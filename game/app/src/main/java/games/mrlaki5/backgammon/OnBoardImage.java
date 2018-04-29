@@ -2,6 +2,7 @@ package games.mrlaki5.backgammon;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
 import android.support.annotation.Nullable;
@@ -46,14 +47,14 @@ public class OnBoardImage extends android.support.v7.widget.AppCompatImageView {
         float x=width/26;
         float y=0;
 
-        canvas.drawLine(width,y,width, y+520, paint);
-        canvas.drawLine(0,y,0, y+520, paint);
+        //canvas.drawLine(width,y,width, y+520, paint);
+        //canvas.drawLine(0,y,0, y+520, paint);
 
-        canvas.drawLine(width/2,y,width/2, y+520, paint);
+        //canvas.drawLine(width/2,y,width/2, y+520, paint);
         float leftX=width*0.450f;
         float rightX=width*0.550f;
-        canvas.drawLine(leftX,y,leftX, y+520, paint);
-        canvas.drawLine(rightX,y,rightX, y+520, paint);
+        //canvas.drawLine(leftX,y,leftX, y+520, paint);
+        //canvas.drawLine(rightX,y,rightX, y+520, paint);
 
         float paddingXLeft=leftX/6;
         float paddingXRight=(width-rightX)/6;
@@ -81,7 +82,7 @@ public class OnBoardImage extends android.support.v7.widget.AppCompatImageView {
                     x=rightX+paddingXRight/2;
                     currPading=paddingXRight;
                 }
-                canvas.drawLine(x,y,x, y+triangleHeight, paint);
+                //canvas.drawLine(x,y,x, y+triangleHeight, paint);
                 if (ChipMatrix[i][0] > 0) {
                     float xChipStart=x-currPading*0.35f;
                     float xChipEnd=x+currPading*0.35f;
@@ -95,9 +96,21 @@ public class OnBoardImage extends android.support.v7.widget.AppCompatImageView {
                     if(i>=12){
                         yChipEnd=y-yChipEnd;
                     }
+                    Paint localPaint=new Paint();
+                    Paint outerPaint=new Paint();
+                    outerPaint.setStyle(Paint.Style.STROKE);
+                    outerPaint.setStrokeWidth(chipSize*0.09F);
+
+                    if(ChipMatrix[i][1]==1){
+                        localPaint.setColor(Color.WHITE);
+                    }
+                    else{
+                        localPaint.setColor(Color.rgb(212, 31, 38));
+                    }
                     for(int j=0; j<ChipMatrix[i][0]; j++) {
                         RectF rect = new RectF(xChipStart, yChipStart, xChipEnd, yChipEnd);
-                        canvas.drawOval(rect, paint);
+                        canvas.drawOval(rect, localPaint);
+                        canvas.drawOval(rect, outerPaint);
                         if(i>=12){
                             yChipStart=yChipEnd+heightPadding;
                             yChipEnd=yChipEnd-chipSize+heightPadding;
