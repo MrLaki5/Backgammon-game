@@ -13,6 +13,12 @@ public class GameActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
+
+        BoardFields[2][0]=2;
+        BoardFields[5][0]=6;
+        BoardFields[13][0]=6;
+        BoardFields[23][0]=3;
+
         BoardImage=((OnBoardImage)findViewById(R.id.boardImage) );
         BoardImage.setChipMatrix(BoardFields);
         BoardImage.invalidate();

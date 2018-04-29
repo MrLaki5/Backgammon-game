@@ -3,6 +3,7 @@ package games.mrlaki5.backgammon;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.RectF;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.widget.ImageView;
@@ -58,7 +59,9 @@ public class OnBoardImage extends android.support.v7.widget.AppCompatImageView {
         float paddingXRight=(width-rightX)/6;
         x=paddingXLeft/2;
 
+
         float triangleHeight=height*0.4f;
+        float realTrinagleHeight=triangleHeight;
 
         float currPading=paddingXLeft;
 
@@ -80,6 +83,30 @@ public class OnBoardImage extends android.support.v7.widget.AppCompatImageView {
                 }
                 canvas.drawLine(x,y,x, y+triangleHeight, paint);
                 if (ChipMatrix[i][0] > 0) {
+                    float xChipStart=x-currPading*0.35f;
+                    float xChipEnd=x+currPading*0.35f;
+                    float yChipStart=y;
+                    float chipSize=Math.abs(xChipStart-xChipEnd);
+                    float heightPadding=0F;
+                    if((chipSize*ChipMatrix[i][0]>realTrinagleHeight) && (ChipMatrix[i][0]>1)){
+                        heightPadding=(chipSize*ChipMatrix[i][0]-realTrinagleHeight)/(ChipMatrix[i][0]-1);
+                    }
+                    float yChipEnd=chipSize;
+                    if(i>=12){
+                        yChipEnd=y-yChipEnd;
+                    }
+                    for(int j=0; j<ChipMatrix[i][0]; j++) {
+                        RectF rect = new RectF(xChipStart, yChipStart, xChipEnd, yChipEnd);
+                        canvas.drawOval(rect, paint);
+                        if(i>=12){
+                            yChipStart=yChipEnd+heightPadding;
+                            yChipEnd=yChipEnd-chipSize+heightPadding;
+                        }
+                        else{
+                            yChipStart=yChipEnd-heightPadding;
+                            yChipEnd=yChipEnd+(chipSize-heightPadding);
+                        }
+                    }
 
                 }
                 x+=currPading;
