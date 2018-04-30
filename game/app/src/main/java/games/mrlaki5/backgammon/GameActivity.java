@@ -8,6 +8,7 @@ import android.view.View;
 public class GameActivity extends AppCompatActivity {
 
     private int [][] BoardFields= new int[24][2];   // 2 red, 1 white
+    private int [] NextMoves=new int[24];
     private OnBoardImage BoardImage;
 
 
@@ -77,8 +78,23 @@ public class GameActivity extends AppCompatActivity {
         BoardFields[23][0]=2;
         BoardFields[23][1]=2;
 
+        NextMoves[0]=1;
+        NextMoves[1]=1;
+        NextMoves[12]=1;
+        NextMoves[3]=1;
+        NextMoves[4]=1;
+        NextMoves[6]=1;
+        NextMoves[7]=1;
+        NextMoves[18]=1;
+        NextMoves[19]=1;
+        NextMoves[10]=1;
+        NextMoves[11]=1;
+        NextMoves[15]=1;
+        NextMoves[16]=1;
+
         BoardImage=((OnBoardImage)findViewById(R.id.boardImage) );
         BoardImage.setChipMatrix(BoardFields);
+        BoardImage.setNextMoveArray(NextMoves);
         BoardImage.invalidate();
         BoardImage.setOnTouchListener(BoardListener);
     }

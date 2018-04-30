@@ -1,6 +1,8 @@
 package games.mrlaki5.backgammon;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -12,11 +14,16 @@ import android.widget.ImageView;
 public class OnBoardImage extends android.support.v7.widget.AppCompatImageView {
 
     private int[][] ChipMatrix;
+    private int[] NextMoveArray;
 
     private Paint RedChipPaint;
     private Paint WhiteChipPaint;
     private Paint BorderChipPaint;
+    private Paint NextTriangleTransparentPaint;
     private RectF ChipRect;
+    private Bitmap NextTriangleImageTop;
+    private Bitmap NextTriangleImageBottom;
+    private RectF NextTriangleRect;
 
     private float Width;
     private float Height;
@@ -59,6 +66,14 @@ public class OnBoardImage extends android.support.v7.widget.AppCompatImageView {
         BorderChipPaint.setStyle(Paint.Style.STROKE);
         //create rect that will be used for drawing chips
         ChipRect=new RectF();
+        //create transparent paint for next move green triangles
+        NextTriangleTransparentPaint=new Paint();
+        NextTriangleTransparentPaint.setAlpha(200);
+        //load green triangle images
+        NextTriangleImageTop= BitmapFactory.decodeResource(getResources(), R.drawable.triangle_up);
+        NextTriangleImageBottom= BitmapFactory.decodeResource(getResources(), R.drawable.triangle_down);
+        //create rect that will be used for drawing triangles for next moves
+        NextTriangleRect=new RectF();
     }
 
     @Override
@@ -81,6 +96,10 @@ public class OnBoardImage extends android.support.v7.widget.AppCompatImageView {
 
     public synchronized void setChipMatrix(int [][]chips){
         this.ChipMatrix=chips;
+    }
+
+    public synchronized void setNextMoveArray(int []moves){
+        this.NextMoveArray=moves;
     }
 
     public void setMoveChip(float x, float y, int player){
@@ -116,6 +135,8 @@ public class OnBoardImage extends android.support.v7.widget.AppCompatImageView {
         float y=0;
         //padding to next triangles middle line
         float currPading=PaddingXLeft;
+        //load current image for next step triangle
+        Bitmap currentNextTriangle=NextTriangleImageTop;
         //if matrix exists draw chips
         if(ChipMatrix!=null) {
             synchronized (this) {
@@ -134,6 +155,8 @@ public class OnBoardImage extends android.support.v7.widget.AppCompatImageView {
                         y = Height;
                         //set padding for left side of board
                         currPading = PaddingXLeft;
+                        //change next move triangle image
+                        currentNextTriangle=NextTriangleImageBottom;
                     }
                     //after first 18 triangles jump to right bottom side of board
                     if (i == 18) {
@@ -188,6 +211,15 @@ public class OnBoardImage extends android.support.v7.widget.AppCompatImageView {
                             }
                         }
 
+                    }
+                    if(NextMoveArray!=null && NextMoveArray[i]!=0){
+                        if(i<12) {
+                            NextTriangleRect.set(x - (currPading / 2f), 0, x + (currPading / 2f), TriangleHeight);
+                        }
+                        else{
+                            NextTriangleRect.set(x - (currPading / 2f), Height-TriangleHeight, x + (currPading / 2f), Height);
+                        }
+                        canvas.drawBitmap(currentNextTriangle, null, NextTriangleRect, NextTriangleTransparentPaint);
                     }
                     //move to next triangle
                     x += currPading;
