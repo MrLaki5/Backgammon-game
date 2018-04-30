@@ -15,18 +15,28 @@ public class GameActivity extends AppCompatActivity {
 
         @Override
         public boolean onTouch(View v, MotionEvent event) {
-            switch(event.getActionMasked())
-            {
+            switch(event.getActionMasked()) {
                 case MotionEvent.ACTION_DOWN:
-                    break;
-                case MotionEvent.ACTION_MOVE:
-                    float x_cord = event.getRawX();
                     float xx= event.getX();
-                    float y_cord = event.getRawY();
                     float yy= event.getY();
                     int touchedNum=BoardImage.triangleTouched(xx,yy);
                     boolean isTouched=BoardImage.chipPTouched(touchedNum, xx, yy);
-                    BoardImage.invalidate();
+                    if(isTouched){
+                        BoardImage.setMoveChip(xx,yy,BoardFields[touchedNum][1]);
+                        BoardImage.invalidate();
+                    }
+                    break;
+                case MotionEvent.ACTION_MOVE:
+                    float xx1= event.getX();
+                    float yy1= event.getY();
+                    if(BoardImage.moveMoveChip(xx1, yy1)) {
+                        BoardImage.invalidate();
+                    }
+                    break;
+                case MotionEvent.ACTION_UP:
+                    if(BoardImage.unsetMoveChip()) {
+                        BoardImage.invalidate();
+                    }
                     break;
                 default:
                     break;

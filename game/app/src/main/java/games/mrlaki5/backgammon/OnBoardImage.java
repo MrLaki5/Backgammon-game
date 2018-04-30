@@ -26,6 +26,12 @@ public class OnBoardImage extends android.support.v7.widget.AppCompatImageView {
     private float PaddingXRight;
     private float TriangleHeight;
 
+    private float MoveChipSize;
+    private float MoveChipX=-1;
+    private float MoveChipY=-1;
+    private int MoveChipPlayer=-1;
+
+
     public OnBoardImage(Context context) {
         super(context);
         initOnBoardImage();
@@ -75,6 +81,31 @@ public class OnBoardImage extends android.support.v7.widget.AppCompatImageView {
 
     public synchronized void setChipMatrix(int [][]chips){
         this.ChipMatrix=chips;
+    }
+
+    public void setMoveChip(float x, float y, int player){
+        MoveChipX=x;
+        MoveChipY=y;
+        MoveChipPlayer=player;
+    }
+
+    public boolean unsetMoveChip(){
+        if(MoveChipX!=-1 && MoveChipY!=-1) {
+            MoveChipX = -1;
+            MoveChipY = -1;
+            MoveChipPlayer = -1;
+            return true;
+        }
+        return false;
+    }
+
+    public boolean moveMoveChip(float x, float y){
+        if(MoveChipX!=-1 && MoveChipY!=-1) {
+            MoveChipX = x;
+            MoveChipY = y;
+            return true;
+        }
+        return false;
     }
 
     @Override
@@ -162,6 +193,17 @@ public class OnBoardImage extends android.support.v7.widget.AppCompatImageView {
                     x += currPading;
                 }
             }
+            if(MoveChipX!=-1 && MoveChipY!=-1){
+                Paint localPaint=null;
+                if(MoveChipPlayer==1){
+                    localPaint=WhiteChipPaint;
+                }
+                else{
+                    localPaint=RedChipPaint;
+                }
+                canvas.drawCircle(MoveChipX, MoveChipY, MoveChipSize/2, localPaint);
+                canvas.drawCircle(MoveChipX, MoveChipY, MoveChipSize/2, BorderChipPaint);
+            }
         }
     }
 
@@ -248,6 +290,7 @@ public class OnBoardImage extends android.support.v7.widget.AppCompatImageView {
         //check if coordinates are in top row of triangles
         if(touch_y<TriangleHeight){
             if(touch_y<=chipsY){
+                MoveChipSize=chipSize;
                 return true;
             }
         }
@@ -255,6 +298,7 @@ public class OnBoardImage extends android.support.v7.widget.AppCompatImageView {
             //check if coordinates are in bottom row of triangles
             if ((Height-TriangleHeight)<touch_y){
                 if((Height-chipsY)<=touch_y){
+                    MoveChipSize=chipSize;
                     return true;
                 }
             }
