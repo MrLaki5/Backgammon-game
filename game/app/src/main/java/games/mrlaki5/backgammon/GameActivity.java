@@ -13,7 +13,7 @@ import games.mrlaki5.backgammon.Beans.NextJump;
 
 public class GameActivity extends AppCompatActivity {
 
-    private BoardFieldState[] BoardFields= new BoardFieldState[24];   // 2 red, 1 white
+    private BoardFieldState[] BoardFields= new BoardFieldState[26];   // 2 red, 1 white 24-white, 25-red side board
     private DiceThrow[] diceThrows=new DiceThrow[4];
 
     private GameLogics gameLogics;
@@ -23,43 +23,89 @@ public class GameActivity extends AppCompatActivity {
     private int [] NextMoves=new int[24];
 
     private int CurrentPlayer;
+    private int MoveFieldSrc;
 
     private View.OnTouchListener BoardListener= new View.OnTouchListener() {
 
         @Override
         public boolean onTouch(View v, MotionEvent event) {
+            float x_touch= event.getX();
+            float y_touch= event.getY();
             switch(event.getActionMasked()) {
                 case MotionEvent.ACTION_DOWN:
-                    float xx= event.getX();
-                    float yy= event.getY();
-                    int touchedNum=BoardImage.triangleTouched(xx,yy);
-                    boolean isTouched=BoardImage.chipPTouched(touchedNum, xx, yy);
+                    int touchedNum=BoardImage.triangleTouched(x_touch,y_touch);
+                    boolean isTouched=BoardImage.chipPTouched(touchedNum, x_touch, y_touch);
                     if(isTouched){
 
                         if(BoardFields[touchedNum].getPlayer()==CurrentPlayer) {
                             nextMoves = gameLogics.caluculateMoves(BoardFields, BoardFields[touchedNum].getPlayer(), diceThrows);
                             NextMoves = gameLogics.CalculateNextMovesForSpecificField(nextMoves, touchedNum);
                             if (NextMoves!=null) {
+                                BoardFields[touchedNum].setNumberOfChips(BoardFields[touchedNum].getNumberOfChips()-1);
+                                if(BoardFields[touchedNum].getNumberOfChips()==0) {
+                                    BoardFields[touchedNum].setPlayer(0);
+                                }
                                 BoardImage.setNextMoveArray(NextMoves);
-
-                                BoardImage.setMoveChip(xx, yy, BoardFields[touchedNum].getPlayer());
+                                MoveFieldSrc=touchedNum;
+                                BoardImage.setMoveChip(x_touch, y_touch, CurrentPlayer);
                                 BoardImage.invalidate();
                             }
                         }
                     }
                     break;
                 case MotionEvent.ACTION_MOVE:
-                    float xx1= event.getX();
-                    float yy1= event.getY();
-                    if(BoardImage.moveMoveChip(xx1, yy1)) {
+                    if(BoardImage.moveMoveChip(x_touch, y_touch)) {
                         BoardImage.invalidate();
                     }
                     break;
                 case MotionEvent.ACTION_UP:
                     if(BoardImage.unsetMoveChip()) {
-                        NextMoves=null;
-                        BoardImage.setNextMoveArray(NextMoves);
+                        int dstField = BoardImage.triangleTouched(x_touch,y_touch);
+                        if(dstField!=-1) {
+                            int throwNum = 0;
+                            for (NextJump tempJump: nextMoves) {
+                                if(tempJump.getSrcField()==MoveFieldSrc && tempJump.getDstField()==dstField){
+                                    throwNum=tempJump.getJumpNumber();
+                                    break;
+                                }
+                            }
+                            if(throwNum==0){
+                                BoardFields[MoveFieldSrc].setNumberOfChips(BoardFields[MoveFieldSrc].getNumberOfChips()+1);
+                                if(BoardFields[MoveFieldSrc].getNumberOfChips()==1){
+                                    BoardFields[MoveFieldSrc].setPlayer(CurrentPlayer);
+                                }
+                            }
+                            else {
+                                for (DiceThrow tempThrow : diceThrows) {
+                                    if (tempThrow.getThrowNumber() == throwNum && tempThrow.getAlreadyUsed() == 0) {
+                                        tempThrow.setAlreadyUsed(1);
+                                        break;
+                                    }
+                                }
+                                int tmpPlayer=BoardFields[dstField].getPlayer();
+                                if(BoardFields[dstField].getNumberOfChips()==1 && tmpPlayer!=CurrentPlayer){
+                                    BoardFields[23+tmpPlayer].setNumberOfChips(BoardFields[23+tmpPlayer].getNumberOfChips()+1);
+                                    if(BoardFields[23+tmpPlayer].getNumberOfChips()==1){
+                                        BoardFields[23+tmpPlayer].setPlayer(tmpPlayer);
+                                    }
+                                }
+                                else {
+                                    BoardFields[dstField].setNumberOfChips(BoardFields[dstField].getNumberOfChips() + 1);
+                                }
+                                if(BoardFields[dstField].getNumberOfChips()==1){
+                                    BoardFields[dstField].setPlayer(CurrentPlayer);
+                                }
+                            }
 
+                        }
+                        else{
+                            BoardFields[MoveFieldSrc].setNumberOfChips(BoardFields[MoveFieldSrc].getNumberOfChips()+1);
+                            if(BoardFields[MoveFieldSrc].getNumberOfChips()==1){
+                                BoardFields[MoveFieldSrc].setPlayer(CurrentPlayer);
+                            }
+                        }
+                        NextMoves = null;
+                        BoardImage.setNextMoveArray(NextMoves);
                         BoardImage.invalidate();
                     }
                     break;
@@ -77,7 +123,7 @@ public class GameActivity extends AppCompatActivity {
 
         gameLogics= new GameLogics();
 
-        for(int i=0; i<4; i++){
+        for(int i=0; i<diceThrows.length; i++){
             diceThrows[i]=new DiceThrow(0);
             diceThrows[i].setAlreadyUsed(1);
         }
@@ -90,7 +136,7 @@ public class GameActivity extends AppCompatActivity {
 
         CurrentPlayer=1;
 
-        for(int i=0; i<24; i++){
+        for(int i=0; i<BoardFields.length; i++){
             BoardFields[i]=new BoardFieldState();
         }
 
@@ -118,6 +164,16 @@ public class GameActivity extends AppCompatActivity {
 
         BoardFields[23].setNumberOfChips(2);
         BoardFields[23].setPlayer(2);
+
+        BoardFields[24].setNumberOfChips(2);
+        BoardFields[24].setPlayer(1);
+
+        BoardFields[25].setNumberOfChips(2);
+        BoardFields[25].setPlayer(2);
+
+        //TEST PART
+        BoardFields[7].setNumberOfChips(1);
+        BoardFields[7].setPlayer(2);
 
 
         BoardImage=((OnBoardImage)findViewById(R.id.boardImage) );

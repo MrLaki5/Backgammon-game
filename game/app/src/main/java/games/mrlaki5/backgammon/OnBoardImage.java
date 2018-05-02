@@ -170,7 +170,7 @@ public class OnBoardImage extends android.support.v7.widget.AppCompatImageView {
         //if matrix exists draw chips
         if(ChipMatrix!=null) {
             synchronized (this) {
-                for (int i = 0; i < 24; i++) {
+                for (int i = 0; i < ChipMatrix.length; i++) {
                     //after first six triangles jump to right top side of board
                     if (i == 6) {
                         //set right top side board coordinates
@@ -195,6 +195,18 @@ public class OnBoardImage extends android.support.v7.widget.AppCompatImageView {
                         //set padding for right side of board
                         currPading = PaddingXRight;
                     }
+                    //sideboard white chips (on up middle border)
+                    if(i==24){
+                        x=Width/2;
+                        y=0;
+                        currPading = PaddingXLeft;
+                    }
+                    //sideboard red chips (on down middle border)
+                    if(i==25){
+                        x=Width/2;
+                        y=Height;
+                        currPading = PaddingXLeft;
+                    }
                     //if there is any chips on current triangle
                     if (ChipMatrix[i].getNumberOfChips() > 0) {
                         //calculate x coordinates for triangle where chip is drawn
@@ -211,7 +223,7 @@ public class OnBoardImage extends android.support.v7.widget.AppCompatImageView {
                         //calculate y coordinates for triangle where chip is drawn
                         float yChipStart = y;
                         float yChipEnd = chipSize;
-                        if (i >= 12) {
+                        if (i >= 12 && i!=24) {
                             yChipEnd = y - yChipEnd;
                         }
                         //set up width of border on chips
@@ -232,7 +244,7 @@ public class OnBoardImage extends android.support.v7.widget.AppCompatImageView {
                             //draw border for chip
                             canvas.drawOval(ChipRect, BorderChipPaint);
                             //move y coordinates for drawing next chip on same triangle
-                            if (i >= 12) {
+                            if (i >= 12 && i!=24) {
                                 yChipStart = yChipEnd + heightPadding;
                                 yChipEnd = yChipEnd - chipSize + heightPadding;
                             } else {
@@ -243,7 +255,7 @@ public class OnBoardImage extends android.support.v7.widget.AppCompatImageView {
 
                     }
                     //check if next step hint (green triangle) is needed over triangle i
-                    if(NextMoveArray!=null && NextMoveArray[i]!=0){
+                    if(NextMoveArray!=null &&  i!=24 && i!=25 && NextMoveArray[i]!=0){
                         //calculate coordinates for green triangle
                         if(i<12) {
                             //if on top row then y from 0 to triangleHeight
@@ -305,6 +317,13 @@ public class OnBoardImage extends android.support.v7.widget.AppCompatImageView {
                     }
                     return currTriangle;
                 }
+                else{
+                    float xChipStart = (Width/2) - PaddingXLeft * 0.35f;
+                    float xChipEnd = (Width/2) + PaddingXLeft * 0.35f;
+                    if(touch_x>=xChipStart && touch_x<=xChipEnd){
+                        return 24;
+                    }
+                }
             }
         }
         else{
@@ -333,6 +352,13 @@ public class OnBoardImage extends android.support.v7.widget.AppCompatImageView {
                         }
                         return currTriangle;
                     }
+                    else{
+                        float xChipStart = (Width/2) - PaddingXLeft * 0.35f;
+                        float xChipEnd = (Width/2) + PaddingXLeft * 0.35f;
+                        if(touch_x>=xChipStart && touch_x<=xChipEnd){
+                            return 25;
+                        }
+                    }
                 }
             }
         }
@@ -343,7 +369,7 @@ public class OnBoardImage extends android.support.v7.widget.AppCompatImageView {
     //Method for checking if chip is touched inside touched triangle
     public synchronized boolean chipPTouched(int trianglePosition, float touch_x, float touch_y){
         //incorrect input
-        if(trianglePosition<0 || trianglePosition>23){
+        if(trianglePosition<0 || trianglePosition>25){
             return false;
         }
         //calculate chip side depending on board side
@@ -353,13 +379,7 @@ public class OnBoardImage extends android.support.v7.widget.AppCompatImageView {
             chipSize=PaddingXRight*0.7f;
         }
         else{
-            //check if coordinates are in left board
-            if(touch_x<LeftX){
-                chipSize=PaddingXLeft*0.7f;
-            }
-            else{
-                return false;
-            }
+            chipSize=PaddingXLeft*0.7f;
         }
         //find how much does group of chips take in specific triangle
         float chipsY=ChipMatrix[trianglePosition].getNumberOfChips()*chipSize;

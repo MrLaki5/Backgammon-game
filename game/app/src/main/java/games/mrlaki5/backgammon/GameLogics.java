@@ -11,7 +11,13 @@ public class GameLogics {
 
     public int CalculateRealPosition(int ChipMatrixPos, int PlayerNum){
         if(PlayerNum==2){
+            if(ChipMatrixPos==25){
+                return 0;
+            }
             return 25-CalculateRealPosition(ChipMatrixPos, 1);
+        }
+        if(ChipMatrixPos==24){
+            return 0;
         }
         if(ChipMatrixPos<=11){
             return 12-ChipMatrixPos;
@@ -23,7 +29,13 @@ public class GameLogics {
 
     public int CalculateMatrixPosition(int ChipRealPos, int PlayerNum){
         if(PlayerNum==2){
+            if(ChipRealPos==0){
+                return 25;
+            }
             return CalculateMatrixPosition(25-ChipRealPos, 1);
+        }
+        if(ChipRealPos ==24){
+            return 0;
         }
         if(ChipRealPos<=12){
             return 12-ChipRealPos;
