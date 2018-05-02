@@ -11,10 +11,12 @@ import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.widget.ImageView;
 
+import games.mrlaki5.backgammon.Beans.BoardFieldState;
+
 public class OnBoardImage extends android.support.v7.widget.AppCompatImageView {
 
     //Chips matrix (with number of chips on triangle [0] and player [1] (1-white, 2-red)), length:24
-    private int[][] ChipMatrix;
+    private BoardFieldState[] ChipMatrix;
     //Array with hints for next move (1-there is hint, 0- no hint), length:24
     private int[] NextMoveArray;
 
@@ -117,7 +119,7 @@ public class OnBoardImage extends android.support.v7.widget.AppCompatImageView {
     }
 
     //Method for setting chip matrix
-    public synchronized void setChipMatrix(int [][]chips){
+    public synchronized void setChipMatrix(BoardFieldState []chips){
         this.ChipMatrix=chips;
     }
 
@@ -194,7 +196,7 @@ public class OnBoardImage extends android.support.v7.widget.AppCompatImageView {
                         currPading = PaddingXRight;
                     }
                     //if there is any chips on current triangle
-                    if (ChipMatrix[i][0] > 0) {
+                    if (ChipMatrix[i].getNumberOfChips() > 0) {
                         //calculate x coordinates for triangle where chip is drawn
                         float xChipStart = x - currPading * 0.35f;
                         float xChipEnd = x + currPading * 0.35f;
@@ -203,8 +205,8 @@ public class OnBoardImage extends android.support.v7.widget.AppCompatImageView {
                         //calculate padding in chip center (needed if there is more chips
                         //in triangle then triangles height is)
                         float heightPadding = 0F;
-                        if ((chipSize * ChipMatrix[i][0] > TriangleHeight) && (ChipMatrix[i][0] > 1)) {
-                            heightPadding = (chipSize * ChipMatrix[i][0] - TriangleHeight) / (ChipMatrix[i][0] - 1);
+                        if ((chipSize * ChipMatrix[i].getNumberOfChips() > TriangleHeight) && (ChipMatrix[i].getNumberOfChips() > 1)) {
+                            heightPadding = (chipSize * ChipMatrix[i].getNumberOfChips() - TriangleHeight) / (ChipMatrix[i].getNumberOfChips() - 1);
                         }
                         //calculate y coordinates for triangle where chip is drawn
                         float yChipStart = y;
@@ -216,13 +218,13 @@ public class OnBoardImage extends android.support.v7.widget.AppCompatImageView {
                         BorderChipPaint.setStrokeWidth(chipSize * 0.09F);
                         //set up color of chips, depending on player
                         Paint localPaint = null;
-                        if (ChipMatrix[i][1] == 1) {
+                        if (ChipMatrix[i].getPlayer() == 1) {
                             localPaint = WhiteChipPaint;
                         } else {
                             localPaint = RedChipPaint;
                         }
                         //go through all chips on triangle and draw them
-                        for (int j = 0; j < ChipMatrix[i][0]; j++) {
+                        for (int j = 0; j < ChipMatrix[i].getNumberOfChips(); j++) {
                             //set up coordinates for drawing current chip
                             ChipRect.set(xChipStart, yChipStart, xChipEnd, yChipEnd);
                             //draw chip
@@ -360,7 +362,7 @@ public class OnBoardImage extends android.support.v7.widget.AppCompatImageView {
             }
         }
         //find how much does group of chips take in specific triangle
-        float chipsY=ChipMatrix[trianglePosition][0]*chipSize;
+        float chipsY=ChipMatrix[trianglePosition].getNumberOfChips()*chipSize;
         //check if coordinates are in top row of triangles
         if(touch_y<TriangleHeight){
             //check if it is in chip range in specific triangle

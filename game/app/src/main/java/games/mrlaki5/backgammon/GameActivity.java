@@ -5,12 +5,24 @@ import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
 
+import java.util.List;
+
+import games.mrlaki5.backgammon.Beans.BoardFieldState;
+import games.mrlaki5.backgammon.Beans.DiceThrow;
+import games.mrlaki5.backgammon.Beans.NextJump;
+
 public class GameActivity extends AppCompatActivity {
 
-    private int [][] BoardFields= new int[24][2];   // 2 red, 1 white
-    private int [] NextMoves=new int[24];
+    private BoardFieldState[] BoardFields= new BoardFieldState[24];   // 2 red, 1 white
+    private DiceThrow[] diceThrows=new DiceThrow[4];
+
+    private GameLogics gameLogics;
     private OnBoardImage BoardImage;
 
+    private List<NextJump> nextMoves=null;
+    private int [] NextMoves=new int[24];
+
+    private int CurrentPlayer;
 
     private View.OnTouchListener BoardListener= new View.OnTouchListener() {
 
@@ -23,8 +35,17 @@ public class GameActivity extends AppCompatActivity {
                     int touchedNum=BoardImage.triangleTouched(xx,yy);
                     boolean isTouched=BoardImage.chipPTouched(touchedNum, xx, yy);
                     if(isTouched){
-                        BoardImage.setMoveChip(xx,yy,BoardFields[touchedNum][1]);
-                        BoardImage.invalidate();
+
+                        if(BoardFields[touchedNum].getPlayer()==CurrentPlayer) {
+                            nextMoves = gameLogics.caluculateMoves(BoardFields, BoardFields[touchedNum].getPlayer(), diceThrows);
+                            NextMoves = gameLogics.CalculateNextMovesForSpecificField(nextMoves, touchedNum);
+                            if (NextMoves!=null) {
+                                BoardImage.setNextMoveArray(NextMoves);
+
+                                BoardImage.setMoveChip(xx, yy, BoardFields[touchedNum].getPlayer());
+                                BoardImage.invalidate();
+                            }
+                        }
                     }
                     break;
                 case MotionEvent.ACTION_MOVE:
@@ -36,6 +57,9 @@ public class GameActivity extends AppCompatActivity {
                     break;
                 case MotionEvent.ACTION_UP:
                     if(BoardImage.unsetMoveChip()) {
+                        NextMoves=null;
+                        BoardImage.setNextMoveArray(NextMoves);
+
                         BoardImage.invalidate();
                     }
                     break;
@@ -51,50 +75,53 @@ public class GameActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
+        gameLogics= new GameLogics();
 
-        BoardFields[0][0]=5;
-        BoardFields[0][1]=1;
+        for(int i=0; i<4; i++){
+            diceThrows[i]=new DiceThrow(0);
+            diceThrows[i].setAlreadyUsed(1);
+        }
 
-        BoardFields[11][0]=2;
-        BoardFields[11][1]=1;
-
-        BoardFields[16][0]=3;
-        BoardFields[16][1]=1;
-
-        BoardFields[18][0]=5;
-        BoardFields[18][1]=1;
-
+        diceThrows[0].setThrowNumber(6);
+        diceThrows[0].setAlreadyUsed(0);
+        diceThrows[1].setThrowNumber(5);
+        diceThrows[1].setAlreadyUsed(0);
 
 
-        BoardFields[4][0]=3;
-        BoardFields[4][1]=2;
+        CurrentPlayer=1;
 
-        BoardFields[6][0]=5;
-        BoardFields[6][1]=2;
+        for(int i=0; i<24; i++){
+            BoardFields[i]=new BoardFieldState();
+        }
 
-        BoardFields[12][0]=5;
-        BoardFields[12][1]=2;
+        BoardFields[0].setNumberOfChips(5);
+        BoardFields[0].setPlayer(1);
 
-        BoardFields[23][0]=2;
-        BoardFields[23][1]=2;
+        BoardFields[11].setNumberOfChips(2);
+        BoardFields[11].setPlayer(1);
 
-        NextMoves[0]=1;
-        NextMoves[1]=1;
-        NextMoves[12]=1;
-        NextMoves[3]=1;
-        NextMoves[4]=1;
-        NextMoves[6]=1;
-        NextMoves[7]=1;
-        NextMoves[18]=1;
-        NextMoves[19]=1;
-        NextMoves[10]=1;
-        NextMoves[11]=1;
-        NextMoves[15]=1;
-        NextMoves[16]=1;
+        BoardFields[16].setNumberOfChips(3);
+        BoardFields[16].setPlayer(1);
+
+        BoardFields[18].setNumberOfChips(5);
+        BoardFields[18].setPlayer(1);
+
+
+        BoardFields[4].setNumberOfChips(3);
+        BoardFields[4].setPlayer(2);
+
+        BoardFields[6].setNumberOfChips(5);
+        BoardFields[6].setPlayer(2);
+
+        BoardFields[12].setNumberOfChips(5);
+        BoardFields[12].setPlayer(2);
+
+        BoardFields[23].setNumberOfChips(2);
+        BoardFields[23].setPlayer(2);
+
 
         BoardImage=((OnBoardImage)findViewById(R.id.boardImage) );
         BoardImage.setChipMatrix(BoardFields);
-        BoardImage.setNextMoveArray(NextMoves);
         BoardImage.invalidate();
         BoardImage.setOnTouchListener(BoardListener);
     }
