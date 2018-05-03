@@ -98,7 +98,7 @@ public class GameLogic {
                 i=19;
                 for(;i<=24;i++){
                     int matrixI=calculateMatrixPosition(i, PlayerNum);
-                    
+
                 }
                 break;
             case 2:

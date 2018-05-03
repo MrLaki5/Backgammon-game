@@ -104,7 +104,7 @@ public class OnBoardImage extends android.support.v7.widget.AppCompatImageView {
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
         //Take width and height of canvas
-        Width=w;
+        Width=w*0.93f;
         Height=h;
         //Width of middle wood border is 10% of board border
         //find width of left and right size of board
