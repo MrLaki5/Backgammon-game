@@ -16,7 +16,7 @@ public class GameActivity extends AppCompatActivity {
     private BoardFieldState[] BoardFields= new BoardFieldState[26];   // 2 red, 1 white 24-white, 25-red side board
     private DiceThrow[] diceThrows=new DiceThrow[4];
 
-    private GameLogics gameLogics;
+    private GameLogic gameLogic;
     private OnBoardImage BoardImage;
 
     private List<NextJump> nextMoves=null;
@@ -38,8 +38,8 @@ public class GameActivity extends AppCompatActivity {
                     if(isTouched){
 
                         if(BoardFields[touchedNum].getPlayer()==CurrentPlayer) {
-                            nextMoves = gameLogics.caluculateMoves(BoardFields, BoardFields[touchedNum].getPlayer(), diceThrows);
-                            NextMoves = gameLogics.CalculateNextMovesForSpecificField(nextMoves, touchedNum);
+                            nextMoves = gameLogic.calculateMoves(BoardFields, BoardFields[touchedNum].getPlayer(), diceThrows);
+                            NextMoves = gameLogic.calculateNextMovesForSpecificField(nextMoves, touchedNum);
                             if (NextMoves!=null) {
                                 BoardFields[touchedNum].setNumberOfChips(BoardFields[touchedNum].getNumberOfChips()-1);
                                 if(BoardFields[touchedNum].getNumberOfChips()==0) {
@@ -121,7 +121,7 @@ public class GameActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
-        gameLogics= new GameLogics();
+        gameLogic = new GameLogic();
 
         for(int i=0; i<diceThrows.length; i++){
             diceThrows[i]=new DiceThrow(0);
@@ -165,15 +165,14 @@ public class GameActivity extends AppCompatActivity {
         BoardFields[23].setNumberOfChips(2);
         BoardFields[23].setPlayer(2);
 
-        BoardFields[24].setNumberOfChips(2);
-        BoardFields[24].setPlayer(1);
-
-        BoardFields[25].setNumberOfChips(2);
-        BoardFields[25].setPlayer(2);
 
         //TEST PART
-        BoardFields[7].setNumberOfChips(1);
-        BoardFields[7].setPlayer(2);
+
+        BoardFields[24].setNumberOfChips(1);
+        BoardFields[24].setPlayer(1);
+
+        BoardFields[25].setNumberOfChips(1);
+        BoardFields[25].setPlayer(2);
 
 
         BoardImage=((OnBoardImage)findViewById(R.id.boardImage) );
