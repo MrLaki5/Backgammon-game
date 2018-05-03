@@ -34,8 +34,8 @@ public class GameLogic {
             }
             return calculateMatrixPosition(25-ChipRealPos, 1);
         }
-        if(ChipRealPos ==24){
-            return 0;
+        if(ChipRealPos ==0){
+            return 24;
         }
         if(ChipRealPos<=12){
             return 12-ChipRealPos;

@@ -39,6 +39,8 @@ public class OnBoardImage extends android.support.v7.widget.AppCompatImageView {
 
     //Width of board
     private float Width;
+    //Full width of board
+    private float RealWidth;
     //Height of board
     private float Height;
     //Width of left side of board
@@ -104,8 +106,9 @@ public class OnBoardImage extends android.support.v7.widget.AppCompatImageView {
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
         //Take width and height of canvas
-        Width=w*0.93f;
+        Width=w*0.909f;
         Height=h;
+        RealWidth=w;
         //Width of middle wood border is 10% of board border
         //find width of left and right size of board
         LeftX=Width*0.450f;
@@ -149,8 +152,12 @@ public class OnBoardImage extends android.support.v7.widget.AppCompatImageView {
     //Method for moving the selected chip
     public boolean moveMoveChip(float x, float y){
         if(MoveChipX!=-1 && MoveChipY!=-1) {
-            MoveChipX = x;
-            MoveChipY = y;
+            if((x-(MoveChipSize/2))>=0 && (x+(MoveChipSize/2))<=RealWidth) {
+                MoveChipX = x;
+            }
+            if((y-(MoveChipSize/2))>=0 && (y+(MoveChipSize/2))<=Height){
+                MoveChipY = y;
+            }
             return true;
         }
         return false;

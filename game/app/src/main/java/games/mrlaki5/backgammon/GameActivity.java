@@ -128,7 +128,7 @@ public class GameActivity extends AppCompatActivity {
             diceThrows[i].setAlreadyUsed(1);
         }
 
-        diceThrows[0].setThrowNumber(6);
+        diceThrows[0].setThrowNumber(3);
         diceThrows[0].setAlreadyUsed(0);
         diceThrows[1].setThrowNumber(5);
         diceThrows[1].setAlreadyUsed(0);
