@@ -13,14 +13,15 @@ import games.mrlaki5.backgammon.Beans.NextJump;
 
 public class GameActivity extends AppCompatActivity {
 
-    private BoardFieldState[] BoardFields= new BoardFieldState[26];   // 2 red, 1 white 24-white, 25-red side board
+    private BoardFieldState[] BoardFields= new BoardFieldState[28];   // 2 red, 1 white 24-white, 25-red side board
+                                                                      // 27-white endBoard, 26-red endBoard
     private DiceThrow[] diceThrows=new DiceThrow[4];
 
     private GameLogic gameLogic;
     private OnBoardImage BoardImage;
 
     private List<NextJump> nextMoves=null;
-    private int [] NextMoves=new int[24];
+    private int [] NextMoves=new int[28];
 
     private int CurrentPlayer;
     private int MoveFieldSrc;
@@ -173,6 +174,12 @@ public class GameActivity extends AppCompatActivity {
 
         BoardFields[25].setNumberOfChips(1);
         BoardFields[25].setPlayer(2);
+
+        BoardFields[26].setNumberOfChips(15);
+        BoardFields[26].setPlayer(2);
+
+        BoardFields[27].setNumberOfChips(10);
+        BoardFields[27].setPlayer(1);
 
 
         BoardImage=((OnBoardImage)findViewById(R.id.boardImage) );

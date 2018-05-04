@@ -14,10 +14,16 @@ public class GameLogic {
             if(ChipMatrixPos==25){
                 return 0;
             }
+            if(ChipMatrixPos==26){
+                return 100;
+            }
             return 25-calculateRealPosition(ChipMatrixPos, 1);
         }
         if(ChipMatrixPos==24){
             return 0;
+        }
+        if(ChipMatrixPos==27){
+            return 100;
         }
         if(ChipMatrixPos<=11){
             return 12-ChipMatrixPos;
@@ -32,10 +38,16 @@ public class GameLogic {
             if(ChipRealPos==0){
                 return 25;
             }
+            if(ChipRealPos==100){
+                return 26;
+            }
             return calculateMatrixPosition(25-ChipRealPos, 1);
         }
         if(ChipRealPos ==0){
             return 24;
+        }
+        if(ChipRealPos==100){
+            return 27;
         }
         if(ChipRealPos<=12){
             return 12-ChipRealPos;
@@ -46,7 +58,7 @@ public class GameLogic {
     }
     
     public int[] calculateNextMovesForSpecificField(List<NextJump> MovesList, int Field){
-        int[] NextArray=new int[24];
+        int[] NextArray=new int[28];
         int flag=0;
         for (NextJump tempJump: MovesList) {
             if(tempJump.getSrcField()==Field){
@@ -68,13 +80,14 @@ public class GameLogic {
         int whichPart=whatPartOfGame(ChipMatrix, PlayerNum);
         switch(whichPart){
             case 0:
+            case 1:
                 if(ChipMatrix[24].getNumberOfChips()>0 && PlayerNum==1){
                     i=24;
                 }
                 if(ChipMatrix[25].getNumberOfChips()>0 && PlayerNum==2){
                     i=25;
                 }
-                for(; i<ChipMatrix.length; i++){
+                for(; i<26; i++){
                     if(PlayerNum==ChipMatrix[i].getPlayer()){
                         int realPos=calculateRealPosition(i, PlayerNum);
                         for(int j=0; j<Throws.length; j++){
@@ -83,7 +96,11 @@ public class GameLogic {
                             }
                             int realNextPos=realPos+Throws[j].getThrowNumber();
                             if(realNextPos>24){
-                                continue;
+                                if(whichPart==0) {
+                                    continue;
+                                }
+                                realNextPos=100;
+                                //TODO: Last part of game part
                             }
                             int matrixNextPos=calculateMatrixPosition(realNextPos, PlayerNum);
                             if((ChipMatrix[matrixNextPos].getPlayer()==PlayerNum) || (ChipMatrix[matrixNextPos].getNumberOfChips()<=1)){
@@ -91,14 +108,6 @@ public class GameLogic {
                             }
                         }
                     }
-                }
-                break;
-            case 1:
-                //TODO: last part of game logic
-                i=19;
-                for(;i<=24;i++){
-                    int matrixI=calculateMatrixPosition(i, PlayerNum);
-
                 }
                 break;
             case 2:
@@ -112,7 +121,7 @@ public class GameLogic {
     public int whatPartOfGame(BoardFieldState[] ChipMatrix, int PlayerNum){
         int leftChipNum=0;
         boolean isLastPart=true;
-        for (int i=0; i<ChipMatrix.length; i++){
+        for (int i=0; i<26; i++){
             if(ChipMatrix[i].getPlayer()==PlayerNum){
                 leftChipNum+=ChipMatrix[i].getNumberOfChips();
                 int fieldPos=calculateRealPosition(i, PlayerNum);
