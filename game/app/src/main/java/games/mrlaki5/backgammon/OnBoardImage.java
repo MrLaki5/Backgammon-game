@@ -329,16 +329,24 @@ public class OnBoardImage extends android.support.v7.widget.AppCompatImageView {
                         }
 
                     }
+                    //padding for calculating hints width
+                    float tempHintWidth=0F;
+                    if(!drawEndBoard){
+                        tempHintWidth=currPading/2F;
+                    }
+                    else{
+                        tempHintWidth=currPading*0.35F;
+                    }
                     //check if next step hint (green triangle) is needed over triangle i
                     if(NextMoveArray!=null &&  i!=24 && i!=25 && NextMoveArray[i]!=0){
                         //calculate coordinates for green triangle
-                        if(i<12 || i==27) {
+                        if(i<12 || i==26) {
                             //if on top row then y from 0 to triangleHeight
-                            NextTriangleRect.set(x - (currPading / 2f), 0, x + (currPading / 2f), TriangleHeight);
+                            NextTriangleRect.set(x - tempHintWidth, 0, x + tempHintWidth, TriangleHeight);
                         }
                         else{
                             //if on bottom row then y from height-triangleHeight to height
-                            NextTriangleRect.set(x - (currPading / 2f), Height-TriangleHeight, x + (currPading / 2f), Height);
+                            NextTriangleRect.set(x - tempHintWidth, Height-TriangleHeight, x + tempHintWidth, Height);
                         }
                         //draw green triangle
                         canvas.drawBitmap(currentNextImage, null, NextTriangleRect, NextTriangleTransparentPaint);
@@ -371,14 +379,24 @@ public class OnBoardImage extends android.support.v7.widget.AppCompatImageView {
         if(touch_y<TriangleHeight){
             //check if coordinates are in top right board
             if(touch_x>RightX){
-                //go through triangles and find touched one
-                float TriangleBorder=PaddingXRight+RightX;
-                int currTriangle=6;
-                while(TriangleBorder<touch_x){
-                    currTriangle++;
-                    TriangleBorder+=PaddingXLeft;
+                //check if end game position
+                if(touch_x>Width){
+                    float tempXStart=EndBoardMidX-(PaddingXLeft*0.35F);
+                    float tempXEnd=EndBoardMidX+(PaddingXLeft*0.35F);
+                    if((touch_x>=tempXStart) && (touch_x<=tempXEnd)){
+                        return 26;
+                    }
                 }
-                return currTriangle;
+                else {
+                    //go through triangles and find touched one
+                    float TriangleBorder = PaddingXRight + RightX;
+                    int currTriangle = 6;
+                    while (TriangleBorder < touch_x) {
+                        currTriangle++;
+                        TriangleBorder += PaddingXLeft;
+                    }
+                    return currTriangle;
+                }
             }
             else{
                 //check if coordinates are in top left board
@@ -406,14 +424,24 @@ public class OnBoardImage extends android.support.v7.widget.AppCompatImageView {
             if ((Height-TriangleHeight)<touch_y){
                 //check if coordinates are in bottom right board
                 if(touch_x>RightX){
-                    //go through triangles and find touched one
-                    float TriangleBorder=PaddingXRight+RightX;
-                    int currTriangle=18;
-                    while(TriangleBorder<touch_x){
-                        currTriangle++;
-                        TriangleBorder+=PaddingXLeft;
+                    //check if end game position
+                    if(touch_x>Width){
+                        float tempXStart=EndBoardMidX-(PaddingXLeft*0.35F);
+                        float tempXEnd=EndBoardMidX+(PaddingXLeft*0.35F);
+                        if((touch_x>=tempXStart) && (touch_x<=tempXEnd)){
+                            return 27;
+                        }
                     }
-                    return currTriangle;
+                    else {
+                        //go through triangles and find touched one
+                        float TriangleBorder = PaddingXRight + RightX;
+                        int currTriangle = 18;
+                        while (TriangleBorder < touch_x) {
+                            currTriangle++;
+                            TriangleBorder += PaddingXLeft;
+                        }
+                        return currTriangle;
+                    }
                 }
                 else{
                     //check if coordinates are in bottom left board

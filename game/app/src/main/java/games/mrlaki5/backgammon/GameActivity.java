@@ -131,7 +131,7 @@ public class GameActivity extends AppCompatActivity {
 
         diceThrows[0].setThrowNumber(3);
         diceThrows[0].setAlreadyUsed(0);
-        diceThrows[1].setThrowNumber(5);
+        diceThrows[1].setThrowNumber(6);
         diceThrows[1].setAlreadyUsed(0);
 
 
@@ -175,15 +175,22 @@ public class GameActivity extends AppCompatActivity {
         BoardFields[25].setNumberOfChips(1);
         BoardFields[25].setPlayer(2);
 
-        BoardFields[26].setNumberOfChips(15);
+        BoardFields[26].setNumberOfChips(3);
         BoardFields[26].setPlayer(2);
 
         BoardFields[27].setNumberOfChips(10);
         BoardFields[27].setPlayer(1);
 
+        int []pomNiz=new int[28];
+        //pomNiz[26]=1;
+        pomNiz[27]=1;
+
 
         BoardImage=((OnBoardImage)findViewById(R.id.boardImage) );
         BoardImage.setChipMatrix(BoardFields);
+
+        BoardImage.setNextMoveArray(pomNiz);
+
         BoardImage.invalidate();
         BoardImage.setOnTouchListener(BoardListener);
     }
