@@ -39,6 +39,13 @@ public class OnBoardImage extends android.support.v7.widget.AppCompatImageView {
     //Image for end board hints
     private Bitmap EndBoardImage;
 
+    //y top border
+    private float YBaseTop;
+    //x right border
+    private float XBaseRight;
+    //x left border
+    private float XBaseLeft;
+
     //Width of board
     private float Width;
     //Full width of board
@@ -112,20 +119,24 @@ public class OnBoardImage extends android.support.v7.widget.AppCompatImageView {
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
+        //borders size
+        YBaseTop=h*0.107F;
+        XBaseLeft=w*0.04F;
+        XBaseRight=w*0.05F;
         //Take width and height of canvas
-        Width=w*0.909f;
-        Height=h;
+        Width=w*0.8735F;
+        Height=h*0.966F;
         RealWidth=w;
         //Width of middle wood border is 10% of board border
         //find width of left and right size of board
-        LeftX=Width*0.450f;
-        RightX=Width*0.550f;
+        LeftX=(Width-YBaseTop)*0.4535f;
+        RightX=(Width-YBaseTop)*0.564f;
         //There is 12 triangles on left and right side, and 6 of them coun in width
         //Count width of left side and right side triangles
         PaddingXLeft=LeftX/6;
-        PaddingXRight=(Width-RightX)/6;
+        PaddingXRight=((Width-XBaseLeft)-RightX)/6;
         //Calculate triangles height about 40% of boards height
-        TriangleHeight=Height*0.39f;
+        TriangleHeight=(Height-YBaseTop)*0.39f;
         //Calculate end boards middle line on x coordinate
         EndBoardMidX=Width+(PaddingXRight*3/4);
         //Calculate height of end chips
@@ -163,10 +174,10 @@ public class OnBoardImage extends android.support.v7.widget.AppCompatImageView {
     //Method for moving the selected chip
     public boolean moveMoveChip(float x, float y){
         if(MoveChipX!=-1 && MoveChipY!=-1) {
-            if((x-(MoveChipSize/2))>=0 && (x+(MoveChipSize/2))<=RealWidth) {
+            if((x-(MoveChipSize/2))>=XBaseLeft && (x+(MoveChipSize/2))<=(RealWidth-XBaseRight)) {
                 MoveChipX = x;
             }
-            if((y-(MoveChipSize/2))>=0 && (y+(MoveChipSize/2))<=Height){
+            if((y-(MoveChipSize/2))>=YBaseTop && (y+(MoveChipSize/2))<=Height){
                 MoveChipY = y;
             }
             return true;
@@ -179,25 +190,18 @@ public class OnBoardImage extends android.support.v7.widget.AppCompatImageView {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-       /* Paint paint =new Paint();
-        paint.setStrokeWidth(5);
-        float tempX=this.getWidth()*0.963f;
-        tempX=this.Width+(this.PaddingXRight*3/4);
+       Paint paint =new Paint();
+        paint.setStrokeWidth(7);
+        float tempX=XBaseLeft;
+        tempX=100;
 
 
-        canvas.drawLine(tempX, 0, tempX, this.TriangleHeight, paint);
-        RectF tempRect=new RectF();
-        tempRect.set(tempX-PaddingXRight*(1/4f), 0, tempX+PaddingXRight*(1/4f), TriangleHeight);
-        Bitmap square=BitmapFactory.decodeResource(getResources(), R.drawable.square);
-        canvas.drawBitmap(square, null, tempRect, NextTriangleTransparentPaint);
+        canvas.drawLine(tempX, Height, tempX+100, Height, paint);
 
-        tempRect.set(tempX-PaddingXRight*(1/4f), Height-TriangleHeight, tempX+PaddingXRight*(1/4f), Height);
-        square=BitmapFactory.decodeResource(getResources(), R.drawable.square);
-        canvas.drawBitmap(square, null, tempRect, NextTriangleTransparentPaint);*/
 
         //Set starting coordinates to first triangles middle line
-        float x=PaddingXLeft/2;
-        float y=0;
+        float x=XBaseLeft+PaddingXLeft/2F;
+        float y=YBaseTop;
         //padding to next triangles middle line
         float currPading=PaddingXLeft;
         //load current image for next step triangle
@@ -210,14 +214,14 @@ public class OnBoardImage extends android.support.v7.widget.AppCompatImageView {
                     //after first six triangles jump to right top side of board
                     if (i == 6) {
                         //set right top side board coordinates
-                        x = RightX + PaddingXRight / 2;
+                        x = XBaseLeft + RightX + PaddingXRight / 2F;
                         //set padding for right side of board
                         currPading = PaddingXRight;
                     }
                     //after first 12 triangles jump to left bottom side of board
                     if (i == 12) {
                         //set coordinates for right bottom side of board
-                        x = PaddingXLeft / 2;
+                        x = XBaseLeft + PaddingXLeft / 2F;
                         y = Height;
                         //set padding for left side of board
                         currPading = PaddingXLeft;
@@ -227,26 +231,26 @@ public class OnBoardImage extends android.support.v7.widget.AppCompatImageView {
                     //after first 18 triangles jump to right bottom side of board
                     if (i == 18) {
                         //set coordinates for left bottom side of board
-                        x = RightX + PaddingXRight / 2;
+                        x = XBaseLeft + RightX + PaddingXRight / 2F;
                         //set padding for right side of board
                         currPading = PaddingXRight;
                     }
                     //sideboard white chips (on up middle border)
                     if(i==24){
-                        x=Width/2;
-                        y=0;
+                        x= XBaseLeft + (Width-XBaseLeft)/2F;
+                        y=YBaseTop;
                         currPading = PaddingXLeft;
                     }
                     //sideboard red chips (on down middle border)
                     if(i==25){
-                        x=Width/2;
+                        x= XBaseLeft + (Width-XBaseLeft)/2F;
                         y=Height;
                         currPading = PaddingXLeft;
                     }
                     if(i==26){
                         drawEndBoard=true;
                         x=EndBoardMidX;
-                        y=0;
+                        y=YBaseTop;
                         currentNextImage=EndBoardImage;
                     }
                     if(i==27){
@@ -273,17 +277,17 @@ public class OnBoardImage extends android.support.v7.widget.AppCompatImageView {
                             }
                             //calculate y coordinates for rect where chip is drawn
                             yChipStart = y;
-                            yChipEnd = chipSize;
+                            yChipEnd = chipSize + y;
                             if (i >= 12 && i!=24) {
-                                yChipEnd = y - yChipEnd;
+                                yChipEnd = y - chipSize;
                             }
                         }
                         else{
                             //calculate y coordinates for rect where end chip is drawn
                             yChipStart = y;
-                            yChipEnd = EndChipHeight;
+                            yChipEnd = EndChipHeight+y;
                             if (i==27) {
-                                yChipEnd = y - yChipEnd;
+                                yChipEnd = y - EndChipHeight;
                             }
                         }
                         //set up width of border on chips
@@ -342,7 +346,7 @@ public class OnBoardImage extends android.support.v7.widget.AppCompatImageView {
                         //calculate coordinates for green triangle
                         if(i<12 || i==26) {
                             //if on top row then y from 0 to triangleHeight
-                            NextTriangleRect.set(x - tempHintWidth, 0, x + tempHintWidth, TriangleHeight);
+                            NextTriangleRect.set(x - tempHintWidth, YBaseTop, x + tempHintWidth, TriangleHeight+YBaseTop);
                         }
                         else{
                             //if on bottom row then y from height-triangleHeight to height
@@ -376,9 +380,9 @@ public class OnBoardImage extends android.support.v7.widget.AppCompatImageView {
     //Method for checking which triangle is touched. (if none ret -1)
     public int triangleTouched(float touch_x, float touch_y){
         //check if coordinates are in top row of triangles
-        if(touch_y<TriangleHeight){
+        if((touch_y<(TriangleHeight+YBaseTop)) && (touch_y>=YBaseTop)){
             //check if coordinates are in top right board
-            if(touch_x>RightX){
+            if(touch_x>(RightX+XBaseLeft)){
                 //check if end game position
                 if(touch_x>Width){
                     float tempXStart=EndBoardMidX-(PaddingXLeft*0.35F);
@@ -389,7 +393,7 @@ public class OnBoardImage extends android.support.v7.widget.AppCompatImageView {
                 }
                 else {
                     //go through triangles and find touched one
-                    float TriangleBorder = PaddingXRight + RightX;
+                    float TriangleBorder = PaddingXRight + RightX + XBaseLeft;
                     int currTriangle = 6;
                     while (TriangleBorder < touch_x) {
                         currTriangle++;
@@ -400,9 +404,9 @@ public class OnBoardImage extends android.support.v7.widget.AppCompatImageView {
             }
             else{
                 //check if coordinates are in top left board
-                if(touch_x<LeftX){
+                if(touch_x<LeftX+XBaseLeft){
                     //go through triangles and find touched one
-                    float TriangleBorder=PaddingXLeft;
+                    float TriangleBorder=PaddingXLeft+XBaseLeft;
                     int currTriangle=0;
                     while(TriangleBorder<touch_x){
                         currTriangle++;
@@ -411,8 +415,8 @@ public class OnBoardImage extends android.support.v7.widget.AppCompatImageView {
                     return currTriangle;
                 }
                 else{
-                    float xChipStart = (Width/2) - PaddingXLeft * 0.35f;
-                    float xChipEnd = (Width/2) + PaddingXLeft * 0.35f;
+                    float xChipStart = ((Width-XBaseLeft)/2)+ XBaseLeft - PaddingXLeft * 0.35f;
+                    float xChipEnd = ((Width-XBaseLeft)/2) + XBaseLeft + PaddingXLeft * 0.35f;
                     if(touch_x>=xChipStart && touch_x<=xChipEnd){
                         return 24;
                     }
@@ -423,7 +427,7 @@ public class OnBoardImage extends android.support.v7.widget.AppCompatImageView {
             //check if coordinates are in bottom row of triangles
             if ((Height-TriangleHeight)<touch_y){
                 //check if coordinates are in bottom right board
-                if(touch_x>RightX){
+                if(touch_x>(RightX+XBaseLeft)){
                     //check if end game position
                     if(touch_x>Width){
                         float tempXStart=EndBoardMidX-(PaddingXLeft*0.35F);
@@ -434,7 +438,7 @@ public class OnBoardImage extends android.support.v7.widget.AppCompatImageView {
                     }
                     else {
                         //go through triangles and find touched one
-                        float TriangleBorder = PaddingXRight + RightX;
+                        float TriangleBorder = PaddingXRight + RightX + XBaseLeft;
                         int currTriangle = 18;
                         while (TriangleBorder < touch_x) {
                             currTriangle++;
@@ -445,9 +449,9 @@ public class OnBoardImage extends android.support.v7.widget.AppCompatImageView {
                 }
                 else{
                     //check if coordinates are in bottom left board
-                    if(touch_x<LeftX){
+                    if(touch_x<(LeftX + XBaseLeft )){
                         //go through triangles and find touched one
-                        float TriangleBorder=PaddingXLeft;
+                        float TriangleBorder=PaddingXLeft + XBaseLeft;
                         int currTriangle=12;
                         while(TriangleBorder<touch_x){
                             currTriangle++;
@@ -456,8 +460,8 @@ public class OnBoardImage extends android.support.v7.widget.AppCompatImageView {
                         return currTriangle;
                     }
                     else{
-                        float xChipStart = (Width/2) - PaddingXLeft * 0.35f;
-                        float xChipEnd = (Width/2) + PaddingXLeft * 0.35f;
+                        float xChipStart = ((Width-XBaseLeft)/2) + XBaseLeft - PaddingXLeft * 0.35f;
+                        float xChipEnd = ((Width-XBaseLeft)/2) + XBaseLeft + PaddingXLeft * 0.35f;
                         if(touch_x>=xChipStart && touch_x<=xChipEnd){
                             return 25;
                         }
@@ -478,7 +482,7 @@ public class OnBoardImage extends android.support.v7.widget.AppCompatImageView {
         //calculate chip side depending on board side
         float chipSize=0f;
         //check if coordinates are in right board
-        if(touch_x>RightX){
+        if(touch_x>(RightX+XBaseLeft)){
             chipSize=PaddingXRight*0.7f;
         }
         else{
@@ -487,9 +491,9 @@ public class OnBoardImage extends android.support.v7.widget.AppCompatImageView {
         //find how much does group of chips take in specific triangle
         float chipsY=ChipMatrix[trianglePosition].getNumberOfChips()*chipSize;
         //check if coordinates are in top row of triangles
-        if(touch_y<TriangleHeight){
+        if((touch_y<(TriangleHeight+YBaseTop)) && (touch_y>=YBaseTop)){
             //check if it is in chip range in specific triangle
-            if(touch_y<=chipsY){
+            if(touch_y<=(chipsY+YBaseTop)){
                 MoveChipSize=chipSize;
                 return true;
             }
