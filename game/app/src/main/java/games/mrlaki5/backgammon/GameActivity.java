@@ -60,6 +60,8 @@ public class GameActivity extends AppCompatActivity {
                     }
                     break;
                 case MotionEvent.ACTION_UP:
+                    x_touch=BoardImage.getXMovPos();
+                    y_touch=BoardImage.getYMovPos();
                     if(BoardImage.unsetMoveChip()) {
                         int dstField = BoardImage.triangleTouched(x_touch,y_touch);
                         if(dstField!=-1) {
@@ -79,7 +81,7 @@ public class GameActivity extends AppCompatActivity {
                             else {
                                 for (DiceThrow tempThrow : diceThrows) {
                                     if (tempThrow.getThrowNumber() == throwNum && tempThrow.getAlreadyUsed() == 0) {
-                                        tempThrow.setAlreadyUsed(1);
+                                        //tempThrow.setAlreadyUsed(1);
                                         break;
                                     }
                                 }
@@ -135,7 +137,7 @@ public class GameActivity extends AppCompatActivity {
         diceThrows[1].setAlreadyUsed(0);
 
 
-        CurrentPlayer=1;
+        CurrentPlayer=2;
 
         for(int i=0; i<BoardFields.length; i++){
             BoardFields[i]=new BoardFieldState();
@@ -168,7 +170,7 @@ public class GameActivity extends AppCompatActivity {
 
 
         //TEST PART
-
+        /*
         BoardFields[24].setNumberOfChips(1);
         BoardFields[24].setPlayer(1);
 
@@ -183,13 +185,13 @@ public class GameActivity extends AppCompatActivity {
 
         int []pomNiz=new int[28];
         //pomNiz[26]=1;
-        pomNiz[27]=1;
+        pomNiz[27]=1;*/
 
 
         BoardImage=((OnBoardImage)findViewById(R.id.boardImage) );
         BoardImage.setChipMatrix(BoardFields);
 
-        BoardImage.setNextMoveArray(pomNiz);
+        //BoardImage.setNextMoveArray(pomNiz);
 
         BoardImage.invalidate();
         BoardImage.setOnTouchListener(BoardListener);

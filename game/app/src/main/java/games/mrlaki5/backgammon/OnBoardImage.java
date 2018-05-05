@@ -155,8 +155,28 @@ public class OnBoardImage extends android.support.v7.widget.AppCompatImageView {
 
     //Method for setting coordinates and player of moving chip
     public void setMoveChip(float x, float y, int player){
-        MoveChipX=x;
-        MoveChipY=y;
+        if(!((x-(MoveChipSize/2F))>=XBaseLeft)) {
+            MoveChipX=XBaseLeft+MoveChipSize/2F;
+        }
+        else{
+            if(!((x+(MoveChipSize/2F))<=(RealWidth-XBaseRight))){
+                MoveChipX=RealWidth-XBaseRight-MoveChipSize/2F;
+            }
+            else{
+                MoveChipX = x;
+            }
+        }
+        if(!((y-(MoveChipSize/2))>=YBaseTop)){
+            MoveChipY = YBaseTop + MoveChipSize/2F;
+        }
+        else{
+            if(!((y+(MoveChipSize/2))<=Height)){
+                MoveChipY = Height-MoveChipSize/2F;
+            }
+            else{
+                MoveChipY = y;
+            }
+        }
         MoveChipPlayer=player;
     }
 
@@ -169,6 +189,16 @@ public class OnBoardImage extends android.support.v7.widget.AppCompatImageView {
             return true;
         }
         return false;
+    }
+
+    //get x coordinate of moving chip
+    public float getXMovPos(){
+        return MoveChipX;
+    }
+
+    //get y coordinate of moving chip
+    public float getYMovPos(){
+        return MoveChipY;
     }
 
     //Method for moving the selected chip

@@ -87,9 +87,13 @@ public class GameLogic {
                 if(ChipMatrix[25].getNumberOfChips()>0 && PlayerNum==2){
                     i=25;
                 }
+                int firstFieldWithChip=-1;
                 for(; i<26; i++){
                     if(PlayerNum==ChipMatrix[i].getPlayer()){
                         int realPos=calculateRealPosition(i, PlayerNum);
+                        if(firstFieldWithChip==-1 && ChipMatrix[i].getNumberOfChips()>0){
+                            firstFieldWithChip=realPos;
+                        }
                         for(int j=0; j<Throws.length; j++){
                             if(Throws[j].getAlreadyUsed()==1){
                                 continue;
@@ -99,8 +103,12 @@ public class GameLogic {
                                 if(whichPart==0) {
                                     continue;
                                 }
+                                if(!(firstFieldWithChip==realPos)){
+                                    if(!(realNextPos==25)){
+                                        continue;
+                                    }
+                                }
                                 realNextPos=100;
-                                //TODO: Last part of game part
                             }
                             int matrixNextPos=calculateMatrixPosition(realNextPos, PlayerNum);
                             if((ChipMatrix[matrixNextPos].getPlayer()==PlayerNum) || (ChipMatrix[matrixNextPos].getNumberOfChips()<=1)){
