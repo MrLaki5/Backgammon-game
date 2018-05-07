@@ -26,6 +26,8 @@ public class GameActivity extends AppCompatActivity {
     private int CurrentPlayer;
     private int MoveFieldSrc;
 
+    private int CurrentFingerPointer=-1;
+
     private View.OnTouchListener BoardListener= new View.OnTouchListener() {
 
         @Override
@@ -50,16 +52,41 @@ public class GameActivity extends AppCompatActivity {
                                 MoveFieldSrc=touchedNum;
                                 BoardImage.setMoveChip(x_touch, y_touch, CurrentPlayer);
                                 BoardImage.invalidate();
+                                CurrentFingerPointer=event.getPointerId(0);
                             }
                         }
                     }
                     break;
                 case MotionEvent.ACTION_MOVE:
+                    for(int i=0; i<event.getPointerCount(); i++){
+                        if(event.getPointerId(i)==CurrentFingerPointer){
+                            x_touch=event.getX(i);
+                            y_touch=event.getY(i);
+                            break;
+                        }
+                    }
                     if(BoardImage.moveMoveChip(x_touch, y_touch)) {
                         BoardImage.invalidate();
                     }
                     break;
+                case MotionEvent.ACTION_POINTER_UP:
                 case MotionEvent.ACTION_UP:
+                    if(CurrentFingerPointer==-1){
+                        break;
+                    }
+                    int tempFlag=1;
+                    for(int i=0; i<event.getPointerCount(); i++){
+                        if(event.getPointerId(i)==CurrentFingerPointer && event.getActionIndex()!=i){
+                            tempFlag=0;
+                            break;
+                        }
+                    }
+                    if(tempFlag==0){
+                        break;
+                    }
+                    else{
+                        CurrentFingerPointer=-1;
+                    }
                     x_touch=BoardImage.getXMovPos();
                     y_touch=BoardImage.getYMovPos();
                     if(BoardImage.unsetMoveChip()) {
