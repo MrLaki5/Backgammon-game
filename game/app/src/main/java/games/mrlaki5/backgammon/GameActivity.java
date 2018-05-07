@@ -1,5 +1,10 @@
 package games.mrlaki5.backgammon;
 
+import android.content.Context;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MotionEvent;
@@ -27,6 +32,14 @@ public class GameActivity extends AppCompatActivity {
     private int MoveFieldSrc;
 
     private int CurrentFingerPointer=-1;
+
+
+    private SensorManager sensorManager;
+    Sensor sensor;
+    private float DiceXCurr;
+    private float DiceYCurr;
+    private float DiceZCurr;
+    private float DiceXYZInit;
 
     private View.OnTouchListener BoardListener= new View.OnTouchListener() {
 
@@ -147,6 +160,30 @@ public class GameActivity extends AppCompatActivity {
         }
     };
 
+    private SensorEventListener DiceListener= new SensorEventListener() {
+        @Override
+        public void onSensorChanged(SensorEvent event) {
+            switch(event.sensor.getType()){
+                case Sensor.TYPE_ACCELEROMETER:
+                    if(DiceXYZInit==0){
+                        DiceXCurr=event.values[0];
+                        DiceYCurr=event.values[1];
+                        DiceZCurr=event.values[2];
+                        DiceXYZInit=1;
+                    }
+                    else{
+
+                    }
+                    break;
+            }
+        }
+
+        @Override
+        public void onAccuracyChanged(Sensor sensor, int accuracy) {
+
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -227,5 +264,9 @@ public class GameActivity extends AppCompatActivity {
 
         BoardImage.invalidate();
         BoardImage.setOnTouchListener(BoardListener);
+
+        sensorManager=(SensorManager) this.getSystemService(Context.SENSOR_SERVICE);
+        sensor=sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        sensorManager.registerListener(DiceListener, sensor, SensorManager.SENSOR_DELAY_GAME);
     }
 }
