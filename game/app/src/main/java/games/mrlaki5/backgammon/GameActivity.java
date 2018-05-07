@@ -81,7 +81,8 @@ public class GameActivity extends AppCompatActivity {
                             else {
                                 for (DiceThrow tempThrow : diceThrows) {
                                     if (tempThrow.getThrowNumber() == throwNum && tempThrow.getAlreadyUsed() == 0) {
-                                        //tempThrow.setAlreadyUsed(1);
+                                        tempThrow.setAlreadyUsed(1);
+                                        BoardImage.setDices(diceThrows);
                                         break;
                                     }
                                 }
@@ -135,6 +136,10 @@ public class GameActivity extends AppCompatActivity {
         diceThrows[0].setAlreadyUsed(0);
         diceThrows[1].setThrowNumber(6);
         diceThrows[1].setAlreadyUsed(0);
+        diceThrows[2].setThrowNumber(3);
+        diceThrows[2].setAlreadyUsed(0);
+        diceThrows[3].setThrowNumber(6);
+        diceThrows[3].setAlreadyUsed(0);
 
 
         CurrentPlayer=2;
@@ -190,7 +195,7 @@ public class GameActivity extends AppCompatActivity {
 
         BoardImage=((OnBoardImage)findViewById(R.id.boardImage) );
         BoardImage.setChipMatrix(BoardFields);
-
+        BoardImage.setDices(diceThrows);
         //BoardImage.setNextMoveArray(pomNiz);
 
         BoardImage.invalidate();

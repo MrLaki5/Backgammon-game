@@ -12,6 +12,7 @@ import android.util.AttributeSet;
 import android.widget.ImageView;
 
 import games.mrlaki5.backgammon.Beans.BoardFieldState;
+import games.mrlaki5.backgammon.Beans.DiceThrow;
 
 public class OnBoardImage extends android.support.v7.widget.AppCompatImageView {
 
@@ -75,6 +76,25 @@ public class OnBoardImage extends android.support.v7.widget.AppCompatImageView {
     //Player of moving chip (1-white, 2-red)
     private int MoveChipPlayer=-1;
 
+    //Dice images
+    private Bitmap DiceImages[]= new Bitmap[4];
+    //Padding between dices
+    private float DicePadding;
+    //Size of dice
+    private float DiceSize;
+    //Dice center x coordinate
+    private float DiceXCenter;
+    //Dices starting y coordinates
+    //when there is 2 or 4 dices drawn
+    private float DiceYStartTwo;
+    private float DiceYStartFour;
+    //Dices x coordinates
+    private float DiceXStart;
+    private float DiceXEnd;
+    //Drawing rect for dice images
+    private RectF DiceRect;
+    //Paint for drawing dices
+    private Paint DicePaint;
 
     public OnBoardImage(Context context) {
         super(context);
@@ -113,6 +133,10 @@ public class OnBoardImage extends android.support.v7.widget.AppCompatImageView {
         EndBoardImage= BitmapFactory.decodeResource(getResources(), R.drawable.square);
         //create rect that will be used for drawing triangles for next moves
         NextTriangleRect=new RectF();
+        //Create rect that will be used for drawing dices
+        DiceRect=new RectF();
+        //Create paint for drawing dices
+        DicePaint=new Paint();
     }
 
     //Method called when size of board changes (is called on creation of view)
@@ -141,6 +165,16 @@ public class OnBoardImage extends android.support.v7.widget.AppCompatImageView {
         EndBoardMidX=Width+(PaddingXRight*3/4);
         //Calculate height of end chips
         EndChipHeight=TriangleHeight/15;
+        //Calculate dice size and padding between dices
+        DiceSize=XBaseRight*0.8F;
+        DicePadding=DiceSize*0.4F;
+        //Calculate x coordinates for dices
+        DiceXCenter=RealWidth-XBaseRight/2F;
+        DiceXStart=DiceXCenter-DiceSize/2F;
+        DiceXEnd=DiceXCenter+DiceSize/2F;
+        //Calculate y coordinates for dices
+        DiceYStartTwo=YBaseTop+((Height-YBaseTop)/2F)-(DicePadding/2F)-DiceSize;
+        DiceYStartFour=YBaseTop+((Height-YBaseTop)/2F)-((DicePadding*3/2F)/2F)-DiceSize*2F;
     }
 
     //Method for setting chip matrix
@@ -215,20 +249,53 @@ public class OnBoardImage extends android.support.v7.widget.AppCompatImageView {
         return false;
     }
 
+    //Method for setting dices
+    public void setDices(DiceThrow[] DiceThrows){
+        synchronized (DiceImages){
+            for(int i=0; i<DiceThrows.length; i++){
+                //if value 0 then its not a throw and image should be null
+                if(DiceThrows[i].getThrowNumber()==0){
+                    DiceImages[i]=null;
+                    continue;
+                }
+                //set up dice image name and find it in resources
+                String diceImageName="dice"+DiceThrows[i].getThrowNumber();
+                if(DiceThrows[i].getAlreadyUsed()==1){
+                    diceImageName+="d";
+                }
+                Context context=getContext();
+                int resId= context.getResources().getIdentifier(diceImageName,
+                        "drawable", context.getPackageName());
+                DiceImages[i]=BitmapFactory.decodeResource(getResources(), resId);
+
+            }
+        }
+    }
+
     //Method for drawing on canvas
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-
-       Paint paint =new Paint();
-        paint.setStrokeWidth(7);
-        float tempX=XBaseLeft;
-        tempX=100;
-
-
-        canvas.drawLine(tempX, Height, tempX+100, Height, paint);
-
-
+        //Dices part
+        synchronized (DiceImages) {
+            //set y coordinate for drawing dices (draw 4 or draw 2)
+            float yDice;
+            if (DiceImages[2] == null || DiceImages[3] == null) {
+                //drawing 2
+                yDice = DiceYStartTwo;
+            } else {
+                //drawing 4
+                yDice = DiceYStartFour;
+            }
+            //Draw dices
+            for (int i = 0; i < DiceImages.length; i++) {
+                if (DiceImages[i] != null) {
+                    DiceRect.set(DiceXStart, yDice, DiceXEnd, yDice + DiceSize);
+                    canvas.drawBitmap(DiceImages[i], null, DiceRect, DicePaint);
+                    yDice += DiceSize + DicePadding;
+                }
+            }
+        }
         //Set starting coordinates to first triangles middle line
         float x=XBaseLeft+PaddingXLeft/2F;
         float y=YBaseTop;
