@@ -151,4 +151,23 @@ public class GameLogic {
         }
     }
 
+    public DiceThrow[] rollDices(){
+        DiceThrow[] retDices=new DiceThrow[4];
+        int rollOne=(int)(Math.random()*6)+1;
+        int rollTwo=(int)(Math.random()*6)+1;
+        retDices[0]=new DiceThrow(rollOne);
+        retDices[1]=new DiceThrow(rollTwo);
+        if(rollOne==rollTwo){
+            retDices[2]=new DiceThrow(rollOne);
+            retDices[3]=new DiceThrow(rollOne);
+        }
+        else{
+            retDices[2]=new DiceThrow(0);
+            retDices[3]=new DiceThrow(0);
+            retDices[2].setAlreadyUsed(1);
+            retDices[3].setAlreadyUsed(1);
+        }
+        return retDices;
+    }
+
 }

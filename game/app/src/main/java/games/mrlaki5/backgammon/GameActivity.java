@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -36,10 +37,13 @@ public class GameActivity extends AppCompatActivity {
 
     private SensorManager sensorManager;
     Sensor sensor;
-    private float DiceXCurr;
-    private float DiceYCurr;
-    private float DiceZCurr;
-    private float DiceXYZInit;
+
+    private long lastUpdate=0;
+    private float last_x=0;
+    private float last_y=0;
+    private float last_z=0;
+    private static final int SHAKE_THRESHOLD = 100;
+    private int shakeStarted=0;
 
     private View.OnTouchListener BoardListener= new View.OnTouchListener() {
 
@@ -165,14 +169,33 @@ public class GameActivity extends AppCompatActivity {
         public void onSensorChanged(SensorEvent event) {
             switch(event.sensor.getType()){
                 case Sensor.TYPE_ACCELEROMETER:
-                    if(DiceXYZInit==0){
-                        DiceXCurr=event.values[0];
-                        DiceYCurr=event.values[1];
-                        DiceZCurr=event.values[2];
-                        DiceXYZInit=1;
-                    }
-                    else{
+                    long curTime = System.currentTimeMillis();
+                    // only allow one update every 100ms.
+                    if ((curTime - lastUpdate) > 100) {
+                        long diffTime = (curTime - lastUpdate);
+                        lastUpdate = curTime;
 
+                        float x = event.values[0];
+                        float y = event.values[1];
+                        float z = event.values[2];
+
+                        float speed = Math.abs(x+y+z - last_x - last_y - last_z) / diffTime * 10000;
+
+                        if (speed > SHAKE_THRESHOLD) {
+                            shakeStarted=1;
+                            android.widget.Toast.makeText(GameActivity.this, "shake detected w/ speed: " + speed, Toast.LENGTH_SHORT).show();
+                        }
+                        else{
+                            if(shakeStarted==1){
+                                shakeStarted=0;
+                                diceThrows=gameLogic.rollDices();
+                                BoardImage.setDices(diceThrows);
+                                BoardImage.invalidate();
+                            }
+                        }
+                        last_x = x;
+                        last_y = y;
+                        last_z = z;
                     }
                     break;
             }
