@@ -1,6 +1,7 @@
 package games.mrlaki5.backgammon;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -43,7 +44,8 @@ public class GameActivity extends AppCompatActivity {
     private float last_x=0;
     private float last_y=0;
     private float last_z=0;
-    private static final int SHAKE_THRESHOLD = 100;
+    private int shake_treshold = 100;
+    private int sample_time;
     private int shakeStarted=0;
 
     private View.OnTouchListener BoardListener= new View.OnTouchListener() {
@@ -172,7 +174,7 @@ public class GameActivity extends AppCompatActivity {
                 case Sensor.TYPE_ACCELEROMETER:
                     long curTime = System.currentTimeMillis();
                     // only allow one update every 100ms.
-                    if ((curTime - lastUpdate) > 100) {
+                    if ((curTime - lastUpdate) > sample_time) {
                         long diffTime = (curTime - lastUpdate);
                         lastUpdate = curTime;
 
@@ -182,7 +184,7 @@ public class GameActivity extends AppCompatActivity {
 
                         float speed = Math.abs(x+y+z - last_x - last_y - last_z) / diffTime * 10000;
 
-                        if (speed > SHAKE_THRESHOLD) {
+                        if (speed > shake_treshold) {
                             shakeStarted=1;
                             android.widget.Toast.makeText(GameActivity.this, "shake detected w/ speed: " + speed, Toast.LENGTH_SHORT).show();
                         }
@@ -216,6 +218,10 @@ public class GameActivity extends AppCompatActivity {
         setContentView(R.layout.activity_game);
 
         gameLogic = new GameLogic();
+
+        SharedPreferences preferences = getSharedPreferences("Settings", 0);
+        shake_treshold=preferences.getInt("sensor_sensibility", 400);
+        sample_time=preferences.getInt("sample_time", 100);
 
         for(int i=0; i<diceThrows.length; i++){
             diceThrows[i]=new DiceThrow(0);
