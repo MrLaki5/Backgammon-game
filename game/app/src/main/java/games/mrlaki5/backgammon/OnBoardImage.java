@@ -153,8 +153,8 @@ public class OnBoardImage extends android.support.v7.widget.AppCompatImageView {
         RealWidth=w;
         //Width of middle wood border is 10% of board border
         //find width of left and right size of board
-        LeftX=(Width-YBaseTop)*0.4535f;
-        RightX=(Width-YBaseTop)*0.564f;
+        LeftX=(Width-YBaseTop)*0.4565f;
+        RightX=(Width-YBaseTop)*0.566f;
         //There is 12 triangles on left and right side, and 6 of them coun in width
         //Count width of left side and right side triangles
         PaddingXLeft=LeftX/6;
@@ -399,7 +399,12 @@ public class OnBoardImage extends android.support.v7.widget.AppCompatImageView {
                         //go through all chips on triangle and draw them
                         for (int j = 0; j < ChipMatrix[i].getNumberOfChips(); j++) {
                             //set up coordinates for drawing current chip
-                            ChipRect.set(xChipStart, yChipStart, xChipEnd, yChipEnd);
+                            if(i<12 || i==24){
+                                ChipRect.set(xChipStart, yChipStart, xChipEnd, yChipEnd);
+                            }
+                            else{
+                                ChipRect.set(xChipStart, yChipEnd , xChipEnd, yChipStart);
+                            }
                             if(!drawEndBoard) {
                                 //draw chip
                                 canvas.drawOval(ChipRect, localPaint);

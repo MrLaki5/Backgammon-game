@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 import java.util.List;
@@ -210,6 +211,8 @@ public class GameActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_game);
 
         gameLogic = new GameLogic();
@@ -260,9 +263,9 @@ public class GameActivity extends AppCompatActivity {
         BoardFields[23].setNumberOfChips(2);
         BoardFields[23].setPlayer(2);
 
-
+/*
         //TEST PART
-        /*
+
         BoardFields[24].setNumberOfChips(1);
         BoardFields[24].setPlayer(1);
 
@@ -276,9 +279,9 @@ public class GameActivity extends AppCompatActivity {
         BoardFields[27].setPlayer(1);
 
         int []pomNiz=new int[28];
-        //pomNiz[26]=1;
-        pomNiz[27]=1;*/
-
+        pomNiz[26]=1;
+        pomNiz[27]=1;
+*/
 
         BoardImage=((OnBoardImage)findViewById(R.id.boardImage) );
         BoardImage.setChipMatrix(BoardFields);
