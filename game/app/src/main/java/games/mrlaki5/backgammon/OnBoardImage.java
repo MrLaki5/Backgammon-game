@@ -399,7 +399,7 @@ public class OnBoardImage extends android.support.v7.widget.AppCompatImageView {
                         //go through all chips on triangle and draw them
                         for (int j = 0; j < ChipMatrix[i].getNumberOfChips(); j++) {
                             //set up coordinates for drawing current chip
-                            if(i<12 || i==24){
+                            if(i<12 || i==24 || i==26){
                                 ChipRect.set(xChipStart, yChipStart, xChipEnd, yChipEnd);
                             }
                             else{

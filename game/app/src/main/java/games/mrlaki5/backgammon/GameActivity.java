@@ -269,9 +269,9 @@ public class GameActivity extends AppCompatActivity {
         BoardFields[23].setNumberOfChips(2);
         BoardFields[23].setPlayer(2);
 
-/*
-        //TEST PART
 
+        //TEST PART
+/*
         BoardFields[24].setNumberOfChips(1);
         BoardFields[24].setPlayer(1);
 

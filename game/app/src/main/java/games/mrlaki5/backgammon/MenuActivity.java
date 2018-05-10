@@ -19,11 +19,11 @@ public class MenuActivity extends AppCompatActivity {
         SharedPreferences preferences = getSharedPreferences("Settings", 0);
         if(!preferences.contains("sensor_sensibility")){
             SharedPreferences.Editor editor=preferences.edit();
-            editor.putInt("sensor_sensibility", 400);
-            editor.putInt("sample_time", 100);
+            editor.putInt("sensor_sensibility", 700);
+            editor.putInt("sample_time", 500);
             editor.putInt("sound", 80);
-            editor.putInt("defSensor_sensibility", 400);
-            editor.putInt("defSample_time", 100);
+            editor.putInt("defSensor_sensibility", 700);
+            editor.putInt("defSample_time", 500);
             editor.putInt("defSound", 80);
             editor.commit();
         }
