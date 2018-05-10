@@ -3,6 +3,7 @@ package games.mrlaki5.backgammon;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.view.WindowManager;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -14,6 +15,10 @@ public class SettingsActivity extends AppCompatActivity {
     private int SoundValue=0;
     private SharedPreferences preferences;
     private SharedPreferences.Editor editor;
+
+    private SeekBar shakeTresholdSlider;
+    private SeekBar timeSampleSlider;
+    private SeekBar soundSlider;
 
     private TextView ShakeSensibilityTextView;
     private TextView TimeSampleTextView;
@@ -105,16 +110,39 @@ public class SettingsActivity extends AppCompatActivity {
         SoundTextView=findViewById(R.id.textView3);
         SoundTextView.setText("Sound: " + SoundValue + "%");
 
-        SeekBar seekBar = findViewById(R.id.seekBar);
-        seekBar.setOnSeekBarChangeListener(shakeSensibilityListener);
-        seekBar.setProgress(ShakeSensibilityValue);
+        shakeTresholdSlider = findViewById(R.id.seekBar);
+        shakeTresholdSlider.setOnSeekBarChangeListener(shakeSensibilityListener);
+        shakeTresholdSlider.setProgress(ShakeSensibilityValue);
 
-        SeekBar seekBar2 = findViewById(R.id.seekBar2);
-        seekBar2.setOnSeekBarChangeListener(timeSampleListener);
-        seekBar2.setProgress(TimeSampleValue);
+        timeSampleSlider = findViewById(R.id.seekBar2);
+        timeSampleSlider.setOnSeekBarChangeListener(timeSampleListener);
+        timeSampleSlider.setProgress(TimeSampleValue);
 
-        SeekBar seekBar3 = findViewById(R.id.seekBar3);
-        seekBar3.setOnSeekBarChangeListener(soundListener);
-        seekBar3.setProgress(SoundValue);
+        soundSlider = findViewById(R.id.seekBar3);
+        soundSlider.setOnSeekBarChangeListener(soundListener);
+        soundSlider.setProgress(SoundValue);
+    }
+
+    public void restoreDef(View view) {
+        int defTreshold=preferences.getInt("defSensor_sensibility", 400);
+        int defTime=preferences.getInt("defSample_time", 100);
+        int defSound=preferences.getInt("defSound", 80);
+
+        editor.putInt("sensor_sensibility", defTreshold);
+        editor.putInt("sample_time", defTime);
+        editor.putInt("sound", defSound);
+        editor.commit();
+
+        ShakeSensibilityValue=defTreshold;
+        TimeSampleValue=defTime;
+        SoundValue=defSound;
+
+        ShakeSensibilityTextView.setText("Shake threshold: " + ShakeSensibilityValue);
+        TimeSampleTextView.setText("Shake time precision: " + TimeSampleValue +"ms");
+        SoundTextView.setText("Sound: " + SoundValue + "%");
+
+        shakeTresholdSlider.setProgress(ShakeSensibilityValue);
+        timeSampleSlider.setProgress(TimeSampleValue);
+        soundSlider.setProgress(SoundValue);
     }
 }

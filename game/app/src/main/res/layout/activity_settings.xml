@@ -76,6 +76,28 @@
                 android:max="100"
                 android:progress="1"/>
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="casual"
+                android:textColor="#d9fddf"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:id="@+id/textView4"/>
+
+            <Button
+                android:onClick="restoreDef"
+                android:id="@+id/restore"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:fontFamily="casual"
+                android:text="Reset"
+                android:textAllCaps="false"
+                android:textColor="#d9fddf"
+                android:textSize="20dp"
+                android:textStyle="bold"/>
+
         </LinearLayout>
         <LinearLayout
             android:layout_width="0dp"
