@@ -69,7 +69,8 @@
             android:textAllCaps="false"
             android:textColor="#d9fddf"
             android:textSize="25dp"
-            android:textStyle="bold"/>
+            android:textStyle="bold"
+            android:onClick="OpenSettings"/>
 
     </RelativeLayout>
 

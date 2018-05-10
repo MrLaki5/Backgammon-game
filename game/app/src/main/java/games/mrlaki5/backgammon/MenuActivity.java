@@ -21,13 +21,21 @@ public class MenuActivity extends AppCompatActivity {
             SharedPreferences.Editor editor=preferences.edit();
             editor.putInt("sensor_sensibility", 400);
             editor.putInt("sample_time", 100);
+            editor.putInt("sound", 80);
             editor.putInt("defSensor_sensibility", 400);
             editor.putInt("defSample_time", 100);
+            editor.putInt("defSound", 80);
+            editor.commit();
         }
     }
 
     public void startNewGame(View view) {
         Intent intent= new Intent(MenuActivity.this, GameActivity.class);
+        startActivity(intent);
+    }
+
+    public void OpenSettings(View view) {
+        Intent intent= new Intent(MenuActivity.this, SettingsActivity.class);
         startActivity(intent);
     }
 }
