@@ -10,6 +10,8 @@ import android.widget.TextView;
 
 public class SettingsActivity extends AppCompatActivity {
 
+    public static int MAX_SOUND_VOLUME=100;
+
     private int ShakeSensibilityValue=0;
     private int TimeSampleValue=0;
     private int SoundValue=0;

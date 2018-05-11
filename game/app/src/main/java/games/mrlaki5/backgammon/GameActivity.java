@@ -6,6 +6,7 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.media.MediaPlayer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MotionEvent;
@@ -20,6 +21,8 @@ import games.mrlaki5.backgammon.Beans.DiceThrow;
 import games.mrlaki5.backgammon.Beans.NextJump;
 
 public class GameActivity extends AppCompatActivity {
+
+    MediaPlayer mPlayer;
 
     private BoardFieldState[] BoardFields= new BoardFieldState[28];   // 2 red, 1 white 24-white, 25-red side board
                                                                       // 27-white endBoard, 26-red endBoard
@@ -47,6 +50,24 @@ public class GameActivity extends AppCompatActivity {
     private int shake_treshold = 100;
     private int sample_time;
     private int shakeStarted=0;
+
+    private int beforeShakeStability=0;
+    private int shakeStability=0;
+
+    private MediaPlayer.OnCompletionListener SongListener= new MediaPlayer.OnCompletionListener() {
+        @Override
+        public void onCompletion(MediaPlayer mp) {
+            if (shakeStarted==0){
+                mPlayer=MediaPlayer.create(getApplicationContext(), R.raw.dice_roll);
+                mPlayer.setOnCompletionListener(this);
+                mPlayer.start();
+            }
+            else{
+                mPlayer=MediaPlayer.create(getApplicationContext(), R.raw.dice_shake);
+                mPlayer.start();
+            }
+        }
+    };
 
     private View.OnTouchListener BoardListener= new View.OnTouchListener() {
 
@@ -184,14 +205,31 @@ public class GameActivity extends AppCompatActivity {
 
                         float speed = Math.abs(x+y+z - last_x - last_y - last_z) / diffTime * 10000;
 
+                        int tempFlag=(100/(sample_time))*3;
+
                         if (speed > shake_treshold) {
-                            shakeStarted=1;
-                            android.widget.Toast.makeText(GameActivity.this, "shake detected w/ speed: " + speed, Toast.LENGTH_SHORT).show();
+                            if(shakeStarted==0 && beforeShakeStability>=tempFlag) {
+                                mPlayer = MediaPlayer.create(getApplicationContext(), R.raw.dice_shake);
+                                mPlayer.setLooping(true);
+                                mPlayer.start();
+                                shakeStarted=1;
+                            }
+                            else{
+                                beforeShakeStability++;
+                            }
+                            shakeStability=0;
+                            //android.widget.Toast.makeText(GameActivity.this, "shake detected w/ speed: " + speed, Toast.LENGTH_SHORT).show();
                         }
                         else{
-                            if(shakeStarted==1){
-                                shakeStarted=0;
-                                diceThrows=gameLogic.rollDices();
+                            shakeStability++;
+                            beforeShakeStability=0;
+                            if(shakeStability>=tempFlag && shakeStarted==1) {
+                                shakeStarted = 0;
+                                beforeShakeStability=0;
+                                mPlayer.stop();
+                                mPlayer = MediaPlayer.create(getApplicationContext(), R.raw.dice_roll);
+                                mPlayer.start();
+                                diceThrows = gameLogic.rollDices();
                                 BoardImage.setDices(diceThrows);
                                 BoardImage.invalidate();
                             }
