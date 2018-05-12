@@ -6,10 +6,19 @@ public abstract class Player {
 
     private GameActivity CurrGame;
     private String PlayerName;
+    private int WaitCond;
 
     public Player(GameActivity currGame, String playerName) {
         CurrGame = currGame;
         PlayerName = playerName;
+    }
+
+    public int getWaitCond() {
+        return WaitCond;
+    }
+
+    public void setWaitCond(int waitCond) {
+        WaitCond = waitCond;
     }
 
     public String getPlayerName() {

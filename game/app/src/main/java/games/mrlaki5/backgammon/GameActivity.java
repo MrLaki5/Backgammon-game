@@ -76,6 +76,12 @@ public class GameActivity extends AppCompatActivity {
 
                         if(model.getBoardFields()[touchedNum].getPlayer()==model.getCurrentPlayer()) {
                             nextMoves = gameLogic.calculateMoves(model.getBoardFields(), model.getBoardFields()[touchedNum].getPlayer(), model.getDiceThrows());
+                            if(nextMoves.isEmpty()){
+                                synchronized (model.getCurrentObjectPlayer()){
+                                    model.getCurrentObjectPlayer().setWaitCond(0);
+                                    model.getCurrentObjectPlayer().notifyAll();
+                                }
+                            }
                             nextMoves1 = gameLogic.calculateNextMovesForSpecificField(nextMoves, touchedNum);
                             if (nextMoves1 !=null) {
                                 model.getBoardFields()[touchedNum].setNumberOfChips(model.getBoardFields()[touchedNum].getNumberOfChips()-1);
@@ -218,7 +224,6 @@ public class GameActivity extends AppCompatActivity {
                             beforeShakeStability=0;
                             if(shakeStability>=tempFlag && shakeStarted==1) {
                                 shakeStarted=2;
-                                beforeShakeStability=0;
                                 mPlayer.stop();
                                 mPlayer = MediaPlayer.create(getApplicationContext(), R.raw.dice_roll);
                                 mPlayer.start();
@@ -226,6 +231,7 @@ public class GameActivity extends AppCompatActivity {
                                 BoardImage.setDices(model.getDiceThrows());
                                 BoardImage.invalidate();
                                 synchronized (model.getCurrentObjectPlayer()){
+                                    model.getCurrentObjectPlayer().setWaitCond(0);
                                     model.getCurrentObjectPlayer().notifyAll();
                                 }
                             }
