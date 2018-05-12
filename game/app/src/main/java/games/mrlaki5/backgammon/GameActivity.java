@@ -49,25 +49,11 @@ public class GameActivity extends AppCompatActivity {
     private float last_z=0;
     private int shake_treshold = 100;
     private int sample_time;
+    private int dice_delay;
     private int shakeStarted=0;
 
     private int beforeShakeStability=0;
     private int shakeStability=0;
-
-    private MediaPlayer.OnCompletionListener SongListener= new MediaPlayer.OnCompletionListener() {
-        @Override
-        public void onCompletion(MediaPlayer mp) {
-            if (shakeStarted==0){
-                mPlayer=MediaPlayer.create(getApplicationContext(), R.raw.dice_roll);
-                mPlayer.setOnCompletionListener(this);
-                mPlayer.start();
-            }
-            else{
-                mPlayer=MediaPlayer.create(getApplicationContext(), R.raw.dice_shake);
-                mPlayer.start();
-            }
-        }
-    };
 
     private View.OnTouchListener BoardListener= new View.OnTouchListener() {
 
@@ -205,7 +191,7 @@ public class GameActivity extends AppCompatActivity {
 
                         float speed = Math.abs(x+y+z - last_x - last_y - last_z) / diffTime * 10000;
 
-                        int tempFlag=(100/(sample_time))*3;
+                        int tempFlag=dice_delay;//(100/(sample_time))*3;
 
                         if (speed > shake_treshold) {
                             if(shakeStarted==0 && beforeShakeStability>=tempFlag) {
@@ -248,6 +234,24 @@ public class GameActivity extends AppCompatActivity {
         }
     };
 
+    //CREATION OF LISTENERS
+
+    public void activateTouchListener(){
+        BoardImage.setOnTouchListener(BoardListener);
+    }
+
+    public void deactivateTouchListener(){
+        BoardImage.setOnTouchListener(null);
+    }
+
+    public void activateShakeListener(){
+        sensorManager.registerListener(DiceListener, sensor, SensorManager.SENSOR_DELAY_GAME);
+    }
+
+    public void deactivateShakeListener(){
+        sensorManager.unregisterListener(DiceListener);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -258,8 +262,9 @@ public class GameActivity extends AppCompatActivity {
         gameLogic = new GameLogic();
 
         SharedPreferences preferences = getSharedPreferences("Settings", 0);
-        shake_treshold=preferences.getInt("sensor_sensibility", 400);
-        sample_time=preferences.getInt("sample_time", 100);
+        shake_treshold=preferences.getInt("sensor_sensibility", SettingsActivity.DEF_DICE_TRAESHOLD);
+        sample_time=preferences.getInt("sample_time", SettingsActivity.DEF_TIME_SAMPLE);
+        dice_delay=preferences.getInt("delay", SettingsActivity.DEF_DICE_SHAKE_DELAY);
 
         for(int i=0; i<diceThrows.length; i++){
             diceThrows[i]=new DiceThrow(0);
@@ -334,6 +339,7 @@ public class GameActivity extends AppCompatActivity {
 
         BoardImage.invalidate();
         BoardImage.setOnTouchListener(BoardListener);
+        BoardImage.setOnTouchListener(null);
 
         sensorManager=(SensorManager) this.getSystemService(Context.SENSOR_SERVICE);
         sensor=sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
