@@ -217,6 +217,7 @@ public class GameActivity extends AppCompatActivity {
                             shakeStability++;
                             beforeShakeStability=0;
                             if(shakeStability>=tempFlag && shakeStarted==1) {
+                                shakeStarted=2;
                                 beforeShakeStability=0;
                                 mPlayer.stop();
                                 mPlayer = MediaPlayer.create(getApplicationContext(), R.raw.dice_roll);

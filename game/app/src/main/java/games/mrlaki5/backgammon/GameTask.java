@@ -18,13 +18,14 @@ public class GameTask extends AsyncTask<Void, Void, Void> {
             switch(model.getState()){
                 case 0:
                     model.getCurrentObjectPlayer().actionRoll();
+                    model.setState(1);
+                    model.cahngeCurrentPlayer();
                     try {
                         Thread.sleep(SLEEP_TIME);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-                    model.setState(1);
-                    model.cahngeCurrentPlayer();
+
                     break;
                 case 1:
                     model.getCurrentObjectPlayer().actionRoll();
