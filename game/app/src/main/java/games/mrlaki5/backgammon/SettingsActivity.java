@@ -10,6 +10,16 @@ import android.widget.TextView;
 
 public class SettingsActivity extends AppCompatActivity {
 
+    public static String KEY_SOUND_VOLUME="volume";
+    public static String KEY_DICE_TRESHOLD="sensor_sensibility";
+    public static String KEY_TIME_SAMPLE="sample_time";
+    public static String KEY_DICE_SHAKE_DELAY="delay";
+
+    public static String KEY_DEF_SOUND_VOLUME="DEFvolume";
+    public static String KEY_DEF_DICE_TRESHOLD="DEFsensor_sensibility";
+    public static String KEY_DEF_TIME_SAMPLE="DEFsample_time";
+    public static String KEY_DEF_DICE_SHAKE_DELAY="DEFdelay";
+
     public static int MAX_SOUND_VOLUME=100;
     public static int MAX_DICE_TRESHOLD=1000;
     public static int MAX_TIME_SAMPLE=200;
@@ -130,10 +140,10 @@ public class SettingsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_settings);
 
         preferences = getSharedPreferences("Settings", 0);
-        ShakeSensibilityValue=preferences.getInt("sensor_sensibility", DEF_DICE_TRAESHOLD);
-        TimeSampleValue=preferences.getInt("sample_time", DEF_TIME_SAMPLE);
-        SoundValue=preferences.getInt("sound", DEF_SOUND_VOLUME);
-        DiceDelayValue=preferences.getInt("delay", DEF_DICE_SHAKE_DELAY);
+        ShakeSensibilityValue=preferences.getInt(KEY_DICE_TRESHOLD, DEF_DICE_TRAESHOLD);
+        TimeSampleValue=preferences.getInt(KEY_TIME_SAMPLE, DEF_TIME_SAMPLE);
+        SoundValue=preferences.getInt(KEY_SOUND_VOLUME, DEF_SOUND_VOLUME);
+        DiceDelayValue=preferences.getInt(KEY_DICE_SHAKE_DELAY, DEF_DICE_SHAKE_DELAY);
         editor=preferences.edit();
 
         ShakeSensibilityTextView=findViewById(R.id.textView);
@@ -166,15 +176,15 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     public void restoreDef(View view) {
-        int defTreshold=preferences.getInt("defSensor_sensibility", DEF_DICE_TRAESHOLD);
-        int defTime=preferences.getInt("defSample_time", DEF_TIME_SAMPLE);
-        int defSound=preferences.getInt("defSound", DEF_SOUND_VOLUME);
-        int defDelay=preferences.getInt("defDelay", DEF_DICE_SHAKE_DELAY);
+        int defTreshold=preferences.getInt(KEY_DEF_DICE_TRESHOLD, DEF_DICE_TRAESHOLD);
+        int defTime=preferences.getInt(KEY_DEF_TIME_SAMPLE, DEF_TIME_SAMPLE);
+        int defSound=preferences.getInt(KEY_DEF_SOUND_VOLUME, DEF_SOUND_VOLUME);
+        int defDelay=preferences.getInt(KEY_DEF_DICE_SHAKE_DELAY, DEF_DICE_SHAKE_DELAY);
 
-        editor.putInt("sensor_sensibility", defTreshold);
-        editor.putInt("sample_time", defTime);
-        editor.putInt("sound", defSound);
-        editor.putInt("delay", defDelay);
+        editor.putInt(KEY_DICE_TRESHOLD, defTreshold);
+        editor.putInt(KEY_TIME_SAMPLE, defTime);
+        editor.putInt(KEY_SOUND_VOLUME, defSound);
+        editor.putInt(KEY_DICE_SHAKE_DELAY, defDelay);
         editor.commit();
 
         ShakeSensibilityValue=defTreshold;

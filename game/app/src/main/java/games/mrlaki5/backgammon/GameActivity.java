@@ -7,6 +7,7 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.media.MediaPlayer;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MotionEvent;
@@ -19,29 +20,29 @@ import java.util.List;
 import games.mrlaki5.backgammon.Beans.BoardFieldState;
 import games.mrlaki5.backgammon.Beans.DiceThrow;
 import games.mrlaki5.backgammon.Beans.NextJump;
+import games.mrlaki5.backgammon.Players.Bot;
+import games.mrlaki5.backgammon.Players.Human;
+import games.mrlaki5.backgammon.Players.Player;
 
 public class GameActivity extends AppCompatActivity {
 
     MediaPlayer mPlayer;
 
-    private BoardFieldState[] BoardFields= new BoardFieldState[28];   // 2 red, 1 white 24-white, 25-red side board
-                                                                      // 27-white endBoard, 26-red endBoard
-    private DiceThrow[] diceThrows=new DiceThrow[4];
-
     private GameLogic gameLogic;
     private OnBoardImage BoardImage;
+    private Model model;
+    private GameTask gameTask;
 
     private List<NextJump> nextMoves=null;
-    private int [] NextMoves=new int[28];
 
-    private int CurrentPlayer;
+
     private int MoveFieldSrc;
 
     private int CurrentFingerPointer=-1;
 
 
     private SensorManager sensorManager;
-    Sensor sensor;
+    private Sensor sensor;
 
     private long lastUpdate=0;
     private float last_x=0;
@@ -55,29 +56,35 @@ public class GameActivity extends AppCompatActivity {
     private int beforeShakeStability=0;
     private int shakeStability=0;
 
+
+
     private View.OnTouchListener BoardListener= new View.OnTouchListener() {
 
         @Override
         public boolean onTouch(View v, MotionEvent event) {
             float x_touch= event.getX();
             float y_touch= event.getY();
+
+            gameTask.cancel(true);
+
             switch(event.getActionMasked()) {
                 case MotionEvent.ACTION_DOWN:
                     int touchedNum=BoardImage.triangleTouched(x_touch,y_touch);
                     boolean isTouched=BoardImage.chipPTouched(touchedNum, x_touch, y_touch);
+                    int[] nextMoves1 = new int[28];
                     if(isTouched){
 
-                        if(BoardFields[touchedNum].getPlayer()==CurrentPlayer) {
-                            nextMoves = gameLogic.calculateMoves(BoardFields, BoardFields[touchedNum].getPlayer(), diceThrows);
-                            NextMoves = gameLogic.calculateNextMovesForSpecificField(nextMoves, touchedNum);
-                            if (NextMoves!=null) {
-                                BoardFields[touchedNum].setNumberOfChips(BoardFields[touchedNum].getNumberOfChips()-1);
-                                if(BoardFields[touchedNum].getNumberOfChips()==0) {
-                                    BoardFields[touchedNum].setPlayer(0);
+                        if(model.getBoardFields()[touchedNum].getPlayer()==model.getCurrentPlayer()) {
+                            nextMoves = gameLogic.calculateMoves(model.getBoardFields(), model.getBoardFields()[touchedNum].getPlayer(), model.getDiceThrows());
+                            nextMoves1 = gameLogic.calculateNextMovesForSpecificField(nextMoves, touchedNum);
+                            if (nextMoves1 !=null) {
+                                model.getBoardFields()[touchedNum].setNumberOfChips(model.getBoardFields()[touchedNum].getNumberOfChips()-1);
+                                if(model.getBoardFields()[touchedNum].getNumberOfChips()==0) {
+                                    model.getBoardFields()[touchedNum].setPlayer(0);
                                 }
-                                BoardImage.setNextMoveArray(NextMoves);
+                                BoardImage.setNextMoveArray(nextMoves1);
                                 MoveFieldSrc=touchedNum;
-                                BoardImage.setMoveChip(x_touch, y_touch, CurrentPlayer);
+                                BoardImage.setMoveChip(x_touch, y_touch, model.getCurrentPlayer());
                                 BoardImage.invalidate();
                                 CurrentFingerPointer=event.getPointerId(0);
                             }
@@ -127,43 +134,43 @@ public class GameActivity extends AppCompatActivity {
                                 }
                             }
                             if(throwNum==0){
-                                BoardFields[MoveFieldSrc].setNumberOfChips(BoardFields[MoveFieldSrc].getNumberOfChips()+1);
-                                if(BoardFields[MoveFieldSrc].getNumberOfChips()==1){
-                                    BoardFields[MoveFieldSrc].setPlayer(CurrentPlayer);
+                                model.getBoardFields()[MoveFieldSrc].setNumberOfChips(model.getBoardFields()[MoveFieldSrc].getNumberOfChips()+1);
+                                if(model.getBoardFields()[MoveFieldSrc].getNumberOfChips()==1){
+                                    model.getBoardFields()[MoveFieldSrc].setPlayer(model.getCurrentPlayer());
                                 }
                             }
                             else {
-                                for (DiceThrow tempThrow : diceThrows) {
+                                for (DiceThrow tempThrow : model.getDiceThrows()) {
                                     if (tempThrow.getThrowNumber() == throwNum && tempThrow.getAlreadyUsed() == 0) {
                                         tempThrow.setAlreadyUsed(1);
-                                        BoardImage.setDices(diceThrows);
+                                        BoardImage.setDices(model.getDiceThrows());
                                         break;
                                     }
                                 }
-                                int tmpPlayer=BoardFields[dstField].getPlayer();
-                                if(BoardFields[dstField].getNumberOfChips()==1 && tmpPlayer!=CurrentPlayer){
-                                    BoardFields[23+tmpPlayer].setNumberOfChips(BoardFields[23+tmpPlayer].getNumberOfChips()+1);
-                                    if(BoardFields[23+tmpPlayer].getNumberOfChips()==1){
-                                        BoardFields[23+tmpPlayer].setPlayer(tmpPlayer);
+                                int tmpPlayer=model.getBoardFields()[dstField].getPlayer();
+                                if(model.getBoardFields()[dstField].getNumberOfChips()==1 && tmpPlayer!= model.getCurrentPlayer()){
+                                    model.getBoardFields()[23+tmpPlayer].setNumberOfChips(model.getBoardFields()[23+tmpPlayer].getNumberOfChips()+1);
+                                    if(model.getBoardFields()[23+tmpPlayer].getNumberOfChips()==1){
+                                        model.getBoardFields()[23+tmpPlayer].setPlayer(tmpPlayer);
                                     }
                                 }
                                 else {
-                                    BoardFields[dstField].setNumberOfChips(BoardFields[dstField].getNumberOfChips() + 1);
+                                    model.getBoardFields()[dstField].setNumberOfChips(model.getBoardFields()[dstField].getNumberOfChips() + 1);
                                 }
-                                if(BoardFields[dstField].getNumberOfChips()==1){
-                                    BoardFields[dstField].setPlayer(CurrentPlayer);
+                                if(model.getBoardFields()[dstField].getNumberOfChips()==1){
+                                    model.getBoardFields()[dstField].setPlayer(model.getCurrentPlayer());
                                 }
                             }
 
                         }
                         else{
-                            BoardFields[MoveFieldSrc].setNumberOfChips(BoardFields[MoveFieldSrc].getNumberOfChips()+1);
-                            if(BoardFields[MoveFieldSrc].getNumberOfChips()==1){
-                                BoardFields[MoveFieldSrc].setPlayer(CurrentPlayer);
+                            model.getBoardFields()[MoveFieldSrc].setNumberOfChips(model.getBoardFields()[MoveFieldSrc].getNumberOfChips()+1);
+                            if(model.getBoardFields()[MoveFieldSrc].getNumberOfChips()==1){
+                                model.getBoardFields()[MoveFieldSrc].setPlayer(model.getCurrentPlayer());
                             }
                         }
-                        NextMoves = null;
-                        BoardImage.setNextMoveArray(NextMoves);
+                        nextMoves1 = null;
+                        BoardImage.setNextMoveArray(nextMoves1);
                         BoardImage.invalidate();
                     }
                     break;
@@ -210,14 +217,16 @@ public class GameActivity extends AppCompatActivity {
                             shakeStability++;
                             beforeShakeStability=0;
                             if(shakeStability>=tempFlag && shakeStarted==1) {
-                                shakeStarted = 0;
                                 beforeShakeStability=0;
                                 mPlayer.stop();
                                 mPlayer = MediaPlayer.create(getApplicationContext(), R.raw.dice_roll);
                                 mPlayer.start();
-                                diceThrows = gameLogic.rollDices();
-                                BoardImage.setDices(diceThrows);
+                                model.setDiceThrows(gameLogic.rollDices());
+                                BoardImage.setDices(model.getDiceThrows());
                                 BoardImage.invalidate();
+                                synchronized (model.getCurrentObjectPlayer()){
+                                    model.getCurrentObjectPlayer().notifyAll();
+                                }
                             }
                         }
                         last_x = x;
@@ -245,6 +254,12 @@ public class GameActivity extends AppCompatActivity {
     }
 
     public void activateShakeListener(){
+        shakeStarted=0;
+        beforeShakeStability=0;
+        lastUpdate=0;
+        last_x=0;
+        last_y=0;
+        last_z=0;
         sensorManager.registerListener(DiceListener, sensor, SensorManager.SENSOR_DELAY_GAME);
     }
 
@@ -259,60 +274,17 @@ public class GameActivity extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_game);
 
-        gameLogic = new GameLogic();
+        Bundle extras=getIntent().getExtras();
 
         SharedPreferences preferences = getSharedPreferences("Settings", 0);
-        shake_treshold=preferences.getInt("sensor_sensibility", SettingsActivity.DEF_DICE_TRAESHOLD);
-        sample_time=preferences.getInt("sample_time", SettingsActivity.DEF_TIME_SAMPLE);
-        dice_delay=preferences.getInt("delay", SettingsActivity.DEF_DICE_SHAKE_DELAY);
-
-        for(int i=0; i<diceThrows.length; i++){
-            diceThrows[i]=new DiceThrow(0);
-            diceThrows[i].setAlreadyUsed(1);
-        }
-
-        diceThrows[0].setThrowNumber(3);
-        diceThrows[0].setAlreadyUsed(0);
-        diceThrows[1].setThrowNumber(6);
-        diceThrows[1].setAlreadyUsed(0);
-        diceThrows[2].setThrowNumber(3);
-        diceThrows[2].setAlreadyUsed(0);
-        diceThrows[3].setThrowNumber(6);
-        diceThrows[3].setAlreadyUsed(0);
+        shake_treshold=preferences.getInt(SettingsActivity.KEY_DICE_TRESHOLD, SettingsActivity.DEF_DICE_TRAESHOLD);
+        sample_time=preferences.getInt(SettingsActivity.KEY_TIME_SAMPLE, SettingsActivity.DEF_TIME_SAMPLE);
+        dice_delay=preferences.getInt(SettingsActivity.KEY_DICE_SHAKE_DELAY, SettingsActivity.DEF_DICE_SHAKE_DELAY);
 
 
-        CurrentPlayer=2;
-
-        for(int i=0; i<BoardFields.length; i++){
-            BoardFields[i]=new BoardFieldState();
-        }
-
-        BoardFields[0].setNumberOfChips(5);
-        BoardFields[0].setPlayer(1);
-
-        BoardFields[11].setNumberOfChips(2);
-        BoardFields[11].setPlayer(1);
-
-        BoardFields[16].setNumberOfChips(3);
-        BoardFields[16].setPlayer(1);
-
-        BoardFields[18].setNumberOfChips(5);
-        BoardFields[18].setPlayer(1);
-
-
-        BoardFields[4].setNumberOfChips(3);
-        BoardFields[4].setPlayer(2);
-
-        BoardFields[6].setNumberOfChips(5);
-        BoardFields[6].setPlayer(2);
-
-        BoardFields[12].setNumberOfChips(5);
-        BoardFields[12].setPlayer(2);
-
-        BoardFields[23].setNumberOfChips(2);
-        BoardFields[23].setPlayer(2);
-
-
+        model=new Model(extras, this);
+        gameLogic = new GameLogic(model);
+        gameTask=new GameTask(model);
         //TEST PART
 /*
         BoardFields[24].setNumberOfChips(1);
@@ -333,16 +305,19 @@ public class GameActivity extends AppCompatActivity {
 */
 
         BoardImage=((OnBoardImage)findViewById(R.id.boardImage) );
-        BoardImage.setChipMatrix(BoardFields);
-        BoardImage.setDices(diceThrows);
+        BoardImage.setChipMatrix(model.getBoardFields());
+        BoardImage.setDices(model.getDiceThrows());
         //BoardImage.setNextMoveArray(pomNiz);
 
         BoardImage.invalidate();
         BoardImage.setOnTouchListener(BoardListener);
-        BoardImage.setOnTouchListener(null);
+        //BoardImage.setOnTouchListener(null);
 
         sensorManager=(SensorManager) this.getSystemService(Context.SENSOR_SERVICE);
         sensor=sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-        sensorManager.registerListener(DiceListener, sensor, SensorManager.SENSOR_DELAY_GAME);
+        //sensorManager.registerListener(DiceListener, sensor, SensorManager.SENSOR_DELAY_GAME);
+
+
+        gameTask.execute();
     }
 }

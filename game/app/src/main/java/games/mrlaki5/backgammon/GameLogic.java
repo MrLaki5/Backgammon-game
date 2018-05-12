@@ -9,6 +9,12 @@ import games.mrlaki5.backgammon.Beans.NextJump;
 
 public class GameLogic {
 
+    private Model model;
+
+    public GameLogic(Model model) {
+        this.model = model;
+    }
+
     public int calculateRealPosition(int ChipMatrixPos, int PlayerNum){
         if(PlayerNum==2){
             if(ChipMatrixPos==25){
@@ -155,9 +161,22 @@ public class GameLogic {
         DiceThrow[] retDices=new DiceThrow[4];
         int rollOne=(int)(Math.random()*6)+1;
         int rollTwo=(int)(Math.random()*6)+1;
-        retDices[0]=new DiceThrow(rollOne);
-        retDices[1]=new DiceThrow(rollTwo);
-        if(rollOne==rollTwo){
+        if(model.getState()<2){
+            if(model.getState()==0){
+                retDices[0] = new DiceThrow(rollOne);
+                retDices[1] = model.getDiceThrows()[1];
+            }
+            else{
+                retDices[0] = model.getDiceThrows()[0];
+                rollOne=retDices[0].getThrowNumber();
+                retDices[1] = new DiceThrow(rollTwo);
+            }
+        }
+        else {
+            retDices[0] = new DiceThrow(rollOne);
+            retDices[1] = new DiceThrow(rollTwo);
+        }
+        if(rollOne==rollTwo && model.getState()!=0){
             retDices[2]=new DiceThrow(rollOne);
             retDices[3]=new DiceThrow(rollOne);
         }
