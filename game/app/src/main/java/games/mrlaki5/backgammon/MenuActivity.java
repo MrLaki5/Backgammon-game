@@ -36,10 +36,13 @@ public class MenuActivity extends AppCompatActivity {
             editor.putInt(SettingsActivity.KEY_TIME_SAMPLE, SettingsActivity.DEF_TIME_SAMPLE);
             editor.putInt(SettingsActivity.KEY_SOUND_VOLUME, SettingsActivity.DEF_SOUND_VOLUME);
             editor.putInt(SettingsActivity.KEY_DICE_SHAKE_DELAY, SettingsActivity.DEF_DICE_SHAKE_DELAY);
+            editor.putInt(SettingsActivity.KEY_TIME_BETWEEN_TURNS, SettingsActivity.DEF_TIME_BETWEEN_TURNS);
+
             editor.putInt(SettingsActivity.KEY_DEF_DICE_TRESHOLD, SettingsActivity.DEF_DICE_TRAESHOLD);
             editor.putInt(SettingsActivity.KEY_DEF_TIME_SAMPLE, SettingsActivity.DEF_TIME_SAMPLE);
             editor.putInt(SettingsActivity.KEY_DEF_SOUND_VOLUME, SettingsActivity.DEF_SOUND_VOLUME);
             editor.putInt(SettingsActivity.KEY_DEF_DICE_SHAKE_DELAY, SettingsActivity.DEF_DICE_SHAKE_DELAY);
+            editor.putInt(SettingsActivity.KEY_DEF_TIME_BETWEEN_TURNS, SettingsActivity.DEF_TIME_BETWEEN_TURNS);
             editor.commit();
         }
     }

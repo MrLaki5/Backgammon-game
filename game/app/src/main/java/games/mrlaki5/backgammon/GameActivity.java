@@ -220,7 +220,6 @@ public class GameActivity extends AppCompatActivity {
                                 beforeShakeStability++;
                             }
                             shakeStability=0;
-                            //android.widget.Toast.makeText(GameActivity.this, "shake detected w/ speed: " + speed, Toast.LENGTH_SHORT).show();
                         }
                         else{
                             shakeStability++;
@@ -292,43 +291,85 @@ public class GameActivity extends AppCompatActivity {
         shake_treshold=preferences.getInt(SettingsActivity.KEY_DICE_TRESHOLD, SettingsActivity.DEF_DICE_TRAESHOLD);
         sample_time=preferences.getInt(SettingsActivity.KEY_TIME_SAMPLE, SettingsActivity.DEF_TIME_SAMPLE);
         dice_delay=preferences.getInt(SettingsActivity.KEY_DICE_SHAKE_DELAY, SettingsActivity.DEF_DICE_SHAKE_DELAY);
+        int timeBTUrns=preferences.getInt(SettingsActivity.KEY_TIME_BETWEEN_TURNS, SettingsActivity.DEF_TIME_BETWEEN_TURNS);
 
         BoardImage=((OnBoardImage)findViewById(R.id.boardImage) );
         model=new Model(extras, this);
         gameLogic = new GameLogic(model);
-        gameTask=new GameTask(model, gameLogic, BoardImage);
-        //TEST PART
-/*
-        BoardFields[24].setNumberOfChips(1);
-        BoardFields[24].setPlayer(1);
+        gameTask=new GameTask(model, gameLogic, BoardImage, timeBTUrns*1000);
 
-        BoardFields[25].setNumberOfChips(1);
-        BoardFields[25].setPlayer(2);
-
-        BoardFields[26].setNumberOfChips(3);
-        BoardFields[26].setPlayer(2);
-
-        BoardFields[27].setNumberOfChips(10);
-        BoardFields[27].setPlayer(1);
-
-        int []pomNiz=new int[28];
-        pomNiz[26]=1;
-        pomNiz[27]=1;
-*/
 
         BoardImage.setChipMatrix(model.getBoardFields());
         BoardImage.setDices(model.getDiceThrows());
-        //BoardImage.setNextMoveArray(pomNiz);
 
         BoardImage.invalidate();
         BoardImage.setOnTouchListener(BoardListener);
-        //BoardImage.setOnTouchListener(null);
 
         sensorManager=(SensorManager) this.getSystemService(Context.SENSOR_SERVICE);
         sensor=sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-        //sensorManager.registerListener(DiceListener, sensor, SensorManager.SENSOR_DELAY_GAME);
-
 
         gameTask.execute();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        leaveMethod();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        //leaveMethod();
+    }
+
+    public void leaveMethod(){
+        if(gameTask!=null){
+            gameTask.setWorkFlag(0);
+
+            synchronized (model.getCurrentObjectPlayer()) {
+                model.getCurrentObjectPlayer().setWaitCond(0);
+                model.getCurrentObjectPlayer().notifyAll();
+            }
+            //gameTask.cancel(true);
+            if(mPlayer!=null){
+                mPlayer.stop();
+                mPlayer.reset();
+                mPlayer.release();
+            }
+            sensorManager.unregisterListener(DiceListener);
+        }
+    }
+
+    public GameLogic getGameLogic() {
+        return gameLogic;
+    }
+
+    public void setGameLogic(GameLogic gameLogic) {
+        this.gameLogic = gameLogic;
+    }
+
+    public OnBoardImage getBoardImage() {
+        return BoardImage;
+    }
+
+    public void setBoardImage(OnBoardImage boardImage) {
+        BoardImage = boardImage;
+    }
+
+    public Model getModel() {
+        return model;
+    }
+
+    public void setModel(Model model) {
+        this.model = model;
+    }
+
+    public MediaPlayer getmPlayer() {
+        return mPlayer;
+    }
+
+    public void setmPlayer(MediaPlayer mPlayer) {
+        this.mPlayer = mPlayer;
     }
 }

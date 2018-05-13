@@ -103,13 +103,13 @@ public class Model {
                 Players[0]=new Human(activity, p1Name);
             }
             else{
-                Players[0]=new Bot(activity, p1Name);
+                Players[0]=new Bot(activity, p1Name, this);
             }
             if("Player".equals(extras.getString(MenuActivity.EXTRA_PLAYER2_KIND))){
                 Players[1]=new Human(activity, p2Name);
             }
             else{
-                Players[1]=new Bot(activity, p2Name);
+                Players[1]=new Bot(activity, p2Name, this);
             }
         }
 
