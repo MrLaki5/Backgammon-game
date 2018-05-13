@@ -293,10 +293,10 @@ public class GameActivity extends AppCompatActivity {
         sample_time=preferences.getInt(SettingsActivity.KEY_TIME_SAMPLE, SettingsActivity.DEF_TIME_SAMPLE);
         dice_delay=preferences.getInt(SettingsActivity.KEY_DICE_SHAKE_DELAY, SettingsActivity.DEF_DICE_SHAKE_DELAY);
 
-
+        BoardImage=((OnBoardImage)findViewById(R.id.boardImage) );
         model=new Model(extras, this);
         gameLogic = new GameLogic(model);
-        gameTask=new GameTask(model, gameLogic);
+        gameTask=new GameTask(model, gameLogic, BoardImage);
         //TEST PART
 /*
         BoardFields[24].setNumberOfChips(1);
@@ -316,7 +316,6 @@ public class GameActivity extends AppCompatActivity {
         pomNiz[27]=1;
 */
 
-        BoardImage=((OnBoardImage)findViewById(R.id.boardImage) );
         BoardImage.setChipMatrix(model.getBoardFields());
         BoardImage.setDices(model.getDiceThrows());
         //BoardImage.setNextMoveArray(pomNiz);

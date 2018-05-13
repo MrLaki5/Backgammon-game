@@ -4,15 +4,23 @@ import android.os.AsyncTask;
 
 public class GameTask extends AsyncTask<Void, Void, Void> {
 
-    public static long SLEEP_TIME=4000;
+    public static long SLEEP_TIME=0001;
     private int WorkFlag=1;
 
     private Model model;
     private GameLogic gameLogic;
+    private OnBoardImage onBoardImage;
 
-    public GameTask(Model model, GameLogic gamLogic){
+    public GameTask(Model model, GameLogic gamLogic, OnBoardImage onBoardImage){
         this.model=model;
         this.gameLogic=gamLogic;
+        this.onBoardImage=onBoardImage;
+    }
+
+    protected void writeMessage(String Text){
+        onBoardImage.setMessage(model.getCurrentObjectPlayer().getPlayerName() +
+                ", " +Text, model.getCurrentPlayer());
+        onBoardImage.postInvalidate();
     }
 
     @Override
@@ -20,6 +28,7 @@ public class GameTask extends AsyncTask<Void, Void, Void> {
         while(WorkFlag==1){
             switch(model.getState()){
                 case 0:
+                    writeMessage("roll dice");
                     model.getCurrentObjectPlayer().actionRoll();
                     model.setState(1);
                     model.cahngeCurrentPlayer();
@@ -31,8 +40,10 @@ public class GameTask extends AsyncTask<Void, Void, Void> {
 
                     break;
                 case 1:
+                    writeMessage("roll dice");
                     model.getCurrentObjectPlayer().actionRoll();
-                    if(model.getDiceThrows()[0].getThrowNumber()>=model.getDiceThrows()[1].getThrowNumber()){
+                    if(model.getDiceThrows()[0].getThrowNumber()>=
+                            model.getDiceThrows()[1].getThrowNumber()){
                         model.setCurrentPlayer(1);
                     }
                     else{
@@ -46,8 +57,10 @@ public class GameTask extends AsyncTask<Void, Void, Void> {
                     }
                     break;
                 case 2:
-                    model.setNextMoves(gameLogic.calculateMoves(model.getBoardFields(), model.getCurrentPlayer(), model.getDiceThrows()));
+                    model.setNextMoves(gameLogic.calculateMoves(model.getBoardFields(),
+                            model.getCurrentPlayer(), model.getDiceThrows()));
                     if(!model.getNextMoves().isEmpty()) {
+                        writeMessage("move chips");
                         model.getCurrentObjectPlayer().actionMove();
                     }
                     model.cahngeCurrentPlayer();
@@ -59,11 +72,18 @@ public class GameTask extends AsyncTask<Void, Void, Void> {
                     }
                     break;
                 case 3:
+                    writeMessage("roll dices");
                     model.getCurrentObjectPlayer().actionRoll();
                     model.setState(2);
                     break;
             }
         }
         return null;
+    }
+
+    @Override
+    protected void onProgressUpdate(Void... values) {
+        super.onProgressUpdate(values);
+        onBoardImage.invalidate();
     }
 }
