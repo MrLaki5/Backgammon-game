@@ -2,8 +2,11 @@ package games.mrlaki5.backgammon;
 
 import android.os.Bundle;
 
+import java.util.List;
+
 import games.mrlaki5.backgammon.Beans.BoardFieldState;
 import games.mrlaki5.backgammon.Beans.DiceThrow;
+import games.mrlaki5.backgammon.Beans.NextJump;
 import games.mrlaki5.backgammon.Players.Bot;
 import games.mrlaki5.backgammon.Players.Human;
 import games.mrlaki5.backgammon.Players.Player;
@@ -12,9 +15,11 @@ public class Model {
 
     private BoardFieldState[] BoardFields= new BoardFieldState[28];   // 2 red, 1 white 24-white, 25-red side board
                                                                       // 27-white endBoard, 26-red endBoard
-    private DiceThrow[] diceThrows=new DiceThrow[4];
+    private DiceThrow[] DiceThrows=new DiceThrow[4];
 
     private Player[] Players=new Player[2];
+
+    private List<NextJump> NextMoves=null;
 
     private int CurrentPlayer;
 
@@ -29,11 +34,11 @@ public class Model {
     }
 
     public DiceThrow[] getDiceThrows() {
-        return diceThrows;
+        return DiceThrows;
     }
 
     public void setDiceThrows(DiceThrow[] diceThrows) {
-        this.diceThrows = diceThrows;
+        this.DiceThrows = diceThrows;
     }
 
     public Player[] getPlayers() {
@@ -60,6 +65,14 @@ public class Model {
         State = state;
     }
 
+    public List<NextJump> getNextMoves() {
+        return NextMoves;
+    }
+
+    public void setNextMoves(List<NextJump> nextMoves) {
+        NextMoves = nextMoves;
+    }
+
     public Player getCurrentObjectPlayer(){
         return Players[CurrentPlayer-1];
     }
@@ -75,12 +88,12 @@ public class Model {
 
     public Model(Bundle extras, GameActivity activity){
 
-        for(int i=0; i<diceThrows.length; i++){
-            diceThrows[i]=new DiceThrow(0);
-            diceThrows[i].setAlreadyUsed(1);
+        for(int i=0; i<DiceThrows.length; i++){
+            DiceThrows[i]=new DiceThrow(0);
+            DiceThrows[i].setAlreadyUsed(1);
         }
-        diceThrows[0].setThrowNumber(1);
-        diceThrows[1].setThrowNumber(1);
+        DiceThrows[0].setThrowNumber(1);
+        DiceThrows[1].setThrowNumber(1);
 
         CurrentPlayer=1;
         if(extras!=null){

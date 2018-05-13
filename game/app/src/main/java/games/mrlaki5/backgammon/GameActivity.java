@@ -33,7 +33,7 @@ public class GameActivity extends AppCompatActivity {
     private Model model;
     private GameTask gameTask;
 
-    private List<NextJump> nextMoves=null;
+
 
 
     private int MoveFieldSrc;
@@ -71,24 +71,16 @@ public class GameActivity extends AppCompatActivity {
                 case MotionEvent.ACTION_DOWN:
                     int touchedNum=BoardImage.triangleTouched(x_touch,y_touch);
                     boolean isTouched=BoardImage.chipPTouched(touchedNum, x_touch, y_touch);
-                    int[] nextMoves1 = new int[28];
                     if(isTouched){
-
                         if(model.getBoardFields()[touchedNum].getPlayer()==model.getCurrentPlayer()) {
-                            nextMoves = gameLogic.calculateMoves(model.getBoardFields(), model.getBoardFields()[touchedNum].getPlayer(), model.getDiceThrows());
-                            if(nextMoves.isEmpty()){
-                                synchronized (model.getCurrentObjectPlayer()){
-                                    model.getCurrentObjectPlayer().setWaitCond(0);
-                                    model.getCurrentObjectPlayer().notifyAll();
-                                }
-                            }
-                            nextMoves1 = gameLogic.calculateNextMovesForSpecificField(nextMoves, touchedNum);
-                            if (nextMoves1 !=null) {
+                            int[] currNextMoves;
+                            currNextMoves = gameLogic.calculateNextMovesForSpecificField(model.getNextMoves(), touchedNum);
+                            if (currNextMoves !=null) {
                                 model.getBoardFields()[touchedNum].setNumberOfChips(model.getBoardFields()[touchedNum].getNumberOfChips()-1);
                                 if(model.getBoardFields()[touchedNum].getNumberOfChips()==0) {
                                     model.getBoardFields()[touchedNum].setPlayer(0);
                                 }
-                                BoardImage.setNextMoveArray(nextMoves1);
+                                BoardImage.setNextMoveArray(currNextMoves);
                                 MoveFieldSrc=touchedNum;
                                 BoardImage.setMoveChip(x_touch, y_touch, model.getCurrentPlayer());
                                 BoardImage.invalidate();
@@ -133,7 +125,7 @@ public class GameActivity extends AppCompatActivity {
                         int dstField = BoardImage.triangleTouched(x_touch,y_touch);
                         if(dstField!=-1) {
                             int throwNum = 0;
-                            for (NextJump tempJump: nextMoves) {
+                            for (NextJump tempJump: model.getNextMoves()) {
                                 if(tempJump.getSrcField()==MoveFieldSrc && tempJump.getDstField()==dstField){
                                     throwNum=tempJump.getJumpNumber();
                                     break;
@@ -166,6 +158,7 @@ public class GameActivity extends AppCompatActivity {
                                 if(model.getBoardFields()[dstField].getNumberOfChips()==1){
                                     model.getBoardFields()[dstField].setPlayer(model.getCurrentPlayer());
                                 }
+                                model.setNextMoves(gameLogic.calculateMoves(model.getBoardFields(), model.getCurrentPlayer(), model.getDiceThrows()));
                             }
 
                         }
@@ -175,8 +168,13 @@ public class GameActivity extends AppCompatActivity {
                                 model.getBoardFields()[MoveFieldSrc].setPlayer(model.getCurrentPlayer());
                             }
                         }
-                        nextMoves1 = null;
-                        BoardImage.setNextMoveArray(nextMoves1);
+                        BoardImage.setNextMoveArray(null);
+                        if(model.getNextMoves().isEmpty()){
+                            synchronized (model.getCurrentObjectPlayer()){
+                                model.getCurrentObjectPlayer().setWaitCond(0);
+                                model.getCurrentObjectPlayer().notifyAll();
+                            }
+                        }
                         BoardImage.invalidate();
                     }
                     break;
@@ -208,6 +206,11 @@ public class GameActivity extends AppCompatActivity {
 
                         if (speed > shake_treshold) {
                             if(shakeStarted==0 && beforeShakeStability>=tempFlag) {
+                                if(mPlayer!=null){
+                                    mPlayer.stop();
+                                    mPlayer.reset();
+                                    mPlayer.release();
+                                }
                                 mPlayer = MediaPlayer.create(getApplicationContext(), R.raw.dice_shake);
                                 mPlayer.setLooping(true);
                                 mPlayer.start();
@@ -225,6 +228,8 @@ public class GameActivity extends AppCompatActivity {
                             if(shakeStability>=tempFlag && shakeStarted==1) {
                                 shakeStarted=2;
                                 mPlayer.stop();
+                                mPlayer.reset();
+                                mPlayer.release();
                                 mPlayer = MediaPlayer.create(getApplicationContext(), R.raw.dice_roll);
                                 mPlayer.start();
                                 model.setDiceThrows(gameLogic.rollDices());
@@ -291,7 +296,7 @@ public class GameActivity extends AppCompatActivity {
 
         model=new Model(extras, this);
         gameLogic = new GameLogic(model);
-        gameTask=new GameTask(model);
+        gameTask=new GameTask(model, gameLogic);
         //TEST PART
 /*
         BoardFields[24].setNumberOfChips(1);

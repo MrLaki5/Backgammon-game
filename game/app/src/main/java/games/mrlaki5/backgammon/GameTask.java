@@ -8,9 +8,11 @@ public class GameTask extends AsyncTask<Void, Void, Void> {
     private int WorkFlag=1;
 
     private Model model;
+    private GameLogic gameLogic;
 
-    public GameTask(Model model){
+    public GameTask(Model model, GameLogic gamLogic){
         this.model=model;
+        this.gameLogic=gamLogic;
     }
 
     @Override
@@ -44,7 +46,10 @@ public class GameTask extends AsyncTask<Void, Void, Void> {
                     }
                     break;
                 case 2:
-                    model.getCurrentObjectPlayer().actionMove();
+                    model.setNextMoves(gameLogic.calculateMoves(model.getBoardFields(), model.getCurrentPlayer(), model.getDiceThrows()));
+                    if(!model.getNextMoves().isEmpty()) {
+                        model.getCurrentObjectPlayer().actionMove();
+                    }
                     model.cahngeCurrentPlayer();
                     model.setState(3);
                     try {
