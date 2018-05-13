@@ -7,9 +7,12 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
+import android.graphics.Typeface;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.widget.ImageView;
+
+import org.w3c.dom.Text;
 
 import games.mrlaki5.backgammon.Beans.BoardFieldState;
 import games.mrlaki5.backgammon.Beans.DiceThrow;
@@ -20,6 +23,8 @@ public class OnBoardImage extends android.support.v7.widget.AppCompatImageView {
     private BoardFieldState[] ChipMatrix;
     //Array with hints for next move (1-there is hint, 0- no hint), length:24
     private int[] NextMoveArray;
+    //String for current game state message
+    private String Message="Player1 roll dices";
 
     //Paint for red chips
     private Paint RedChipPaint;
@@ -96,6 +101,18 @@ public class OnBoardImage extends android.support.v7.widget.AppCompatImageView {
     //Paint for drawing dices
     private Paint DicePaint;
 
+    //Coordinates for text drawing
+    private float TextXCoordinate;
+    private float TextYCoordinate;
+    //rect for text figure drawing
+    private RectF TextFigureRect;
+    //Paint for text figure
+    private Paint TextFigurePaint;
+    //Paint for text
+    private Paint TextPaint;
+    //size of text
+    private float TextSize;
+
     public OnBoardImage(Context context) {
         super(context);
         initOnBoardImage();
@@ -137,6 +154,11 @@ public class OnBoardImage extends android.support.v7.widget.AppCompatImageView {
         DiceRect=new RectF();
         //Create paint for drawing dices
         DicePaint=new Paint();
+        //Create paint for text drawing
+        TextPaint=new Paint();
+        TextPaint.setColor(Color.rgb(212, 31, 38));
+        TextPaint.setShadowLayer(2.0F, 2.0F, 2.0F, Color.BLACK); //shadow on border part
+        TextPaint.setTypeface(Typeface.create("casual",Typeface.BOLD));
     }
 
     //Method called when size of board changes (is called on creation of view)
@@ -175,6 +197,12 @@ public class OnBoardImage extends android.support.v7.widget.AppCompatImageView {
         //Calculate y coordinates for dices
         DiceYStartTwo=YBaseTop+((Height-YBaseTop)/2F)-(DicePadding/2F)-DiceSize;
         DiceYStartFour=YBaseTop+((Height-YBaseTop)/2F)-((DicePadding*3/2F)/2F)-DiceSize*2F;
+        //Calculate coordinates for text drawing
+        TextXCoordinate=XBaseLeft;
+        TextYCoordinate=YBaseTop*0.55F;
+        //Calculate size of text
+        TextSize=YBaseTop*0.45F;
+        TextPaint.setTextSize(TextSize);
     }
 
     //Method for setting chip matrix
@@ -272,10 +300,27 @@ public class OnBoardImage extends android.support.v7.widget.AppCompatImageView {
         }
     }
 
+    //Method for setting up message and color of message (depending on player)
+    public void setMessage(String text, int PlayerNum){
+        synchronized (Message){
+            Message=text;
+            if(PlayerNum==1){
+                TextPaint.setColor(Color.WHITE);
+            }
+            else{
+                TextPaint.setColor(Color.rgb(212, 31, 38));
+            }
+        }
+    }
+
     //Method for drawing on canvas
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
+        //Text part
+        synchronized (Message) {
+            canvas.drawText(Message, TextXCoordinate, TextYCoordinate, TextPaint);
+        }
         //Dices part
         synchronized (DiceImages) {
             //set y coordinate for drawing dices (draw 4 or draw 2)
