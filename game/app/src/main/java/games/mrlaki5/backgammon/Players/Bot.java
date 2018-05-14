@@ -21,20 +21,23 @@ public class Bot extends Player {
     }
 
     @Override
-    public void actionMove() {
-        int nextJumpId=(int)(Math.random()*(model.getNextMoves().size()));
-        int dstField=model.getNextMoves().get(nextJumpId).getDstField();
-        int srcField=model.getNextMoves().get(nextJumpId).getSrcField();
-        int throwNum=model.getNextMoves().get(nextJumpId).getJumpNumber();
+    public synchronized void actionMove() {
         OnBoardImage BoardImage=super.getCurrGame().getBoardImage();
         GameLogic gameLogic=super.getCurrGame().getGameLogic();
-
+        super.setWaitCond(1);
         while(!model.getNextMoves().isEmpty()) {
             try {
-                Thread.sleep(BOT_THINK_TIME);
+                this.wait(BOT_THINK_TIME);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+            if (super.getWaitCond() == 0) {
+                return;
+            }
+            int nextJumpId=(int)(Math.random()*(model.getNextMoves().size()));
+            int dstField=model.getNextMoves().get(nextJumpId).getDstField();
+            int srcField=model.getNextMoves().get(nextJumpId).getSrcField();
+            int throwNum=model.getNextMoves().get(nextJumpId).getJumpNumber();
             model.getBoardFields()[srcField].setNumberOfChips(model.getBoardFields()[srcField].getNumberOfChips()-1);
             if(model.getBoardFields()[srcField].getNumberOfChips()==0) {
                 model.getBoardFields()[srcField].setPlayer(0);
@@ -63,27 +66,20 @@ public class Bot extends Player {
         }
     }
     @Override
-    public void actionRoll() {
-        MediaPlayer mPlayer=super.getCurrGame().getmPlayer();
-        if(mPlayer!=null){
-            mPlayer.stop();
-            mPlayer.reset();
-            mPlayer.release();
-        }
-        mPlayer = MediaPlayer.create(super.getCurrGame().getApplicationContext(), R.raw.dice_shake);
-        mPlayer.setLooping(true);
-        mPlayer.start();
-        model.setDiceThrows(super.getCurrGame().getGameLogic().rollDices());
+    public synchronized void actionRoll() {
+        super.setWaitCond(1);
+        super.getCurrGame().setMPlayer(1);
         try {
-            Thread.sleep(BOT_THINK_TIME);
+            this.wait(BOT_THINK_TIME);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        mPlayer.stop();
-        mPlayer.reset();
-        mPlayer.release();
-        mPlayer = MediaPlayer.create(super.getCurrGame().getApplicationContext(), R.raw.dice_roll);
-        mPlayer.start();
+        if (super.getWaitCond() == 0) {
+            return;
+        }
+        super.getCurrGame().setMPlayer(2);
+        model.setDiceThrows(super.getCurrGame().getGameLogic().rollDices());
+        super.getCurrGame().getBoardImage().setDices(model.getDiceThrows());
         super.getCurrGame().getBoardImage().postInvalidate();
     }
 }

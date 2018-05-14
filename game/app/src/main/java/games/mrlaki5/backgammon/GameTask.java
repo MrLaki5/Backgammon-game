@@ -6,6 +6,7 @@ public class GameTask extends AsyncTask<Void, Void, Void> {
 
     public long sleep_time;
     private int WorkFlag=1;
+    private int FinishedFlag=0;
 
     private Model model;
     private GameLogic gameLogic;
@@ -27,6 +28,14 @@ public class GameTask extends AsyncTask<Void, Void, Void> {
 
     public void setWorkFlag(int workFlag) {
         WorkFlag = workFlag;
+    }
+
+    public int getFinishedFlag() {
+        return FinishedFlag;
+    }
+
+    public void setFinishedFlag(int finishedFlag) {
+        FinishedFlag = finishedFlag;
     }
 
     private void writeMessage(String Text){
@@ -102,6 +111,7 @@ public class GameTask extends AsyncTask<Void, Void, Void> {
                     break;
             }
         }
+        FinishedFlag=1;
         return null;
     }
 }

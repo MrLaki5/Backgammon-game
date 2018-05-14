@@ -26,7 +26,10 @@ import games.mrlaki5.backgammon.Players.Player;
 
 public class GameActivity extends AppCompatActivity {
 
-    MediaPlayer mPlayer;
+
+
+    private MediaPlayer mPlayer;
+    private final String mPlayerSem="mPlayer";
 
     private GameLogic gameLogic;
     private OnBoardImage BoardImage;
@@ -206,14 +209,7 @@ public class GameActivity extends AppCompatActivity {
 
                         if (speed > shake_treshold) {
                             if(shakeStarted==0 && beforeShakeStability>=tempFlag) {
-                                if(mPlayer!=null){
-                                    mPlayer.stop();
-                                    mPlayer.reset();
-                                    mPlayer.release();
-                                }
-                                mPlayer = MediaPlayer.create(getApplicationContext(), R.raw.dice_shake);
-                                mPlayer.setLooping(true);
-                                mPlayer.start();
+                                setMPlayer(1);
                                 shakeStarted=1;
                             }
                             else{
@@ -226,11 +222,7 @@ public class GameActivity extends AppCompatActivity {
                             beforeShakeStability=0;
                             if(shakeStability>=tempFlag && shakeStarted==1) {
                                 shakeStarted=2;
-                                mPlayer.stop();
-                                mPlayer.reset();
-                                mPlayer.release();
-                                mPlayer = MediaPlayer.create(getApplicationContext(), R.raw.dice_roll);
-                                mPlayer.start();
+                                setMPlayer(2);
                                 model.setDiceThrows(gameLogic.rollDices());
                                 BoardImage.setDices(model.getDiceThrows());
                                 BoardImage.invalidate();
@@ -332,12 +324,11 @@ public class GameActivity extends AppCompatActivity {
                 model.getCurrentObjectPlayer().notifyAll();
             }
             //gameTask.cancel(true);
-            if(mPlayer!=null){
-                mPlayer.stop();
-                mPlayer.reset();
-                mPlayer.release();
-            }
+            clearMPlayer();
             sensorManager.unregisterListener(DiceListener);
+            while(gameTask.getFinishedFlag()!=1){
+
+            }
         }
     }
 
@@ -365,11 +356,35 @@ public class GameActivity extends AppCompatActivity {
         this.model = model;
     }
 
-    public MediaPlayer getmPlayer() {
-        return mPlayer;
+    public void clearMPlayer(){
+        synchronized (mPlayerSem){
+            if(mPlayer!=null){
+                mPlayer.stop();
+                mPlayer.reset();
+                mPlayer.release();
+                mPlayer=null;
+            }
+        }
     }
 
-    public void setmPlayer(MediaPlayer mPlayer) {
-        this.mPlayer = mPlayer;
+    public void setMPlayer(int SongNum){
+        synchronized (mPlayerSem){
+            if(mPlayer!=null){
+                mPlayer.stop();
+                mPlayer.reset();
+                mPlayer.release();
+                mPlayer=null;
+            }
+            if(SongNum==1){
+                mPlayer = MediaPlayer.create(getApplicationContext(), R.raw.dice_shake);
+                mPlayer.setLooping(true);
+                mPlayer.start();
+            }
+            else{
+                mPlayer = MediaPlayer.create(getApplicationContext(), R.raw.dice_roll);
+                mPlayer.start();
+            }
+        }
     }
+
 }
