@@ -111,7 +111,10 @@ public class GameTask extends AsyncTask<Void, Void, Void> {
                     break;
             }
         }
-        FinishedFlag=1;
+        synchronized (this) {
+            FinishedFlag = 1;
+            this.notifyAll();
+        }
         return null;
     }
 }

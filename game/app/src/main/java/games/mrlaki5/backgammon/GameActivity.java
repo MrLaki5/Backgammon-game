@@ -326,8 +326,14 @@ public class GameActivity extends AppCompatActivity {
             //gameTask.cancel(true);
             clearMPlayer();
             sensorManager.unregisterListener(DiceListener);
-            while(gameTask.getFinishedFlag()!=1){
-
+            synchronized (gameTask) {
+                while (gameTask.getFinishedFlag() != 1) {
+                    try {
+                        gameTask.wait();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
             }
         }
     }
