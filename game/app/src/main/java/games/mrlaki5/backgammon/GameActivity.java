@@ -33,6 +33,7 @@ public class GameActivity extends AppCompatActivity {
 
     private GameLogic gameLogic;
     private OnBoardImage BoardImage;
+    private ModelLoader modelLoader;
     private Model model;
     private GameTask gameTask;
 
@@ -286,7 +287,8 @@ public class GameActivity extends AppCompatActivity {
         int timeBTUrns=preferences.getInt(SettingsActivity.KEY_TIME_BETWEEN_TURNS, SettingsActivity.DEF_TIME_BETWEEN_TURNS);
 
         BoardImage=((OnBoardImage)findViewById(R.id.boardImage) );
-        model=new Model(extras, this);
+        modelLoader=new ModelLoader();
+        model=modelLoader.loadModel(extras, this);
         gameLogic = new GameLogic(model);
         gameTask=new GameTask(model, gameLogic, BoardImage, timeBTUrns*1000);
 
@@ -335,6 +337,7 @@ public class GameActivity extends AppCompatActivity {
                     }
                 }
             }
+            modelLoader.saveModel(model, this);
         }
     }
 

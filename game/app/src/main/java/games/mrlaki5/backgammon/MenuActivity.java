@@ -2,6 +2,7 @@ package games.mrlaki5.backgammon;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -12,12 +13,16 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
+import java.io.File;
+
 public class MenuActivity extends AppCompatActivity {
 
     public static String EXTRA_PLAYER1_NAME="p1name";
     public static String EXTRA_PLAYER2_NAME="p2name";
     public static String EXTRA_PLAYER1_KIND="p1kind";
     public static String EXTRA_PLAYER2_KIND="p2kind";
+
+    public static String GAME_CONTINUE_SAVE_FILE_NAME="gameSave";
 
     private AlertDialog myDialog;
     private View myView;
@@ -45,6 +50,8 @@ public class MenuActivity extends AppCompatActivity {
             editor.putInt(SettingsActivity.KEY_DEF_TIME_BETWEEN_TURNS, SettingsActivity.DEF_TIME_BETWEEN_TURNS);
             editor.commit();
         }
+
+        checkAndChangeButtonColor();
     }
 
     public void startNewGame(View view) {
@@ -108,4 +115,26 @@ public class MenuActivity extends AppCompatActivity {
             }
         }
     };
+
+    public boolean checkContinueGame(){
+        File file=new File(this.getFilesDir(), MenuActivity.GAME_CONTINUE_SAVE_FILE_NAME);
+        if(file.exists()){
+            return true;
+        }
+        return false;
+    }
+
+    public void checkAndChangeButtonColor(){
+        if(checkContinueGame()){
+            Button button=((Button) findViewById(R.id.continueGame));
+            button.setTextColor(Color.rgb(217, 253, 223));
+        }
+    }
+
+    public void continueGame(View view) {
+        if(checkContinueGame()){
+            Intent intent= new Intent(MenuActivity.this, GameActivity.class);
+            startActivity(intent);
+        }
+    }
 }

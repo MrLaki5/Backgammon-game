@@ -86,8 +86,9 @@ public class Model {
         }
     }
 
-    public Model(Bundle extras, GameActivity activity){
+    public Model(){}
 
+    public Model(Bundle extras, GameActivity activity){
         for(int i=0; i<DiceThrows.length; i++){
             DiceThrows[i]=new DiceThrow(0);
             DiceThrows[i].setAlreadyUsed(1);

@@ -12,6 +12,11 @@ public class BoardFieldState {
         Player=0;
     }
 
+    public BoardFieldState(int NumberOfChips, int Player){
+        this.NumberOfChips=NumberOfChips;
+        this.Player=Player;
+    }
+
     public int getNumberOfChips() {
         return NumberOfChips;
     }

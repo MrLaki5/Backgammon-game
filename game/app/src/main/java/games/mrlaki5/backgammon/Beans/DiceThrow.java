@@ -10,6 +10,11 @@ public class DiceThrow {
         AlreadyUsed = 0;
     }
 
+    public DiceThrow(int throwNumber, int alreadyUsed){
+        this.ThrowNumber=throwNumber;
+        this.AlreadyUsed=alreadyUsed;
+    }
+
     public int getThrowNumber() {
         return ThrowNumber;
     }

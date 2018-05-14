@@ -26,7 +26,8 @@
             android:textAllCaps="false"
             android:textColor="#828783"
             android:textSize="25dp"
-            android:textStyle="bold"/>
+            android:textStyle="bold"
+            android:onClick="continueGame"/>
 
         <Button
             android:id="@+id/newGame"
