@@ -21,8 +21,12 @@ public class MenuActivity extends AppCompatActivity {
     public static String EXTRA_PLAYER2_NAME="p2name";
     public static String EXTRA_PLAYER1_KIND="p1kind";
     public static String EXTRA_PLAYER2_KIND="p2kind";
+    public static String EXTRA_WINING_PLAYER="pWin";
 
     public static String GAME_CONTINUE_SAVE_FILE_NAME="gameSave";
+    public static final int GAME_PRESSED_BACK=55;
+    public static final int GAME_ENDED_OK=56;
+    public static final int REQUEST_CODE_GAME=65;
 
     private AlertDialog myDialog;
     private View myView;
@@ -66,7 +70,7 @@ public class MenuActivity extends AppCompatActivity {
 
     public void OpenSettings(View view) {
         Intent intent= new Intent(MenuActivity.this, SettingsActivity.class);
-        startActivity(intent);
+        startActivityForResult(intent, REQUEST_CODE_GAME);
     }
 
     private View.OnClickListener CancelListener= new View.OnClickListener() {
@@ -104,17 +108,35 @@ public class MenuActivity extends AppCompatActivity {
                         myDialog.dismiss();
                         myDialog = null;
                         myView=null;
+                        File file=new File(MenuActivity.this.getFilesDir().getAbsolutePath(), MenuActivity.GAME_CONTINUE_SAVE_FILE_NAME);
+                        file.delete();
                         Intent intent= new Intent(MenuActivity.this, GameActivity.class);
                         intent.putExtra(EXTRA_PLAYER1_NAME, playerName1);
                         intent.putExtra(EXTRA_PLAYER2_NAME, playerName2);
                         intent.putExtra(EXTRA_PLAYER1_KIND, playerKind1);
                         intent.putExtra(EXTRA_PLAYER2_KIND, playerKind2);
-                        startActivity(intent);
+                        startActivityForResult(intent, REQUEST_CODE_GAME);
                     }
                 }
             }
         }
     };
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch(requestCode){
+            case REQUEST_CODE_GAME:
+                switch(resultCode){
+                    case GAME_PRESSED_BACK:
+                        checkAndChangeButtonColor();
+                        break;
+                    case GAME_ENDED_OK:
+                        checkAndChangeButtonColor();
+                        break;
+                }
+                break;
+        }
+    }
 
     public boolean checkContinueGame(){
         File file=new File(this.getFilesDir(), MenuActivity.GAME_CONTINUE_SAVE_FILE_NAME);
@@ -125,9 +147,12 @@ public class MenuActivity extends AppCompatActivity {
     }
 
     public void checkAndChangeButtonColor(){
+        Button button=((Button) findViewById(R.id.continueGame));
         if(checkContinueGame()){
-            Button button=((Button) findViewById(R.id.continueGame));
             button.setTextColor(Color.rgb(217, 253, 223));
+        }
+        else{
+            button.setTextColor(Color.rgb(130, 135, 131));
         }
     }
 

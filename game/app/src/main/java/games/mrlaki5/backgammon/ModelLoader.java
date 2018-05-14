@@ -108,7 +108,7 @@ public class ModelLoader {
             }
 
             file=new File(activity.getFilesDir().getAbsolutePath(), MenuActivity.GAME_CONTINUE_SAVE_FILE_NAME);
-            boolean check=file.delete();
+            file.delete();
 
         }
         return model;

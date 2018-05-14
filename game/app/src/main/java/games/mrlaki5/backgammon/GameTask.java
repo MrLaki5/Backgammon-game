@@ -1,5 +1,6 @@
 package games.mrlaki5.backgammon;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 
 public class GameTask extends AsyncTask<Void, Void, Void> {
@@ -8,15 +9,17 @@ public class GameTask extends AsyncTask<Void, Void, Void> {
     private int WorkFlag=1;
     private int FinishedFlag=0;
 
+    private GameActivity gameActivity;
     private Model model;
     private GameLogic gameLogic;
     private OnBoardImage onBoardImage;
 
-    public GameTask(Model model, GameLogic gamLogic, OnBoardImage onBoardImage, long sleep_time){
+    public GameTask(Model model, GameLogic gamLogic, OnBoardImage onBoardImage, long sleep_time, GameActivity gameActivity){
         this.model=model;
         this.gameLogic=gamLogic;
         this.onBoardImage=onBoardImage;
         this.sleep_time=sleep_time;
+        this.gameActivity=gameActivity;
         if(this.sleep_time==0){
             this.sleep_time=1;
         }
@@ -92,6 +95,19 @@ public class GameTask extends AsyncTask<Void, Void, Void> {
                         if(WorkFlag==0){
                             break;
                         }
+                    }
+                    if(gameLogic.getCurrPlayerFinished()!=0){
+                        WorkFlag=0;
+                        Intent data= new Intent();
+                        data.putExtra(MenuActivity.EXTRA_PLAYER1_NAME,
+                                model.getPlayers()[0].getPlayerName());
+                        data.putExtra(MenuActivity.EXTRA_PLAYER2_NAME,
+                                model.getPlayers()[1].getPlayerName());
+                        data.putExtra(MenuActivity.EXTRA_WINING_PLAYER,
+                                gameLogic.getCurrPlayerFinished());
+                        gameActivity.setResult(MenuActivity.GAME_ENDED_OK, data);
+                        gameActivity.finish();
+                        break;
                     }
                     model.cahngeCurrentPlayer();
                     model.setState(3);

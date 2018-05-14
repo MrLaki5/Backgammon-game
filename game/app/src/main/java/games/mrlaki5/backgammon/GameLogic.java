@@ -11,6 +11,8 @@ public class GameLogic {
 
     private Model model;
 
+    private int CurrPlayerFinished=0;
+
     public GameLogic(Model model) {
         this.model = model;
     }
@@ -125,7 +127,7 @@ public class GameLogic {
                 }
                 break;
             case 2:
-                //TODO: Game done part
+                CurrPlayerFinished=PlayerNum;
                 break;
         }
         return jumps;
@@ -189,4 +191,11 @@ public class GameLogic {
         return retDices;
     }
 
+    public int getCurrPlayerFinished() {
+        return CurrPlayerFinished;
+    }
+
+    public void setCurrPlayerFinished(int currPlayerFinished) {
+        CurrPlayerFinished = currPlayerFinished;
+    }
 }

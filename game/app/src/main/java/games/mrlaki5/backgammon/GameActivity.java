@@ -1,6 +1,7 @@
 package games.mrlaki5.backgammon;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -290,7 +291,7 @@ public class GameActivity extends AppCompatActivity {
         modelLoader=new ModelLoader();
         model=modelLoader.loadModel(extras, this);
         gameLogic = new GameLogic(model);
-        gameTask=new GameTask(model, gameLogic, BoardImage, timeBTUrns*1000);
+        gameTask=new GameTask(model, gameLogic, BoardImage, timeBTUrns*1000, this);
 
 
         BoardImage.setChipMatrix(model.getBoardFields());
@@ -307,8 +308,10 @@ public class GameActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
         leaveMethod();
+        Intent data= new Intent();
+        setResult(MenuActivity.GAME_PRESSED_BACK, data);
+        super.onBackPressed();
     }
 
     @Override
