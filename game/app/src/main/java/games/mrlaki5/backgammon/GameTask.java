@@ -8,6 +8,7 @@ public class GameTask extends AsyncTask<Void, Void, Void> {
     public long sleep_time;
     private int WorkFlag=1;
     private int FinishedFlag=0;
+    private int EndRoutineStarted=0;
 
     private GameActivity gameActivity;
     private Model model;
@@ -39,6 +40,14 @@ public class GameTask extends AsyncTask<Void, Void, Void> {
 
     public void setFinishedFlag(int finishedFlag) {
         FinishedFlag = finishedFlag;
+    }
+
+    public int getEndRoutineStarted() {
+        return EndRoutineStarted;
+    }
+
+    public void setEndRoutineStarted(int endRoutineStarted) {
+        EndRoutineStarted = endRoutineStarted;
     }
 
     private void writeMessage(String Text){
@@ -97,16 +106,21 @@ public class GameTask extends AsyncTask<Void, Void, Void> {
                         }
                     }
                     if(gameLogic.getCurrPlayerFinished()!=0){
-                        WorkFlag=0;
-                        Intent data= new Intent();
-                        data.putExtra(MenuActivity.EXTRA_PLAYER1_NAME,
-                                model.getPlayers()[0].getPlayerName());
-                        data.putExtra(MenuActivity.EXTRA_PLAYER2_NAME,
-                                model.getPlayers()[1].getPlayerName());
-                        data.putExtra(MenuActivity.EXTRA_WINING_PLAYER,
-                                gameLogic.getCurrPlayerFinished());
-                        gameActivity.setResult(MenuActivity.GAME_ENDED_OK, data);
-                        gameActivity.finish();
+                        synchronized (this) {
+                            if(EndRoutineStarted==0) {
+                                EndRoutineStarted=1;
+                                WorkFlag = 0;
+                                Intent data = new Intent();
+                                data.putExtra(MenuActivity.EXTRA_PLAYER1_NAME,
+                                        model.getPlayers()[0].getPlayerName());
+                                data.putExtra(MenuActivity.EXTRA_PLAYER2_NAME,
+                                        model.getPlayers()[1].getPlayerName());
+                                data.putExtra(MenuActivity.EXTRA_WINING_PLAYER,
+                                        gameLogic.getCurrPlayerFinished());
+                                gameActivity.setResult(MenuActivity.GAME_ENDED_OK, data);
+                                gameActivity.finish();
+                            }
+                        }
                         break;
                     }
                     model.cahngeCurrentPlayer();

@@ -331,7 +331,12 @@ public class GameActivity extends AppCompatActivity {
             //gameTask.cancel(true);
             clearMPlayer();
             sensorManager.unregisterListener(DiceListener);
+            int tempFlag=0;
             synchronized (gameTask) {
+                if(gameTask.getEndRoutineStarted()==0){
+                    gameTask.setEndRoutineStarted(1);
+                    tempFlag=1;
+                }
                 while (gameTask.getFinishedFlag() != 1) {
                     try {
                         gameTask.wait();
@@ -340,7 +345,9 @@ public class GameActivity extends AppCompatActivity {
                     }
                 }
             }
-            modelLoader.saveModel(model, this);
+            if(tempFlag==1) {
+                modelLoader.saveModel(model, this);
+            }
         }
     }
 
