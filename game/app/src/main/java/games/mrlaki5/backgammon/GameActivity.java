@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Toast;
 
+import java.io.File;
 import java.util.List;
 
 import games.mrlaki5.backgammon.Beans.BoardFieldState;
@@ -32,14 +33,15 @@ public class GameActivity extends AppCompatActivity {
     private MediaPlayer mPlayer;
     private final String mPlayerSem="mPlayer";
 
+
     private GameLogic gameLogic;
     private OnBoardImage BoardImage;
     private ModelLoader modelLoader;
     private Model model;
     private GameTask gameTask;
 
-
-
+    private int pauseDone=0;
+    private int timeBetweenTurns=0;
 
     private int MoveFieldSrc;
 
@@ -285,13 +287,13 @@ public class GameActivity extends AppCompatActivity {
         shake_treshold=preferences.getInt(SettingsActivity.KEY_DICE_TRESHOLD, SettingsActivity.DEF_DICE_TRAESHOLD);
         sample_time=preferences.getInt(SettingsActivity.KEY_TIME_SAMPLE, SettingsActivity.DEF_TIME_SAMPLE);
         dice_delay=preferences.getInt(SettingsActivity.KEY_DICE_SHAKE_DELAY, SettingsActivity.DEF_DICE_SHAKE_DELAY);
-        int timeBTUrns=preferences.getInt(SettingsActivity.KEY_TIME_BETWEEN_TURNS, SettingsActivity.DEF_TIME_BETWEEN_TURNS);
+        timeBetweenTurns=preferences.getInt(SettingsActivity.KEY_TIME_BETWEEN_TURNS, SettingsActivity.DEF_TIME_BETWEEN_TURNS);
 
         BoardImage=((OnBoardImage)findViewById(R.id.boardImage) );
         modelLoader=new ModelLoader();
         model=modelLoader.loadModel(extras, this);
         gameLogic = new GameLogic(model);
-        gameTask=new GameTask(model, gameLogic, BoardImage, timeBTUrns*1000, this);
+        gameTask=new GameTask(model, gameLogic, BoardImage, timeBetweenTurns*1000, this);
 
 
         BoardImage.setChipMatrix(model.getBoardFields());
@@ -315,9 +317,61 @@ public class GameActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onStart() {
+        super.onStart();
+        if(pauseDone==1){
+            File file=new File(GameActivity.this.getFilesDir().getAbsolutePath(), MenuActivity.GAME_CONTINUE_SAVE_FILE_NAME);
+            file.delete();
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(pauseDone==1){
+            pauseDone=0;
+            gameTask=new GameTask(model, gameLogic, BoardImage, timeBetweenTurns*1000, this);
+            gameTask.execute();
+        }
+    }
+
+    @Override
     protected void onPause() {
+        if(gameTask!=null) {
+            gameTask.setWorkFlag(0);
+            synchronized (gameTask) {
+                if (gameTask.getEndRoutineStarted() == 0) {
+                    gameTask.setEndRoutineStarted(1);
+                    pauseDone=1;
+                }
+            }
+            if(pauseDone==1){
+                synchronized (model.getCurrentObjectPlayer()) {
+                    model.getCurrentObjectPlayer().setWaitCond(0);
+                    model.getCurrentObjectPlayer().notifyAll();
+                }
+                clearMPlayer();
+                sensorManager.unregisterListener(DiceListener);
+            }
+        }
         super.onPause();
-        //leaveMethod();
+    }
+
+    @Override
+    protected void onStop() {
+        if(pauseDone==1){
+            synchronized (gameTask){
+                while (gameTask.getFinishedFlag() != 1) {
+                    try {
+                        gameTask.wait();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+            modelLoader.saveModel(model, this);
+        }
+        super.onStop();
     }
 
     public void leaveMethod(){

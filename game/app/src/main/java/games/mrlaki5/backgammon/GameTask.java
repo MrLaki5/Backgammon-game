@@ -5,7 +5,7 @@ import android.os.AsyncTask;
 
 public class GameTask extends AsyncTask<Void, Void, Void> {
 
-    public long sleep_time;
+    private long sleep_time;
     private int WorkFlag=1;
     private int FinishedFlag=0;
     private int EndRoutineStarted=0;
