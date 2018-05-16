@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2">
+
+            <TextView
+                android:id="@+id/rListP1State"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="WIN"
+                android:layout_alignParentRight="true"
+                android:fontFamily="casual"
+                android:textColor="#d9fddf"
+                android:textSize="18dp"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/rListP1Name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Player1: "
+                android:layout_toStartOf="@id/rListP1State"
+                android:fontFamily="casual"
+                android:textColor="#d9fddf"
+                android:textSize="18dp"
+                android:textStyle="bold"/>
+
+        </RelativeLayout>
+
+        <TextView
+        android:id="@+id/rListDummuText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"/>
+
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2">
+
+            <TextView
+                android:id="@+id/rListP2State"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="LOSE"
+                android:layout_toEndOf="@id/rListP2Name"
+                android:fontFamily="casual"
+                android:textColor="#d9fddf"
+                android:textSize="18dp"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/rListP2Name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Player2: "
+                android:layout_alignParentLeft="true"
+                android:fontFamily="casual"
+                android:textColor="#d9fddf"
+                android:textSize="18dp"
+                android:textStyle="bold"/>
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/rListDate"
+        android:textAlignment="center"
+        android:text="Time: HH:mm dd:MM:yyyy"
+        android:fontFamily="casual"
+        android:textColor="#d9fddf"
+        android:textSize="15dp"
+        android:textStyle="bold"/>
+
+</LinearLayout>

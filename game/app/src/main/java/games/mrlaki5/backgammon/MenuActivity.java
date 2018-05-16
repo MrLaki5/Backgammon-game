@@ -77,7 +77,7 @@ public class MenuActivity extends AppCompatActivity {
 
     public void OpenSettings(View view) {
         Intent intent= new Intent(MenuActivity.this, SettingsActivity.class);
-        startActivityForResult(intent, REQUEST_CODE_GAME);
+        startActivity(intent);
     }
 
     private View.OnClickListener CancelListener= new View.OnClickListener() {
@@ -159,6 +159,10 @@ public class MenuActivity extends AppCompatActivity {
                             SimpleDateFormat format = new SimpleDateFormat("HH:mm dd/MM/yyyy");
                             values.put(ScoresTableEntry.COLUMN_END_GAME_TIME, format.format(currDate));
                             db.insert(ScoresTableEntry.TABLE_NAME, null, values);
+                            Intent intent=new Intent(MenuActivity.this, ResultsActivity.class);
+                            intent.putExtra(EXTRA_PLAYER1_NAME, extras.getString(EXTRA_PLAYER1_NAME));
+                            intent.putExtra(EXTRA_PLAYER2_NAME, extras.getString(EXTRA_PLAYER2_NAME));
+                            startActivity(intent);
                         }
                         break;
                 }
@@ -187,7 +191,7 @@ public class MenuActivity extends AppCompatActivity {
     public void continueGame(View view) {
         if(checkContinueGame()){
             Intent intent= new Intent(MenuActivity.this, GameActivity.class);
-            startActivity(intent);
+            startActivityForResult(intent, REQUEST_CODE_GAME);
         }
     }
 }
