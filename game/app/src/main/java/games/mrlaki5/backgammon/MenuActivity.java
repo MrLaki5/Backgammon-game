@@ -1,7 +1,9 @@
 package games.mrlaki5.backgammon;
 
+import android.content.ContentValues;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -14,6 +16,11 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import games.mrlaki5.backgammon.Database.DbHelper;
+import games.mrlaki5.backgammon.Database.ScoresTableEntry;
 
 public class MenuActivity extends AppCompatActivity {
 
@@ -131,7 +138,28 @@ public class MenuActivity extends AppCompatActivity {
                         checkAndChangeButtonColor();
                         break;
                     case GAME_ENDED_OK:
+                        Bundle extras = data.getExtras();
                         checkAndChangeButtonColor();
+                        if(extras!=null) {
+                            DbHelper helper = new DbHelper(MenuActivity.this);
+                            SQLiteDatabase db = helper.getWritableDatabase();
+                            ContentValues values = new ContentValues();
+                            values.put(ScoresTableEntry.COLUMN_PLAYER1_NAME,
+                                    extras.getString(EXTRA_PLAYER1_NAME));
+                            values.put(ScoresTableEntry.COLUMN_PLAYER2_NAME,
+                                    extras.getString(EXTRA_PLAYER2_NAME));
+                            if (extras.getInt(EXTRA_WINING_PLAYER) == 1) {
+                                values.put(ScoresTableEntry.COLUMN_PLAYER1_WIN, 1);
+                                values.put(ScoresTableEntry.COLUMN_PLAYER2_WIN, 0);
+                            } else {
+                                values.put(ScoresTableEntry.COLUMN_PLAYER1_WIN, 0);
+                                values.put(ScoresTableEntry.COLUMN_PLAYER2_WIN, 1);
+                            }
+                            Date currDate = new Date();
+                            SimpleDateFormat format = new SimpleDateFormat("HH:mm dd/MM/yyyy");
+                            values.put(ScoresTableEntry.COLUMN_END_GAME_TIME, format.format(currDate));
+                            db.insert(ScoresTableEntry.TABLE_NAME, null, values);
+                        }
                         break;
                 }
                 break;

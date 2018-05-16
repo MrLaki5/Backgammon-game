@@ -32,6 +32,7 @@ public class GameActivity extends AppCompatActivity {
 
     private MediaPlayer mPlayer;
     private final String mPlayerSem="mPlayer";
+    private int soundVolume=0;
 
 
     private GameLogic gameLogic;
@@ -288,6 +289,7 @@ public class GameActivity extends AppCompatActivity {
         sample_time=preferences.getInt(SettingsActivity.KEY_TIME_SAMPLE, SettingsActivity.DEF_TIME_SAMPLE);
         dice_delay=preferences.getInt(SettingsActivity.KEY_DICE_SHAKE_DELAY, SettingsActivity.DEF_DICE_SHAKE_DELAY);
         timeBetweenTurns=preferences.getInt(SettingsActivity.KEY_TIME_BETWEEN_TURNS, SettingsActivity.DEF_TIME_BETWEEN_TURNS);
+        soundVolume=preferences.getInt(SettingsActivity.KEY_SOUND_VOLUME, SettingsActivity.DEF_SOUND_VOLUME);
 
         BoardImage=((OnBoardImage)findViewById(R.id.boardImage) );
         modelLoader=new ModelLoader();
@@ -450,11 +452,19 @@ public class GameActivity extends AppCompatActivity {
             }
             if(SongNum==1){
                 mPlayer = MediaPlayer.create(getApplicationContext(), R.raw.dice_shake);
+                final float volume = (float) (1 -
+                        (Math.log(SettingsActivity.MAX_SOUND_VOLUME - soundVolume)
+                                / Math.log(SettingsActivity.MAX_SOUND_VOLUME)));
+                mPlayer.setVolume(volume, volume);
                 mPlayer.setLooping(true);
                 mPlayer.start();
             }
             else{
                 mPlayer = MediaPlayer.create(getApplicationContext(), R.raw.dice_roll);
+                final float volume = (float) (1 -
+                        (Math.log(SettingsActivity.MAX_SOUND_VOLUME - soundVolume)
+                                / Math.log(SettingsActivity.MAX_SOUND_VOLUME)));
+                mPlayer.setVolume(volume, volume);
                 mPlayer.start();
             }
         }
