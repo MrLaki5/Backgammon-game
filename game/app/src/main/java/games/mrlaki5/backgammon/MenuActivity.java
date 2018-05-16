@@ -194,4 +194,9 @@ public class MenuActivity extends AppCompatActivity {
             startActivityForResult(intent, REQUEST_CODE_GAME);
         }
     }
+
+    public void scores(View view) {
+        Intent intent= new Intent(MenuActivity.this, ScoresActivity.class);
+        startActivity(intent);
+    }
 }

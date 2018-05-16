@@ -52,6 +52,7 @@
             android:layout_height="wrap_content"
             android:background="@null"
             android:fontFamily="casual"
+            android:onClick="scores"
             android:text="Scores"
             android:textAllCaps="false"
             android:textColor="#d9fddf"
