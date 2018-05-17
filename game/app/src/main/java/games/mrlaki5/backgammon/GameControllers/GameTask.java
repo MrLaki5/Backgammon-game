@@ -1,7 +1,13 @@
-package games.mrlaki5.backgammon;
+package games.mrlaki5.backgammon.GameControllers;
 
 import android.content.Intent;
 import android.os.AsyncTask;
+
+import games.mrlaki5.backgammon.GameControllers.GameActivity;
+import games.mrlaki5.backgammon.GameControllers.GameLogic;
+import games.mrlaki5.backgammon.MenuActivity;
+import games.mrlaki5.backgammon.Model;
+import games.mrlaki5.backgammon.OnBoardImage;
 
 public class GameTask extends AsyncTask<Void, Void, Void> {
 

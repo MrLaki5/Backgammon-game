@@ -7,6 +7,7 @@ import java.util.List;
 import games.mrlaki5.backgammon.Beans.BoardFieldState;
 import games.mrlaki5.backgammon.Beans.DiceThrow;
 import games.mrlaki5.backgammon.Beans.NextJump;
+import games.mrlaki5.backgammon.GameControllers.GameActivity;
 import games.mrlaki5.backgammon.Players.Bot;
 import games.mrlaki5.backgammon.Players.Human;
 import games.mrlaki5.backgammon.Players.Player;
@@ -121,8 +122,8 @@ public class Model {
         BoardFields[0].setNumberOfChips(5);
         BoardFields[0].setPlayer(1);
 
-        //BoardFields[11].setNumberOfChips(2);
-        //BoardFields[11].setPlayer(1);
+        BoardFields[11].setNumberOfChips(2);
+        BoardFields[11].setPlayer(1);
 
         BoardFields[16].setNumberOfChips(3);
         BoardFields[16].setPlayer(1);
@@ -130,7 +131,8 @@ public class Model {
         BoardFields[18].setNumberOfChips(5);
         BoardFields[18].setPlayer(1);
 
-        /*
+
+
         BoardFields[4].setNumberOfChips(3);
         BoardFields[4].setPlayer(2);
 
@@ -141,12 +143,7 @@ public class Model {
         BoardFields[12].setPlayer(2);
 
         BoardFields[23].setNumberOfChips(2);
-        BoardFields[23].setPlayer(2);*/
-
-        //TEST PART
-
-        BoardFields[11].setNumberOfChips(15);
-        BoardFields[11].setPlayer(2);
+        BoardFields[23].setPlayer(2);
 
 
     }

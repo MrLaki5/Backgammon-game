@@ -21,6 +21,7 @@ import java.util.Date;
 
 import games.mrlaki5.backgammon.Database.DbHelper;
 import games.mrlaki5.backgammon.Database.ScoresTableEntry;
+import games.mrlaki5.backgammon.GameControllers.GameActivity;
 
 public class MenuActivity extends AppCompatActivity {
 

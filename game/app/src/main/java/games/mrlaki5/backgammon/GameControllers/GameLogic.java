@@ -1,4 +1,4 @@
-package games.mrlaki5.backgammon;
+package games.mrlaki5.backgammon.GameControllers;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,6 +6,7 @@ import java.util.List;
 import games.mrlaki5.backgammon.Beans.BoardFieldState;
 import games.mrlaki5.backgammon.Beans.DiceThrow;
 import games.mrlaki5.backgammon.Beans.NextJump;
+import games.mrlaki5.backgammon.Model;
 
 public class GameLogic {
 

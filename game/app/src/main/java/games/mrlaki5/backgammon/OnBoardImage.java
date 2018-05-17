@@ -25,7 +25,6 @@ public class OnBoardImage extends android.support.v7.widget.AppCompatImageView {
     private int[] NextMoveArray;
     //String for current game state message
     private String Message="Player1 roll dices";
-
     //Paint for red chips
     private Paint RedChipPaint;
     //Paint for white chips
@@ -44,14 +43,12 @@ public class OnBoardImage extends android.support.v7.widget.AppCompatImageView {
     private RectF NextTriangleRect;
     //Image for end board hints
     private Bitmap EndBoardImage;
-
     //y top border
     private float YBaseTop;
     //x right border
     private float XBaseRight;
     //x left border
     private float XBaseLeft;
-
     //Width of board
     private float Width;
     //Full width of board
@@ -72,7 +69,6 @@ public class OnBoardImage extends android.support.v7.widget.AppCompatImageView {
     private float TriangleHeight;
     //Height of end chip
     private float EndChipHeight;
-
     //Size of moving chip
     private float MoveChipSize;
     //Coordinates of moving chip (-1 if not used)
@@ -80,7 +76,6 @@ public class OnBoardImage extends android.support.v7.widget.AppCompatImageView {
     private float MoveChipY=-1;
     //Player of moving chip (1-white, 2-red)
     private int MoveChipPlayer=-1;
-
     //Dice images
     private Bitmap DiceImages[]= new Bitmap[4];
     //Padding between dices
@@ -100,7 +95,6 @@ public class OnBoardImage extends android.support.v7.widget.AppCompatImageView {
     private RectF DiceRect;
     //Paint for drawing dices
     private Paint DicePaint;
-
     //Coordinates for text drawing
     private float TextXCoordinate;
     private float TextYCoordinate;
