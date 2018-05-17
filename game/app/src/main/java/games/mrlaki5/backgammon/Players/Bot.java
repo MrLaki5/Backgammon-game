@@ -3,8 +3,8 @@ package games.mrlaki5.backgammon.Players;
 import games.mrlaki5.backgammon.Beans.DiceThrow;
 import games.mrlaki5.backgammon.GameControllers.GameActivity;
 import games.mrlaki5.backgammon.GameControllers.GameLogic;
-import games.mrlaki5.backgammon.Model;
-import games.mrlaki5.backgammon.OnBoardImage;
+import games.mrlaki5.backgammon.GameModel.Model;
+import games.mrlaki5.backgammon.GameView.OnBoardImage;
 
 //Implementation of player, bot (phone)
 public class Bot extends Player {

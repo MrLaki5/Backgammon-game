@@ -7,7 +7,7 @@
     android:background="@drawable/game_background"
     tools:context=".GameControllers.GameActivity">
 
-    <games.mrlaki5.backgammon.OnBoardImage
+    <games.mrlaki5.backgammon.GameView.OnBoardImage
         android:id="@+id/boardImage"
         android:layout_width="0dp"
         android:layout_height="0dp"

@@ -1,4 +1,4 @@
-package games.mrlaki5.backgammon;
+package games.mrlaki5.backgammon.GameView;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -10,13 +10,12 @@ import android.graphics.RectF;
 import android.graphics.Typeface;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
-import android.widget.ImageView;
-
-import org.w3c.dom.Text;
 
 import games.mrlaki5.backgammon.Beans.BoardFieldState;
 import games.mrlaki5.backgammon.Beans.DiceThrow;
+import games.mrlaki5.backgammon.R;
 
+//View of game
 public class OnBoardImage extends android.support.v7.widget.AppCompatImageView {
 
     //Chips matrix (with number of chips on triangle [0] and player [1] (1-white, 2-red)), length:24
@@ -140,7 +139,8 @@ public class OnBoardImage extends android.support.v7.widget.AppCompatImageView {
         NextTriangleTransparentPaint.setAlpha(150);
         //load green hint images
         NextTriangleImageTop= BitmapFactory.decodeResource(getResources(), R.drawable.triangle_up);
-        NextTriangleImageBottom= BitmapFactory.decodeResource(getResources(), R.drawable.triangle_down);
+        NextTriangleImageBottom= BitmapFactory.decodeResource(getResources(),
+                R.drawable.triangle_down);
         EndBoardImage= BitmapFactory.decodeResource(getResources(), R.drawable.square);
         //create rect that will be used for drawing triangles for next moves
         NextTriangleRect=new RectF();
@@ -151,7 +151,7 @@ public class OnBoardImage extends android.support.v7.widget.AppCompatImageView {
         //Create paint for text drawing
         TextPaint=new Paint();
         TextPaint.setColor(Color.rgb(212, 31, 38));
-        TextPaint.setShadowLayer(2.0F, 2.0F, 2.0F, Color.BLACK); //shadow on border part
+        TextPaint.setShadowLayer(2.0F, 2.0F, 2.0F, Color.BLACK); //shadow on border
         TextPaint.setTypeface(Typeface.create("casual",Typeface.BOLD));
     }
 
@@ -408,8 +408,10 @@ public class OnBoardImage extends android.support.v7.widget.AppCompatImageView {
                         if (!drawEndBoard) {
                             //calculate padding in chip center (needed if there is more chips
                             //in triangle then triangles height is)
-                            if ((chipSize * ChipMatrix[i].getNumberOfChips() > TriangleHeight) && (ChipMatrix[i].getNumberOfChips() > 1)) {
-                                heightPadding = (chipSize * ChipMatrix[i].getNumberOfChips() - TriangleHeight) / (ChipMatrix[i].getNumberOfChips() - 1);
+                            if ((chipSize * ChipMatrix[i].getNumberOfChips() > TriangleHeight)
+                                    && (ChipMatrix[i].getNumberOfChips() > 1)) {
+                                heightPadding = (chipSize * ChipMatrix[i].getNumberOfChips() -
+                                        TriangleHeight) / (ChipMatrix[i].getNumberOfChips() - 1);
                             }
                             //calculate y coordinates for rect where chip is drawn
                             yChipStart = y;
@@ -487,14 +489,17 @@ public class OnBoardImage extends android.support.v7.widget.AppCompatImageView {
                         //calculate coordinates for green triangle
                         if(i<12 || i==26) {
                             //if on top row then y from 0 to triangleHeight
-                            NextTriangleRect.set(x - tempHintWidth, YBaseTop, x + tempHintWidth, TriangleHeight+YBaseTop);
+                            NextTriangleRect.set(x - tempHintWidth, YBaseTop, x +
+                                    tempHintWidth, TriangleHeight+YBaseTop);
                         }
                         else{
                             //if on bottom row then y from height-triangleHeight to height
-                            NextTriangleRect.set(x - tempHintWidth, Height-TriangleHeight, x + tempHintWidth, Height);
+                            NextTriangleRect.set(x - tempHintWidth, Height-TriangleHeight,
+                                    x + tempHintWidth, Height);
                         }
                         //draw green triangle
-                        canvas.drawBitmap(currentNextImage, null, NextTriangleRect, NextTriangleTransparentPaint);
+                        canvas.drawBitmap(currentNextImage, null, NextTriangleRect,
+                                NextTriangleTransparentPaint);
                     }
                     //move to next triangle
                     x += currPading;

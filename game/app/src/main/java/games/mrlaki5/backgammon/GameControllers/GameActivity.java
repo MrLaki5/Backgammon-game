@@ -19,9 +19,9 @@ import java.io.File;
 import games.mrlaki5.backgammon.Beans.DiceThrow;
 import games.mrlaki5.backgammon.Beans.NextJump;
 import games.mrlaki5.backgammon.MenuActivity;
-import games.mrlaki5.backgammon.Model;
-import games.mrlaki5.backgammon.ModelLoader;
-import games.mrlaki5.backgammon.OnBoardImage;
+import games.mrlaki5.backgammon.GameModel.Model;
+import games.mrlaki5.backgammon.GameModel.ModelLoader;
+import games.mrlaki5.backgammon.GameView.OnBoardImage;
 import games.mrlaki5.backgammon.R;
 import games.mrlaki5.backgammon.SettingsActivity;
 
