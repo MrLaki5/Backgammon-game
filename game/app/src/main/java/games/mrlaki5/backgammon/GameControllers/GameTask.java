@@ -3,7 +3,7 @@ package games.mrlaki5.backgammon.GameControllers;
 import android.content.Intent;
 import android.os.AsyncTask;
 
-import games.mrlaki5.backgammon.MenuActivity;
+import games.mrlaki5.backgammon.Menus.MenuActivity;
 import games.mrlaki5.backgammon.GameModel.Model;
 import games.mrlaki5.backgammon.GameView.OnBoardImage;
 

@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MenuActivity"
+            android:name=".Menus.MenuActivity"
             android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -26,12 +26,12 @@
             android:name=".GameControllers.GameActivity"
             android:screenOrientation="landscape" />
         <activity
-            android:name=".SettingsActivity"
+            android:name=".Menus.SettingsActivity"
             android:screenOrientation="landscape" />
         <activity
-            android:name=".ResultsActivity"
+            android:name=".Menus.ResultsActivity"
             android:screenOrientation="landscape" />
-        <activity android:name=".ScoresActivity"></activity>
+        <activity android:name=".Menus.ScoresActivity"></activity>
     </application>
 
 </manifest>

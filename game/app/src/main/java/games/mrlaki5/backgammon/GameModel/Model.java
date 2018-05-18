@@ -8,7 +8,7 @@ import games.mrlaki5.backgammon.Beans.BoardFieldState;
 import games.mrlaki5.backgammon.Beans.DiceThrow;
 import games.mrlaki5.backgammon.Beans.NextJump;
 import games.mrlaki5.backgammon.GameControllers.GameActivity;
-import games.mrlaki5.backgammon.MenuActivity;
+import games.mrlaki5.backgammon.Menus.MenuActivity;
 import games.mrlaki5.backgammon.Players.Bot;
 import games.mrlaki5.backgammon.Players.Human;
 import games.mrlaki5.backgammon.Players.Player;
