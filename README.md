@@ -8,7 +8,7 @@ Description:
 
     *   Two player game
 
-    *   Backgammon classic [rules](https://en.wikipedia.org/wiki/Backgammon) 
+    *   Backgammon classic rules https://en.wikipedia.org/wiki/Backgammon
 
     *   Type of players: human, bot
 
