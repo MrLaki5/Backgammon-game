@@ -31,7 +31,8 @@
         <activity
             android:name=".Menus.ResultsActivity"
             android:screenOrientation="landscape" />
-        <activity android:name=".Menus.ScoresActivity"></activity>
+        <activity android:name=".Menus.ScoresActivity"
+            android:screenOrientation="landscape"/>
     </application>
 
 </manifest>
