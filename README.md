@@ -12,6 +12,6 @@ Description:
 
     *   Type of players: human, bot
 
-    *   Score traking and statistics
+    *   Score tracking and statistics
 
     *   Easy to pause and continue game after
