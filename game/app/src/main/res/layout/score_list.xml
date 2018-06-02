@@ -45,6 +45,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:textAlignment="center"
+            android:fontFamily="casual"
             android:text="3:5"
             android:textColor="#d9fddf"
             android:textSize="19dp"
