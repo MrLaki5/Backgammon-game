@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    The journey, laid out for the screen it actually runs on.
+
+    Every screen in this game is landscape, so a vertical list of full-width rows
+    wasted two thirds of the glass and showed two chapters at a time. This is a
+    road instead: a fixed panel on the leading edge that says where the player is,
+    and the chapters running away to the side as a scrollable path.
+-->
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_royal_backdrop">
+
+    <!-- ── Leading panel: identity, progress, and the way back ─────────────── -->
+
+    <View
+        android:id="@+id/journeyPanelScrim"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/royal_scrim"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/journeyPanelGuide" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/journeyPanelGuide"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.28" />
+
+    <ImageButton
+        android:id="@+id/btnJourneyBack"
+        android:layout_width="@dimen/control_md"
+        android:layout_height="@dimen/control_md"
+        android:layout_margin="@dimen/space_m"
+        android:background="@drawable/bg_round_button_royal"
+        android:contentDescription="@string/review_back"
+        android:src="@drawable/ic_royal_back"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/journeyCrown"
+        android:layout_width="@dimen/icon_md"
+        android:layout_height="@dimen/icon_md"
+        android:layout_marginStart="@dimen/space_l"
+        android:contentDescription="@null"
+        android:src="@drawable/ic_royal_crown"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tvJourneyTitle"
+        app:layout_constraintBottom_toBottomOf="@id/tvJourneyTitle" />
+
+    <ImageView
+        android:id="@+id/tvJourneyTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/control_sm"
+        android:layout_marginStart="@dimen/space_s"
+        android:layout_marginTop="@dimen/space_s"
+        android:layout_marginEnd="@dimen/space_l"
+        android:adjustViewBounds="true"
+        android:contentDescription="@string/journey_title"
+        android:src="@drawable/title_journey"
+        app:layout_constraintStart_toEndOf="@id/journeyCrown"
+        app:layout_constraintTop_toBottomOf="@id/btnJourneyBack" />
+
+    <ImageView
+        android:id="@+id/journeyRule"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/space_m"
+        android:layout_marginStart="@dimen/space_l"
+        android:layout_marginTop="@dimen/space_xs"
+        android:layout_marginEnd="@dimen/space_xl"
+        android:contentDescription="@null"
+        android:scaleType="fitXY"
+        android:src="@drawable/ic_arabesque_divider"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/journeyPanelGuide"
+        app:layout_constraintTop_toBottomOf="@id/tvJourneyTitle" />
+
+    <!-- Progress seal: the number is the headline, the bar is the detail -->
+
+    <FrameLayout
+        android:id="@+id/journeyProgressSeal"
+        android:layout_width="@dimen/art_lg"
+        android:layout_height="@dimen/art_lg"
+        android:layout_marginStart="@dimen/space_l"
+        android:layout_marginTop="@dimen/space_m"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/journeyRule">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:contentDescription="@null"
+            android:src="@drawable/ic_shamsa_ring" />
+
+        <TextView
+            android:id="@+id/tvJourneyProgress"
+            style="@style/RoyalText.Display"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:textSize="@dimen/text_title" />
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/tvJourneyProgressLabel"
+        style="@style/RoyalText.Caption"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/space_m"
+        android:layout_marginEnd="@dimen/screen_margin"
+        android:text="@string/journey_progress_label"
+        app:layout_constraintStart_toEndOf="@id/journeyProgressSeal"
+        app:layout_constraintEnd_toEndOf="@id/journeyPanelGuide"
+        app:layout_constraintTop_toTopOf="@id/journeyProgressSeal"
+        app:layout_constraintBottom_toTopOf="@id/journeyProgressBar" />
+
+    <ProgressBar
+        android:id="@+id/journeyProgressBar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/space_s"
+        android:layout_marginStart="@dimen/space_m"
+        android:layout_marginEnd="@dimen/screen_margin"
+        android:max="100"
+        android:progressDrawable="@drawable/bg_progress_track_royal"
+        app:layout_constraintStart_toEndOf="@id/journeyProgressSeal"
+        app:layout_constraintEnd_toEndOf="@id/journeyPanelGuide"
+        app:layout_constraintTop_toTopOf="@id/journeyProgressSeal"
+        app:layout_constraintBottom_toBottomOf="@id/journeyProgressSeal"
+        app:layout_constraintVertical_bias="0.62" />
+
+    <TextView
+        android:id="@+id/tvJourneyHint"
+        style="@style/RoyalText.Caption"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/space_l"
+        android:layout_marginTop="@dimen/space_m"
+        android:layout_marginEnd="@dimen/space_xl"
+        android:maxLines="3"
+        android:ellipsize="end"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/journeyPanelGuide"
+        app:layout_constraintTop_toBottomOf="@id/journeyProgressSeal" />
+
+    <!-- ── The road ────────────────────────────────────────────────────────── -->
+
+    <HorizontalScrollView
+        android:id="@+id/journeyRoadScroll"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:clipToPadding="false"
+        android:paddingStart="@dimen/space_l"
+        android:paddingEnd="@dimen/space_l"
+        android:scrollbars="none"
+        app:layout_constraintStart_toEndOf="@id/journeyPanelGuide"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <LinearLayout
+            android:id="@+id/journeyList"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:orientation="horizontal" />
+    </HorizontalScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

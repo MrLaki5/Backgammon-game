@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Arabesque rule — a hairline that grows a vine toward a central bud and mirrors
+    itself. Used under headings instead of a plain divider line.
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="240dp"
+    android:height="16dp"
+    android:viewportWidth="240"
+    android:viewportHeight="16">
+
+    <path
+        android:fillColor="@android:color/transparent"
+        android:strokeColor="@color/gold_deep"
+        android:strokeWidth="1.2"
+        android:strokeLineCap="round"
+        android:pathData="M4,8 H86" />
+    <path
+        android:fillColor="@android:color/transparent"
+        android:strokeColor="@color/gold_deep"
+        android:strokeWidth="1.2"
+        android:strokeLineCap="round"
+        android:pathData="M154,8 H236" />
+    <path
+        android:fillColor="@android:color/transparent"
+        android:strokeColor="@color/gold"
+        android:strokeWidth="1.4"
+        android:strokeLineCap="round"
+        android:pathData="M86,8 C98,8 98,1 110,1 C118,1 120,5 120,8 C120,11 118,15 110,15 C98,15 98,8 86,8 Z" />
+    <path
+        android:fillColor="@android:color/transparent"
+        android:strokeColor="@color/gold"
+        android:strokeWidth="1.4"
+        android:strokeLineCap="round"
+        android:pathData="M154,8 C142,8 142,1 130,1 C122,1 120,5 120,8 C120,11 122,15 130,15 C142,15 142,8 154,8 Z" />
+    <path
+        android:fillColor="@color/gold_bright"
+        android:pathData="M120,5.4 A2.6,2.6 0 1,0 120,10.6 A2.6,2.6 0 1,0 120,5.4 Z" />
+</vector>

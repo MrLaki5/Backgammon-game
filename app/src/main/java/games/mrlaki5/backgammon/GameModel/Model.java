@@ -2,7 +2,17 @@ package games.mrlaki5.backgammon.GameModel;
 
 import android.os.Bundle;
 
+import games.mrlaki5.backgammon.Analysis.TurnRecord;
+
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+
+import com.royalbackgammon.core.model.BoardField;
+import com.royalbackgammon.core.model.GameState;
+import com.royalbackgammon.core.model.TurnContext;
+import com.royalbackgammon.core.scoring.MatchState;
+import com.royalbackgammon.core.variant.Variant;
 
 import games.mrlaki5.backgammon.Beans.BoardFieldState;
 import games.mrlaki5.backgammon.Beans.DiceThrow;
@@ -15,6 +25,9 @@ import games.mrlaki5.backgammon.Players.Player;
 
 //Model class
 public class Model {
+
+    //Keeps the review bounded on very long games
+    private static final int MAX_RECORDED_TURNS = 300;
 
     //Array that represents all fields on board, side board and end board
     //24-white, 25-red side board
@@ -35,6 +48,24 @@ public class Model {
     //2: currentPlayer move chips
     //3: currentPlayer roll dices
     private int State;
+    //Rule variant of this game
+    private Variant variant = Variant.STANDARD;
+    //Completed turns this game and checkers moved off the head this turn (running family)
+    private int turnsPlayed = 0;
+    private int headMovesThisTurn = 0;
+    //Acey-deucey: checkers sent back by a hit (index 0 white, 1 red), and the 1-2 bonus state
+    private final int[] barHits = new int[2];
+    private boolean bonusDoublePending = false;
+    private boolean extraTurnPending = false;
+    //Challenge games roll from a seed so that everyone gets the same dice; 0 = normal random
+    private long diceSeed = 0;
+    private int diceRollsUsed = 0;
+    private transient java.util.Random seededRandom;
+    //Turn-by-turn history for the post-game review (human turns are the ones analysed)
+    private final List<TurnRecord> turnHistory = new ArrayList<>();
+    private TurnRecord currentTurnRecord;
+    //Running score of the match this game belongs to (target 1 = single game)
+    private MatchState match = new MatchState(Variant.STANDARD, Collections.emptyList(), 1, 0, 0, 0);
 
     //Constructor used when loading model from save file
     public Model(){}
@@ -52,6 +83,17 @@ public class Model {
         CurrentPlayer=1;
         //Load from extras player names and player kinds and create players
         if(extras!=null){
+            variant=parseVariant(extras.getString(MenuActivity.EXTRA_VARIANT));
+            List<Variant> rotation = extras.getBoolean(MenuActivity.EXTRA_TAVLI, false)
+                    ? Variant.TAVLI_ROTATION : Collections.<Variant>emptyList();
+            match=new MatchState(variant, rotation,
+                    Math.max(1, extras.getInt(MenuActivity.EXTRA_MATCH_TARGET, 1)),
+                    extras.getInt(MenuActivity.EXTRA_MATCH_WHITE_SCORE, 0),
+                    extras.getInt(MenuActivity.EXTRA_MATCH_RED_SCORE, 0),
+                    extras.getInt(MenuActivity.EXTRA_MATCH_GAMES, 0));
+            //In a Tavli match the rotation decides which game is being played
+            variant=match.currentVariant();
+            diceSeed=extras.getLong(MenuActivity.EXTRA_DICE_SEED, 0L);
             String p1Name=extras.getString(MenuActivity.EXTRA_PLAYER1_NAME);
             String p2Name=extras.getString(MenuActivity.EXTRA_PLAYER2_NAME);
             if("Player".equals(extras.getString(MenuActivity.EXTRA_PLAYER1_KIND))){
@@ -67,29 +109,11 @@ public class Model {
                 Players[1]=new Bot(activity, p2Name, this);
             }
         }
-        //Create board fields
+        //Create board fields with the variant's starting position
+        BoardField[] start=GameState.newGame(variant).getBoard();
         for(int i=0; i<BoardFields.length; i++){
-            BoardFields[i]=new BoardFieldState();
+            BoardFields[i]=new BoardFieldState(start[i].getChipCount(), start[i].getOwner(), start[i].getPinned());
         }
-        //Initialize board fields with starting chip positions
-        //White player
-        BoardFields[0].setNumberOfChips(5);
-        BoardFields[0].setPlayer(1);
-        BoardFields[11].setNumberOfChips(2);
-        BoardFields[11].setPlayer(1);
-        BoardFields[16].setNumberOfChips(3);
-        BoardFields[16].setPlayer(1);
-        BoardFields[18].setNumberOfChips(5);
-        BoardFields[18].setPlayer(1);
-        //Red player
-        BoardFields[4].setNumberOfChips(3);
-        BoardFields[4].setPlayer(2);
-        BoardFields[6].setNumberOfChips(5);
-        BoardFields[6].setPlayer(2);
-        BoardFields[12].setNumberOfChips(5);
-        BoardFields[12].setPlayer(2);
-        BoardFields[23].setNumberOfChips(2);
-        BoardFields[23].setPlayer(2);
     }
 
     //Method used to change current player to other one
@@ -149,6 +173,144 @@ public class Model {
 
     public void setNextMoves(List<NextJump> nextMoves) {
         NextMoves = nextMoves;
+    }
+
+    public Variant getVariant() {
+        return variant;
+    }
+
+    public void setVariant(Variant variant) {
+        this.variant = variant;
+    }
+
+    //Called when the current player's turn ends, before switching player
+    public void onTurnEnded(){
+        flushTurnRecord();
+        turnsPlayed++;
+        headMovesThisTurn=0;
+        bonusDoublePending=false;
+        extraTurnPending=false;
+    }
+
+    //Called when the current player is about to move, and again after an undo
+    public void beginTurnRecord(){
+        currentTurnRecord=new TurnRecord(variant, CurrentPlayer, BoardFields, DiceThrows);
+    }
+
+    public void recordMove(NextJump move){
+        if(currentTurnRecord!=null){
+            currentTurnRecord.addMove(move);
+        }
+    }
+
+    //Stores the turn that was just played; also called when the game ends mid-turn
+    public void flushTurnRecord(){
+        if(currentTurnRecord!=null && !currentTurnRecord.getMoves().isEmpty()
+                && turnHistory.size()<MAX_RECORDED_TURNS){
+            turnHistory.add(currentTurnRecord);
+        }
+        currentTurnRecord=null;
+    }
+
+    public List<TurnRecord> getTurnHistory() {
+        return turnHistory;
+    }
+
+    public TurnContext getTurnContext(){
+        return new TurnContext(headMovesThisTurn, turnsPlayed < 2, getHitsOnBar(CurrentPlayer));
+    }
+
+    public int getHitsOnBar(int player){
+        return barHits[player == 1 ? 0 : 1];
+    }
+
+    public void setHitsOnBar(int player, int value){
+        barHits[player == 1 ? 0 : 1] = Math.max(0, value);
+    }
+
+    public boolean isBonusDoublePending() {
+        return bonusDoublePending;
+    }
+
+    public void setBonusDoublePending(boolean pending) {
+        this.bonusDoublePending = pending;
+    }
+
+    public boolean isExtraTurnPending() {
+        return extraTurnPending;
+    }
+
+    public void setExtraTurnPending(boolean pending) {
+        this.extraTurnPending = pending;
+    }
+
+    public int getTurnsPlayed() {
+        return turnsPlayed;
+    }
+
+    public void setTurnsPlayed(int turnsPlayed) {
+        this.turnsPlayed = turnsPlayed;
+    }
+
+    public int getHeadMovesThisTurn() {
+        return headMovesThisTurn;
+    }
+
+    public void setHeadMovesThisTurn(int headMovesThisTurn) {
+        this.headMovesThisTurn = headMovesThisTurn;
+    }
+
+    public long getDiceSeed() {
+        return diceSeed;
+    }
+
+    public void setDiceSeed(long diceSeed) {
+        this.diceSeed = diceSeed;
+        this.seededRandom = null;
+    }
+
+    public int getDiceRollsUsed() {
+        return diceRollsUsed;
+    }
+
+    public void setDiceRollsUsed(int diceRollsUsed) {
+        this.diceRollsUsed = diceRollsUsed;
+        this.seededRandom = null;
+    }
+
+    /** Next die value: seeded and reproducible in challenge games, random otherwise. */
+    public int nextDieValue() {
+        if (diceSeed == 0) {
+            return (int) (Math.random() * 6) + 1;
+        }
+        if (seededRandom == null) {
+            seededRandom = new java.util.Random(diceSeed);
+            for (int i = 0; i < diceRollsUsed; i++) {
+                seededRandom.nextInt(6);
+            }
+        }
+        diceRollsUsed++;
+        return seededRandom.nextInt(6) + 1;
+    }
+
+    public MatchState getMatch() {
+        return match;
+    }
+
+    public void setMatch(MatchState match) {
+        this.match = match;
+    }
+
+    //Unknown or missing names fall back to STANDARD (old saves, old intents)
+    public static Variant parseVariant(String name){
+        if(name==null){
+            return Variant.STANDARD;
+        }
+        try{
+            return Variant.valueOf(name);
+        } catch (IllegalArgumentException e){
+            return Variant.STANDARD;
+        }
     }
 
     public Player getCurrentObjectPlayer(){

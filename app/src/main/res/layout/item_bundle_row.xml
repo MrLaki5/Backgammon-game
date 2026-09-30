@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    One piece inside a bundle.
+
+    The row carries the piece's own art rather than a category icon, because the
+    whole argument for a set is that these particular objects go together, and
+    that argument cannot be made with seven identical glyphs.
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/space_xs"
+    android:background="@drawable/bg_royal_well"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingStart="@dimen/space_s"
+    android:paddingTop="@dimen/space_xs"
+    android:paddingEnd="@dimen/space_s"
+    android:paddingBottom="@dimen/space_xs">
+
+    <ImageView
+        android:id="@+id/rowArt"
+        android:layout_width="@dimen/art_sm"
+        android:layout_height="@dimen/art_sm"
+        android:contentDescription="@null"
+        android:scaleType="fitCenter" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/space_s"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/rowTitle"
+            style="@style/RoyalText.Title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textSize="@dimen/text_caption" />
+
+        <TextView
+            android:id="@+id/rowRarity"
+            style="@style/RoyalText.Caption"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textSize="@dimen/text_micro" />
+    </LinearLayout>
+
+    <!-- Held, or the one word that says this piece is not for sale. -->
+    <TextView
+        android:id="@+id/rowState"
+        style="@style/RoyalText.Chip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/space_xs"
+        android:maxLines="1"
+        android:textSize="@dimen/text_micro" />
+</LinearLayout>

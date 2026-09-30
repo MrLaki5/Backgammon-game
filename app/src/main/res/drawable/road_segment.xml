@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- The dashed gold road that links one chapter to the next. -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="line">
+    <stroke
+        android:width="2dp"
+        android:color="@color/gold_hairline"
+        android:dashWidth="5dp"
+        android:dashGap="4dp" />
+</shape>

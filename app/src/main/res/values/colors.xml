@@ -1,6 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="surface_base">#112532</color>
+    <color name="surface_panel">#183242</color>
+    <color name="surface_inset">#0B1A24</color>
+    <color name="accent_gold">#F4B044</color>
+    <color name="accent_gold_support">#D4AF37</color>
+    <color name="accent_orange">#E0680E</color>
+    <color name="splash_background">#F98401</color>
+    <color name="launcher_icon_background">#1D2338</color>
+    <color name="accent_slate">#88A5B7</color>
+    <color name="text_primary">#F7EFD5</color>
+    <color name="text_on_accent">#112532</color>
+    <color name="text_muted">#88A5B7</color>
+    <color name="shadow_deep">#99000000</color>
+
+    <color name="colorPrimary">#112532</color>
+    <color name="colorPrimaryDark">#0B1A24</color>
+    <color name="colorAccent">#F4B044</color>
+
+    <!-- Dialog & Theme Picker Colors -->
+    <color name="color_dialog_bg">#112532</color>
+    <color name="color_gold_primary">#F4B044</color>
+    <color name="color_lock_overlay">#CC000000</color>
+    <color name="color_player_name_text">#E0E0E0</color>
+    <color name="color_player_name_hint">#555555</color>
+    <color name="color_difficulty_text_normal">#F7D488</color>
+    <color name="color_difficulty_text_selected">#231504</color>
+    <color name="color_cancel_button_text">#BBBBBB</color>
+    <color name="color_play_button_text">#0E1721</color>
+    <color name="color_play_button_text_dark">#1A1A1A</color>
+    <color name="color_drag_handle">#55FFFFFF</color>
 </resources>

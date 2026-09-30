@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/gameRoot"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/game_background"
+    android:layoutDirection="ltr"
     tools:context=".GameControllers.GameActivity">
 
-    <games.mrlaki5.backgammon.GameView.OnBoardImage
+    <games.mrlaki5.backgammon.GameView.RoyalOnBoardImage
         android:id="@+id/boardImage"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -16,4 +19,118 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-</android.support.constraint.ConstraintLayout>
+    <ImageButton
+        android:id="@+id/btnPause"
+        android:layout_width="38dp"
+        android:layout_height="38dp"
+        android:layout_marginTop="14dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/bg_pause_icon_btn"
+        android:contentDescription="@string/pause_title"
+        android:elevation="16dp"
+        android:padding="7dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/ic_pause_gold"
+        app:layout_constraintEnd_toEndOf="@id/boardImage"
+        app:layout_constraintTop_toTopOf="@id/boardImage" />
+
+    <Button
+        android:id="@+id/btnHint"
+        style="@style/RoyalButton.Gold.Small"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/control_md"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="8dp"
+        android:elevation="16dp"
+        android:paddingStart="@dimen/space_m"
+        android:paddingEnd="@dimen/space_m"
+        android:text="@string/hint_button"
+        android:textSize="@dimen/text_caption"
+        app:layout_constraintEnd_toStartOf="@id/btnPause"
+        app:layout_constraintTop_toTopOf="@id/boardImage" />
+
+    <Button
+        android:id="@+id/btnUndo"
+        style="@style/RoyalButton.Wood"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/control_md"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="8dp"
+        android:elevation="16dp"
+        android:paddingStart="@dimen/space_m"
+        android:paddingEnd="@dimen/space_m"
+        android:text="@string/undo_move"
+        android:textSize="@dimen/text_caption"
+        android:visibility="gone"
+        app:layout_constraintEnd_toStartOf="@id/btnHint"
+        app:layout_constraintTop_toTopOf="@id/boardImage" />
+
+    <ImageButton
+        android:id="@+id/rollDiceButton"
+        android:layout_width="62dp"
+        android:layout_height="62dp"
+        android:background="@drawable/bg_roll_dice_amber"
+        android:contentDescription="@string/roll_button_label"
+        android:elevation="14dp"
+        android:padding="12dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/ic_dice_roll"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/boardImage"
+        app:layout_constraintEnd_toEndOf="@id/boardImage"
+        app:layout_constraintHorizontal_bias="0.455"
+        app:layout_constraintStart_toStartOf="@id/boardImage"
+        app:layout_constraintTop_toTopOf="@id/boardImage" />
+
+    <LinearLayout
+        android:id="@+id/tutorialPanel"
+        android:layout_width="280dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="14dp"
+        android:layout_marginBottom="14dp"
+        android:background="@drawable/royal_panel"
+        android:elevation="14dp"
+        android:orientation="vertical"
+        android:padding="14dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <TextView
+            android:id="@+id/tutorialTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/tutorial_title"
+            android:textColor="@color/accent_gold"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tutorialBody"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:textColor="@color/text_primary"
+            android:textSize="15sp" />
+
+        <Button
+            android:id="@+id/tutorialNextButton"
+            android:layout_width="112dp"
+            android:layout_height="40dp"
+            android:layout_gravity="end"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/bg_pause_button"
+            android:minHeight="0dp"
+            android:minWidth="0dp"
+            android:text="@string/tutorial_next"
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:visibility="gone" />
+
+    </LinearLayout>
+
+    <include layout="@layout/turn_switch_overlay" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

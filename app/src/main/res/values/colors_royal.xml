@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Royal palette — one visual language for the whole app.
+
+    The reference is the game's own board and the illuminated manuscript it borrows
+    from: walnut grounds, gold leaf for everything that matters, Persian turquoise
+    for the living accents, parchment cream for text. The menu art was already wood
+    and gold, so the rest of the app answers to it instead of fighting it.
+
+    Use the semantic names (royal_*, gold_*, ink_*) in layouts; the raw hues stay
+    private to this file so the whole app can be re-tinted from one place.
+-->
+<resources>
+
+    <!-- Grounds: walnut, from the deepest shadow up to the lit panel face -->
+    <color name="royal_night">#150D06</color>
+    <color name="royal_deep">#28180E</color>
+    <color name="royal_panel">#3B2616</color>
+    <color name="royal_panel_high">#55381F</color>
+    <color name="royal_ember">#6E4824</color>
+
+    <!-- Gold leaf: the illumination. bright = lit edge, deep = shadowed edge -->
+    <color name="gold_bright">#F7D488</color>
+    <color name="gold">#E0AE4C</color>
+    <color name="gold_deep">#9C6B1E</color>
+    <color name="gold_ghost">#33E0AE4C</color>
+    <color name="gold_hairline">#55E0AE4C</color>
+
+    <!-- Turquoise (فیروزه): the second voice — progress, success, the living state -->
+    <color name="turquoise">#34C5AC</color>
+    <color name="turquoise_deep">#17705F</color>
+    <color name="turquoise_ghost">#2634C5AC</color>
+
+    <!-- Terracotta: warnings, locked seals, the clay of the tilework -->
+    <color name="terracotta">#C4552F</color>
+
+    <!-- Ink: text on the dark ground -->
+    <color name="ink_parchment">#F4E9D0</color>
+    <color name="ink_soft">#E2CFAC</color>
+    <color name="ink_muted">#A98F6C</color>
+    <color name="ink_on_gold">#231504</color>
+
+    <!-- Scrims and shadows -->
+    <color name="royal_scrim">#C2150D06</color>
+    <color name="royal_shadow">#66000000</color>
+</resources>

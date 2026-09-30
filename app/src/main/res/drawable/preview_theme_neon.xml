@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="320dp"
+    android:height="180dp"
+    android:viewportWidth="320"
+    android:viewportHeight="180">
+
+    <!-- Board background: very dark #0D0D0D -->
+    <path android:fillColor="#0D0D0D"
+          android:pathData="M0,0 H272 V180 H0 Z"/>
+
+    <!-- Subtle scanlines -->
+    <path android:fillColor="#00000000"
+          android:strokeColor="#2000FFFF"
+          android:strokeWidth="0.8"
+          android:pathData="
+            M8,20 H264 M8,32 H264 M8,44 H264 M8,56 H264
+            M8,68 H264 M8,80 H264 M8,92 H264 M8,104 H264
+            M8,116 H264 M8,128 H264 M8,140 H264 M8,152 H264 M8,164 H264"/>
+
+    <!-- Frame overlay: dark metallic #111111 -->
+    <path android:fillColor="#111111"
+          android:pathData="M0,0 H272 V8 H0 Z
+                            M0,172 H272 V180 H0 Z
+                            M0,0 H8 V180 H0 Z
+                            M264,0 H272 V180 H264 Z"/>
+
+    <!-- LEFT QUADRANT: 6 top triangles (neon cyan vs neon magenta 60% opacity) -->
+    <path android:fillColor="#9900FFFF"
+          android:pathData="M8,8   L28,8  L18,86 Z
+                            M48,8  L68,8  L58,86 Z
+                            M88,8  L108,8 L98,86 Z"/>
+    <path android:fillColor="#99FF00FF"
+          android:pathData="M28,8  L48,8  L38,86 Z
+                            M68,8  L88,8  L78,86 Z
+                            M108,8 L128,8 L118,86 Z"/>
+
+    <!-- LEFT QUADRANT: 6 bottom triangles -->
+    <path android:fillColor="#99FF00FF"
+          android:pathData="M8,172   L28,172  L18,94 Z
+                            M48,172  L68,172  L58,94 Z
+                            M88,172  L108,172 L98,94 Z"/>
+    <path android:fillColor="#9900FFFF"
+          android:pathData="M28,172  L48,172  L38,94 Z
+                            M68,172  L88,172  L78,94 Z
+                            M108,172 L128,172 L118,94 Z"/>
+
+    <!-- Center bar -->
+    <path android:fillColor="#080808"
+          android:pathData="M132,8 H140 V172 H132 Z"/>
+
+    <!-- RIGHT QUADRANT: top triangles -->
+    <path android:fillColor="#99FF00FF"
+          android:pathData="M140,8  L160,8  L150,86 Z
+                            M180,8  L200,8  L190,86 Z
+                            M220,8  L240,8  L230,86 Z"/>
+    <path android:fillColor="#9900FFFF"
+          android:pathData="M160,8  L180,8  L170,86 Z
+                            M200,8  L220,8  L210,86 Z
+                            M240,8  L260,8  L250,86 Z"/>
+
+    <!-- bottom triangles -->
+    <path android:fillColor="#9900FFFF"
+          android:pathData="M140,172 L160,172 L150,94 Z
+                            M180,172 L200,172 L190,94 Z
+                            M220,172 L240,172 L230,94 Z"/>
+    <path android:fillColor="#99FF00FF"
+          android:pathData="M160,172 L180,172 L170,94 Z
+                            M200,172 L220,172 L210,94 Z
+                            M240,172 L260,172 L250,94 Z"/>
+
+    <!-- Neon outlines on triangles -->
+    <path android:fillColor="#00000000"
+          android:strokeColor="#00FFFF"
+          android:strokeWidth="0.7"
+          android:pathData="
+            M8,8   L28,8  L18,86 Z
+            M48,8  L68,8  L58,86 Z
+            M88,8  L108,8 L98,86 Z
+            M28,172  L48,172  L38,94 Z
+            M68,172  L88,172  L78,94 Z
+            M108,172 L128,172 L118,94 Z
+            M160,8  L180,8  L170,86 Z
+            M200,8  L220,8  L210,86 Z
+            M240,8  L260,8  L250,86 Z
+            M140,172 L160,172 L150,94 Z
+            M180,172 L200,172 L190,94 Z
+            M220,172 L240,172 L230,94 Z"/>
+    <path android:fillColor="#00000000"
+          android:strokeColor="#FF00FF"
+          android:strokeWidth="0.7"
+          android:pathData="
+            M28,8  L48,8  L38,86 Z
+            M68,8  L88,8  L78,86 Z
+            M108,8 L128,8 L118,86 Z
+            M8,172   L28,172  L18,94 Z
+            M48,172  L68,172  L58,94 Z
+            M88,172  L108,172 L98,94 Z
+            M140,8  L160,8  L150,86 Z
+            M180,8  L200,8  L190,86 Z
+            M220,8  L240,8  L230,86 Z
+            M160,172 L180,172 L170,94 Z
+            M200,172 L220,172 L210,94 Z
+            M240,172 L260,172 L250,94 Z"/>
+
+    <!-- Neon cyan outer glow on frame -->
+    <path android:fillColor="#00000000"
+          android:strokeColor="#00FFFF"
+          android:strokeWidth="1.2"
+          android:pathData="M3,3 H269 V177 H3 Z"/>
+
+    <!-- Right panels column -->
+    <path android:fillColor="#090909"
+          android:pathData="M272,0 H320 V180 H272 Z"/>
+    <path android:fillColor="#141414"
+          android:pathData="M276,8 H316 V86 H276 Z"/>
+    <path android:fillColor="#00000000"
+          android:strokeColor="#00FFFF"
+          android:strokeWidth="1.5"
+          android:pathData="M276,8 H316 V86 H276 Z"/>
+    <path android:fillColor="#141414"
+          android:pathData="M276,94 H316 V172 H276 Z"/>
+    <path android:fillColor="#00000000"
+          android:strokeColor="#FF00FF"
+          android:strokeWidth="1.5"
+          android:pathData="M276,94 H316 V172 H276 Z"/>
+</vector>

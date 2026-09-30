@@ -1,79 +1,344 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<!--
+    Main menu.
+
+    Third pass, driven by what the phone showed rather than by a mock-up.
+
+    Five tiles in one row could not hold a Persian word: "امتیازها" arrived as
+    "ام…". Shrinking the type would have treated the symptom, so the grid changed
+    shape instead — six tiles in two rows, each wide enough to set an icon beside
+    its label rather than above it, which is also the faster thing to read. The
+    shop came down out of the top bar into the sixth slot: it fills the grid, and
+    it leaves the bar to the two things a bar is for — what the player has, and
+    what the player is rated.
+
+    Labels autosize through AppCompat as well, so no device, font scale or
+    translation can clip one again.
+-->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/meny_background"
+    android:background="@drawable/bg_royal_backdrop"
+    android:layoutDirection="locale"
     tools:context=".Menus.MenuActivity">
 
+    <!-- ── Top bar: the purse and the rating ───────────────────────────────── -->
 
-    <RelativeLayout
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/menuTopBar"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true">
+        android:layout_gravity="top"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingStart="@dimen/space_l"
+        android:paddingTop="@dimen/space_s"
+        android:paddingEnd="@dimen/space_l">
+
+        <LinearLayout
+            android:id="@+id/coinBalanceContainer"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/control_sm"
+            android:background="@drawable/bg_royal_pill"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingStart="@dimen/space_m"
+            android:paddingEnd="@dimen/space_m">
+
+            <ImageView
+                android:layout_width="@dimen/icon_sm"
+                android:layout_height="@dimen/icon_sm"
+                android:contentDescription="@null"
+                android:src="@drawable/gold_coin" />
+
+            <TextView
+                android:id="@+id/tvCoinBalance"
+                style="@style/RoyalText.Chip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/space_s"
+                android:background="@null"
+                android:paddingStart="0dp"
+                android:paddingEnd="0dp"
+                android:text="0"
+                android:textSize="@dimen/text_body" />
+        </LinearLayout>
 
         <Button
-            android:id="@+id/continueGame"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
+            android:id="@+id/btnFreeCoins"
+            style="@style/RoyalButton.Gold.Small"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@null"
-            android:fontFamily="casual"
-            android:text="Continue game"
-            android:textAllCaps="false"
-            android:textColor="#828783"
-            android:textSize="25dp"
-            android:textStyle="bold"
-            android:onClick="continueGame"/>
+            android:layout_height="@dimen/control_sm"
+            android:layout_marginStart="@dimen/space_s"
+            android:onClick="onFreeCoinsClicked"
+            android:text="@string/free_coins" />
 
-        <Button
-            android:id="@+id/newGame"
-            android:layout_below="@id/continueGame"
-            android:layout_centerHorizontal="true"
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1" />
+
+        <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@null"
-            android:fontFamily="casual"
-            android:onClick="startNewGame"
-            android:text="New Game"
-            android:textAllCaps="false"
-            android:textColor="#d9fddf"
-            android:textSize="25dp"
-            android:textStyle="bold"/>
+            android:layout_height="@dimen/control_sm"
+            android:background="@drawable/bg_royal_pill"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center_vertical"
+            android:onClick="openPlayerStats"
+            android:orientation="horizontal"
+            android:paddingStart="@dimen/space_m"
+            android:paddingEnd="@dimen/space_m">
 
-        <Button
-            android:id="@+id/scores"
-            android:layout_below="@id/newGame"
-            android:layout_centerHorizontal="true"
+            <ImageView
+                android:layout_width="@dimen/icon_sm"
+                android:layout_height="@dimen/icon_sm"
+                android:contentDescription="@null"
+                android:src="@drawable/gold_medal" />
+
+            <TextView
+                android:id="@+id/tvEloRating"
+                style="@style/RoyalText.Chip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/space_s"
+                android:background="@null"
+                android:paddingStart="0dp"
+                android:paddingEnd="0dp"
+                android:textSize="@dimen/text_body" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- ── The crest ───────────────────────────────────────────────────────── -->
+
+    <ImageView
+        android:id="@+id/royalLogo"
+        android:layout_width="@dimen/art_lg"
+        android:layout_height="162dp"
+        android:layout_gravity="end|center_vertical"
+        android:layout_marginEnd="@dimen/space_xxl"
+        android:layout_marginBottom="@dimen/space_m"
+        android:adjustViewBounds="true"
+        android:contentDescription="@string/app_name"
+        android:elevation="6dp"
+        android:importantForAccessibility="no"
+        android:scaleType="fitCenter"
+        android:src="@drawable/royal_backgammon_logo" />
+
+    <!-- ── The illuminated panel ───────────────────────────────────────────── -->
+
+    <LinearLayout
+        android:id="@+id/menuPanel"
+        android:layout_width="@dimen/panel_menu_width"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start|bottom"
+        android:layout_marginStart="@dimen/space_xxl"
+        android:layout_marginBottom="@dimen/space_s"
+        android:background="@drawable/bg_royal_panel"
+        android:elevation="18dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:paddingStart="@dimen/space_xl"
+        android:paddingTop="@dimen/space_m"
+        android:paddingEnd="@dimen/space_xl"
+        android:paddingBottom="@dimen/space_l">
+
+        <!-- Muqarnas: the stalactite vaulting over a Persian doorway, built
+             from two-centred arches rather than painted. It crowns the panel,
+             which is why the crown icon it replaced came out. -->
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/icon_lg"
+            android:layout_marginTop="-5dp"
+            android:contentDescription="@null"
+            android:scaleType="fitXY"
+            android:src="@drawable/muqarnas_cornice" />
+
+        <ImageView
+            android:id="@+id/menuTitle"
             android:layout_width="wrap_content"
+            android:layout_height="@dimen/control_md"
+            android:layout_marginTop="@dimen/space_xs"
+            android:adjustViewBounds="true"
+            android:contentDescription="@string/app_name"
+            android:src="@drawable/title_app" />
+
+        <TextView
+            android:id="@+id/menuSubtitle"
+            style="@style/RoyalText.Story"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@null"
-            android:fontFamily="casual"
-            android:onClick="scores"
-            android:text="Scores"
-            android:textAllCaps="false"
-            android:textColor="#d9fddf"
-            android:textSize="25dp"
-            android:textStyle="bold"/>
+            android:gravity="center"
+            android:text="@string/royal_subtitle" />
 
-        <Button
-            android:id="@+id/settings"
-            android:layout_below="@id/scores"
-            android:layout_centerHorizontal="true"
-            android:layout_width="wrap_content"
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/space_m"
+            android:layout_marginTop="@dimen/space_xs"
+            android:contentDescription="@null"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_arabesque_divider" />
+
+        <TextView
+            android:id="@+id/tvDailyChallenge"
+            style="@style/RoyalText.Caption"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@null"
-            android:fontFamily="casual"
-            android:text="Settings"
-            android:textAllCaps="false"
-            android:textColor="#d9fddf"
-            android:textSize="25dp"
-            android:textStyle="bold"
-            android:onClick="OpenSettings"/>
+            android:layout_marginTop="@dimen/space_xs"
+            android:gravity="center"
+            android:maxLines="2"
+            android:textColor="@color/turquoise" />
 
-    </RelativeLayout>
+        <!-- The one action the screen exists for. The frame clips the glint
+             that slides across the gold every few seconds. -->
+        <FrameLayout
+            android:id="@+id/playGameFrame"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/control_lg"
+            android:layout_marginTop="@dimen/space_s"
+            android:clipChildren="true"
+            android:clipToPadding="true">
 
-</RelativeLayout>
+            <LinearLayout
+                android:id="@+id/playGame"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/bg_gold_button"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="center"
+                android:onClick="openPlayOptions"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="@dimen/icon_md"
+                    android:layout_height="@dimen/icon_md"
+                    android:contentDescription="@null"
+                    android:src="@drawable/ic_royal_play" />
+
+                <TextView
+                    style="@style/RoyalText.Display"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/space_s"
+                    android:text="@string/play_game"
+                    android:textColor="@color/ink_on_gold"
+                    android:textSize="@dimen/text_display" />
+            </LinearLayout>
+
+            <View
+                android:id="@+id/playGameGlint"
+                android:layout_width="@dimen/art_md"
+                android:layout_height="match_parent"
+                android:background="@drawable/bg_glint"
+                android:visibility="invisible" />
+        </FrameLayout>
+
+        <!-- Six equals, three to a row, icon beside label -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_s"
+            android:baselineAligned="false"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/passAndPlay"
+                style="@style/RoyalMenuTile"
+                android:onClick="openPassAndPlay">
+
+                <ImageView style="@style/RoyalMenuTile.Icon" android:src="@drawable/gold_duel" />
+
+                <TextView
+                    style="@style/RoyalMenuTile.Label"
+                    android:text="@string/pass_and_play" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/journey"
+                style="@style/RoyalMenuTile"
+                android:layout_marginStart="@dimen/space_s"
+                android:onClick="openJourney">
+
+                <ImageView style="@style/RoyalMenuTile.Icon" android:src="@drawable/gold_road" />
+
+                <TextView
+                    style="@style/RoyalMenuTile.Label"
+                    android:text="@string/journey_title" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/tutorial"
+                style="@style/RoyalMenuTile"
+                android:layout_marginStart="@dimen/space_s"
+                android:onClick="startTutorial">
+
+                <ImageView style="@style/RoyalMenuTile.Icon" android:src="@drawable/gold_book" />
+
+                <TextView
+                    style="@style/RoyalMenuTile.Label"
+                    android:text="@string/tutorial" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_s"
+            android:baselineAligned="false"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/scores"
+                style="@style/RoyalMenuTile"
+                android:onClick="scores">
+
+                <ImageView style="@style/RoyalMenuTile.Icon" android:src="@drawable/gold_trophy" />
+
+                <TextView
+                    style="@style/RoyalMenuTile.Label"
+                    android:text="@string/scores" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/btnShop"
+                style="@style/RoyalMenuTile"
+                android:layout_marginStart="@dimen/space_s"
+                android:onClick="openCoinShop">
+
+                <ImageView style="@style/RoyalMenuTile.Icon" android:src="@drawable/gold_shop" />
+
+                <TextView
+                    style="@style/RoyalMenuTile.Label"
+                    android:text="@string/coin_shop" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/settings"
+                style="@style/RoyalMenuTile"
+                android:layout_marginStart="@dimen/space_s"
+                android:onClick="OpenSettings">
+
+                <ImageView style="@style/RoyalMenuTile.Icon" android:src="@drawable/gold_gear" />
+
+                <TextView
+                    style="@style/RoyalMenuTile.Label"
+                    android:text="@string/settings" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/languageToggle"
+        style="@style/RoyalButton.Wood"
+        android:layout_width="124dp"
+        android:layout_height="@dimen/control_md"
+        android:layout_gravity="end|bottom"
+        android:layout_marginEnd="@dimen/space_xxl"
+        android:layout_marginBottom="@dimen/space_l"
+        android:elevation="8dp"
+        android:onClick="toggleLanguage"
+        android:text="@string/language_toggle" />
+
+</FrameLayout>

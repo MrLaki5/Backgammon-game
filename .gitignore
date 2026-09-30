@@ -5,6 +5,26 @@
 /.idea/modules.xml
 /.idea/workspace.xml
 .DS_Store
-/build
+build/
 /captures
 .externalNativeBuild
+*.jks
+*.keystore
+app/google-services.json
+app/release/*.apk
+app/release/baselineProfiles/
+hs_err_pid*
+replay_pid*
+.gradle-ci/
+/game-core/bin/
+/app/*/release/
+
+# Files the delivery script drops into the working tree. They are untracked and
+# large; git must never try to stash or clean them. apply.bat is the reason this
+# block exists: `git stash -u` deleted the script while Windows was still
+# reading it line-by-line, which killed the run at its first step.
+apply.bat
+apply-log.txt
+phase*.bundle
+apk.part*
+royal-test.apk

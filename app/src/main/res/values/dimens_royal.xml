@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    The measuring system.
+
+    Before this file the royal screens used forty-four different spacing values
+    and eighteen type sizes — 6dp here, 7dp there, 9dp next to 10dp, 13.5sp
+    beside 14sp. No two gaps agreed, so nothing lined up with anything, and that
+    is what reads as amateur long before any single element does. Nobody sees a
+    9dp gap; everybody sees that the page has no rhythm.
+
+    So: one four-dp grid for space, three control heights, four icon sizes, three
+    radii, six type steps. Every layout draws from these and nothing else. If a
+    value is not here it does not get used, and if something needs a size that is
+    not here, the size is wrong or the system is — either way it gets decided
+    once, in this file, rather than improvised in a layout.
+-->
+<resources>
+
+    <!-- ── Space: a four-dp grid ───────────────────────────────────────────── -->
+    <dimen name="space_xs">4dp</dimen>
+    <dimen name="space_s">8dp</dimen>
+    <dimen name="space_m">12dp</dimen>
+    <dimen name="space_l">16dp</dimen>
+    <dimen name="space_xl">24dp</dimen>
+    <dimen name="space_xxl">32dp</dimen>
+
+    <!-- The gutter every screen keeps to its edges -->
+    <dimen name="screen_margin">20dp</dimen>
+
+    <!-- ── Controls ────────────────────────────────────────────────────────── -->
+    <!-- Small: pills and badges, read but rarely pressed -->
+    <dimen name="control_sm">36dp</dimen>
+    <!-- Medium: the standard target, and the smallest a thumb should be asked for -->
+    <dimen name="control_md">44dp</dimen>
+    <!-- Large: one per screen, the action the screen exists for -->
+    <dimen name="control_lg">56dp</dimen>
+
+    <!-- ── Icons and artwork ───────────────────────────────────────────────── -->
+    <dimen name="icon_sm">16dp</dimen>
+    <dimen name="icon_md">24dp</dimen>
+    <dimen name="icon_lg">32dp</dimen>
+    <dimen name="art_sm">40dp</dimen>
+    <dimen name="art_md">56dp</dimen>
+    <dimen name="art_lg">72dp</dimen>
+
+    <!-- ── Corners ─────────────────────────────────────────────────────────── -->
+    <dimen name="radius_s">8dp</dimen>
+    <dimen name="radius_m">12dp</dimen>
+    <dimen name="radius_l">20dp</dimen>
+
+    <!-- ── Type: six steps, no halves ──────────────────────────────────────── -->
+    <dimen name="text_display">22sp</dimen>
+    <dimen name="text_title">17sp</dimen>
+    <dimen name="text_body">14sp</dimen>
+    <dimen name="text_caption">12sp</dimen>
+    <dimen name="text_chip">11sp</dimen>
+    <dimen name="text_micro">10sp</dimen>
+
+    <!-- ── Fixed panels ────────────────────────────────────────────────────── -->
+    <!-- Multiples of eight, so panels align to the same grid as their contents -->
+    <dimen name="panel_menu_width">400dp</dimen>
+    <dimen name="panel_dialog_width">376dp</dimen>
+    <dimen name="card_stage_width">160dp</dimen>
+    <dimen name="card_shop_width">152dp</dimen>
+    <dimen name="card_piece_width">104dp</dimen>
+</resources>

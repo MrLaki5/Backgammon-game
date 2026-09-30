@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Rendered by tools/generate_royal_assets.py; see that file for the method. -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@drawable/btn_wood_pressed" android:state_pressed="true" />
+    <item android:drawable="@drawable/btn_wood" />
+</selector>
