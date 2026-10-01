@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Bundle product card — spans the full grid width.
+
+    A bundle is not just a cheaper basket of items; it is a world. The card
+    shows the world: a large piece of artwork, the name, what is inside,
+    and what the player saves by buying together. Price goes on the button.
+    Rarity carries the same premium-metal framing as any other card.
+-->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/space_xs">
+
+    <LinearLayout
+        android:id="@+id/shopCardBody"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/card_common"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingStart="@dimen/space_s"
+        android:paddingTop="@dimen/space_s"
+        android:paddingEnd="@dimen/space_s"
+        android:paddingBottom="@dimen/space_s">
+
+        <!-- Hidden compat anchor: keeps ViewHolder non-null for icon binding -->
+        <TextView
+            android:id="@+id/tvShopItemIcon"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:visibility="gone" />
+
+        <!-- Bundle artwork — large enough to read the craft -->
+        <ImageView
+            android:id="@+id/ivBundleArt"
+            android:layout_width="88dp"
+            android:layout_height="88dp"
+            android:adjustViewBounds="true"
+            android:contentDescription="@null"
+            android:scaleType="fitCenter" />
+
+        <!-- Info block -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/space_m"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <!-- Title row: name + rarity chip -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tvShopItemTitle"
+                    style="@style/RoyalText.Display"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:textSize="@dimen/text_body" />
+
+                <TextView
+                    android:id="@+id/tvShopItemRarity"
+                    style="@style/RoyalText.Chip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/space_xs"
+                    android:letterSpacing="0.04"
+                    android:textSize="@dimen/text_micro" />
+            </LinearLayout>
+
+            <!-- Description: one line to keep the card tight -->
+            <TextView
+                android:id="@+id/tvShopItemDesc"
+                style="@style/RoyalText.Story"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:textSize="@dimen/text_micro" />
+
+            <!-- Bundle value row: item count + savings -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_xs"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tvBundleItemCount"
+                    style="@style/RoyalText.Chip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_chip_turquoise"
+                    android:paddingStart="@dimen/space_s"
+                    android:paddingEnd="@dimen/space_s"
+                    android:paddingTop="2dp"
+                    android:paddingBottom="2dp"
+                    android:textColor="@color/turquoise"
+                    android:textSize="@dimen/text_micro" />
+
+                <TextView
+                    android:id="@+id/tvBundleSavings"
+                    style="@style/RoyalText.Caption"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/space_s"
+                    android:textColor="@color/accent_gold"
+                    android:textSize="@dimen/text_micro"
+                    android:visibility="gone" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!-- Action column: buy button -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/space_m"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/btnShopItemAction"
+                style="@style/RoyalButton.Gold"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/control_sm"
+                android:minWidth="72dp"
+                android:paddingStart="@dimen/space_m"
+                android:paddingEnd="@dimen/space_m"
+                android:textSize="@dimen/text_micro" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <!-- Corner badge (NEW, HOT, etc.) -->
+    <TextView
+        android:id="@+id/tvShopItemBadge"
+        style="@style/RoyalText.Chip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|end"
+        android:layout_margin="@dimen/space_xs"
+        android:background="@drawable/bg_chip_turquoise"
+        android:paddingStart="@dimen/space_s"
+        android:paddingEnd="@dimen/space_s"
+        android:paddingTop="@dimen/space_xs"
+        android:paddingBottom="@dimen/space_xs"
+        android:textColor="@color/turquoise"
+        android:textSize="@dimen/text_micro"
+        android:visibility="gone" />
+
+    <!-- Hidden compat views that ViewHolder looks for in any card layout -->
+    <TextView
+        android:id="@+id/tvShopItemQuantityBadge"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:visibility="gone" />
+
+</FrameLayout>

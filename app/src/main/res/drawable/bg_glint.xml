@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    The highlight that slides across a gold surface. Angled, because a reflection
+    on a raised face is never a vertical bar, and soft at both edges so it reads
+    as light rather than as a shape moving past.
+-->
+<rotate xmlns:android="http://schemas.android.com/apk/res/android"
+    android:fromDegrees="18"
+    android:toDegrees="18"
+    android:pivotX="50%"
+    android:pivotY="50%">
+    <shape android:shape="rectangle">
+        <gradient
+            android:angle="0"
+            android:startColor="#00FFF6E0"
+            android:centerColor="#73FFF6E0"
+            android:endColor="#00FFF6E0"
+            android:type="linear" />
+    </shape>
+</rotate>

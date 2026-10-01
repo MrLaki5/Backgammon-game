@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Finished: a turquoise glaze over the plaque, so progress reads down the road. -->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@drawable/btn_wood" />
+    <item>
+        <shape android:shape="rectangle">
+            <corners android:radius="13dp" />
+            <solid android:color="#1A2E9E8C" />
+        </shape>
+    </item>
+</layer-list>

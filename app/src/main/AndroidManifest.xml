@@ -1,37 +1,97 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="games.mrlaki5.backgammon">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <!-- Network required for ads (TapsellPlus) and future online multiplayer -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <!-- The game also works with the on-screen button, so the accelerometer is optional. -->
     <uses-feature
         android:name="android.hardware.sensor.accelerometer"
-        android:required="true" />
+        android:required="false" />
 
     <application
-        android:allowBackup="true"
-        android:roundIcon="@mipmap/title"
+        android:name=".BackgammonApp"
+        android:allowBackup="false"
+        android:icon="@mipmap/ic_launcher"
+        android:roundIcon="@mipmap/ic_launcher_round"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <activity
-            android:name=".Menus.MenuActivity"
+            android:name=".Menus.SplashActivity"
+            android:exported="true"
+            android:noHistory="true"
             android:screenOrientation="landscape">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
+
+        <activity
+            android:name=".Menus.MenuActivity"
+            android:exported="false"
+            android:screenOrientation="landscape" />
+
         <activity
             android:name=".GameControllers.GameActivity"
+            android:exported="false"
             android:screenOrientation="landscape" />
+
         <activity
             android:name=".Menus.SettingsActivity"
+            android:exported="false"
             android:screenOrientation="landscape" />
+
         <activity
             android:name=".Menus.ResultsActivity"
+            android:exported="false"
             android:screenOrientation="landscape" />
-        <activity android:name=".Menus.ScoresActivity"
-            android:screenOrientation="landscape"/>
+
+        <activity
+            android:name=".Menus.ScoresActivity"
+            android:exported="false"
+            android:screenOrientation="landscape" />
+
+        <activity
+            android:name=".Menus.LegacyScoresActivity"
+            android:exported="false"
+            android:screenOrientation="landscape" />
+
+        <activity
+            android:name=".Economy.CollectionActivity"
+            android:exported="false"
+            android:screenOrientation="landscape" />
+
+        <activity
+            android:name=".Economy.BundleActivity"
+            android:exported="false"
+            android:screenOrientation="landscape" />
+
+        <activity
+            android:name=".Economy.CoinShopActivity"
+            android:exported="false"
+            android:screenOrientation="landscape" />
+
+        <activity
+            android:name=".PlayerStatsActivity"
+            android:exported="false"
+            android:screenOrientation="landscape" />
+
+        <activity
+            android:name=".Analysis.GameReviewActivity"
+            android:exported="false"
+            android:screenOrientation="landscape" />
+
+        <activity
+            android:name=".Journey.JourneyActivity"
+            android:exported="false"
+            android:screenOrientation="landscape" />
+
     </application>
 
 </manifest>

@@ -1,9 +1,10 @@
 package games.mrlaki5.backgammon.Menus;
 
+import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Color;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
@@ -13,11 +14,16 @@ import android.widget.TextView;
 
 import games.mrlaki5.backgammon.Database.DbHelper;
 import games.mrlaki5.backgammon.Database.ScoresTableEntry;
-import games.mrlaki5.backgammon.Menus.MenuActivity;
+import games.mrlaki5.backgammon.LocaleHelper;
 import games.mrlaki5.backgammon.R;
 
 //Activity for showing results of games played by two same players
 public class ResultsActivity extends AppCompatActivity {
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(LocaleHelper.applySelectedLocale(newBase));
+    }
 
     //Player1 name
     String Player1="";
@@ -41,7 +47,8 @@ public class ResultsActivity extends AppCompatActivity {
                 //Player names
                 case ScoresTableEntry.COLUMN_PLAYER1_NAME:
                 case ScoresTableEntry.COLUMN_PLAYER2_NAME:
-                    ((TextView) view).setText(cursor.getString(columnIndex)+": ");
+                    ((TextView) view).setText(getString(R.string.label_with_colon,
+                            cursor.getString(columnIndex)));
                     break;
                 //Player scores
                 case ScoresTableEntry.COLUMN_PLAYER1_WIN:
@@ -49,17 +56,20 @@ public class ResultsActivity extends AppCompatActivity {
                     TextView tempTW=(TextView) view;
                     //Set text and color of text depending on win or lose
                     if(cursor.getInt(columnIndex)==1){
-                        tempTW.setText("WIN");
-                        tempTW.setTextColor(Color.rgb(52, 158, 70));
+                        tempTW.setText(R.string.win);
+                        tempTW.setTextColor(ContextCompat.getColor(ResultsActivity.this,
+                                R.color.accent_gold));
                     }
                     else{
-                        tempTW.setText("LOSE");
-                        tempTW.setTextColor(Color.rgb(212, 31, 38));
+                        tempTW.setText(R.string.lose);
+                        tempTW.setTextColor(ContextCompat.getColor(ResultsActivity.this,
+                                R.color.accent_orange));
                     }
                     break;
                 //Date of end game time
                 case ScoresTableEntry.COLUMN_END_GAME_TIME:
-                    ((TextView) view).setText("Time: "+cursor.getString(columnIndex));
+                    ((TextView) view).setText(getString(R.string.game_time_with_value,
+                            cursor.getString(columnIndex)));
                     break;
             }
             return true;
@@ -142,10 +152,11 @@ public class ResultsActivity extends AppCompatActivity {
         Player1Wins=0;
         Player2Wins=0;
         //Go through data and find in every result which player won
+        int player1WinColumn=cursor2.getColumnIndexOrThrow(ScoresTableEntry.COLUMN_PLAYER1_WIN);
+        int player1NameColumn=cursor2.getColumnIndexOrThrow(ScoresTableEntry.COLUMN_PLAYER1_NAME);
         while(cursor2.moveToNext()){
-            if(cursor2.getInt(cursor2.getColumnIndex(ScoresTableEntry.COLUMN_PLAYER1_WIN))==1){
-                if(cursor2.getString(cursor2.getColumnIndex(
-                        ScoresTableEntry.COLUMN_PLAYER1_NAME)).equals(Player1)){
+            if(cursor2.getInt(player1WinColumn)==1){
+                if(cursor2.getString(player1NameColumn).equals(Player1)){
                     Player1Wins++;
                 }
                 else{
@@ -153,8 +164,7 @@ public class ResultsActivity extends AppCompatActivity {
                 }
             }
             else{
-                if(cursor2.getString(cursor2.getColumnIndex(
-                        ScoresTableEntry.COLUMN_PLAYER1_NAME)).equals(Player1)){
+                if(cursor2.getString(player1NameColumn).equals(Player1)){
                     Player2Wins++;
                 }
                 else{
@@ -165,7 +175,8 @@ public class ResultsActivity extends AppCompatActivity {
         //Close second cursor
         cursor2.close();
         //Set view with overall wins
-        String tempStr=Player1+" "+Player1Wins+":"+Player2Wins+" "+Player2;
+        String tempStr=getString(R.string.results_summary, Player1, Player1Wins,
+                Player2Wins, Player2);
         ((TextView) findViewById(R.id.mainResultsText)).setText(tempStr);
     }
 }

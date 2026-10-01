@@ -1,0 +1,67 @@
+{
+  "project_info": {
+    "project_number": "451108259165",
+    "project_id": "ryal-backgammon",
+    "storage_bucket": "ryal-backgammon.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:451108259165:android:f8f336790b46219fcad4b4",
+        "android_client_info": {
+          "package_name": "com.royalbackgammon.offline"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDSsp2wOGNCckmdoIKJD0UXA-PhfJH1m2E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:451108259165:android:f8f336790b46219fcad4b4",
+        "android_client_info": {
+          "package_name": "com.royalbackgammon.offline.bazaar"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDSsp2wOGNCckmdoIKJD0UXA-PhfJH1m2E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:451108259165:android:f8f336790b46219fcad4b4",
+        "android_client_info": {
+          "package_name": "com.royalbackgammon.offline.myket"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDSsp2wOGNCckmdoIKJD0UXA-PhfJH1m2E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="320dp"
+    android:height="180dp"
+    android:viewportWidth="320"
+    android:viewportHeight="180">
+
+    <!-- Board background: dark walnut -->
+    <path android:fillColor="#3B1C0A"
+          android:pathData="M0,0 H272 V180 H0 Z"/>
+
+    <!-- Frame overlay (border darkening) -->
+    <path android:fillColor="#1A0A03"
+          android:pathData="M0,0 H272 V8 H0 Z
+                            M0,172 H272 V180 H0 Z
+                            M0,0 H8 V180 H0 Z
+                            M264,0 H272 V180 H264 Z"/>
+
+    <!-- LEFT QUADRANT: 6 top triangles (base y=8, tip y=86) -->
+    <!-- Each point width: (264-8-8)/2 / 6 = 124/6 ≈ 20.7 → use 20 each, starts at x=8 -->
+    <!-- Green at i=0,2,4; cream at i=1,3,5 -->
+    <path android:fillColor="#2B5223"
+          android:pathData="M8,8   L28,8  L18,86 Z
+                            M48,8  L68,8  L58,86 Z
+                            M88,8  L108,8 L98,86 Z"/>
+    <path android:fillColor="#E8DDB5"
+          android:pathData="M28,8  L48,8  L38,86 Z
+                            M68,8  L88,8  L78,86 Z
+                            M108,8 L128,8 L118,86 Z"/>
+
+    <!-- LEFT QUADRANT: 6 bottom triangles (base y=172, tip y=94) -->
+    <!-- Inverted colors: cream at i=0,2,4; green at i=1,3,5 -->
+    <path android:fillColor="#E8DDB5"
+          android:pathData="M8,172   L28,172  L18,94 Z
+                            M48,172  L68,172  L58,94 Z
+                            M88,172  L108,172 L98,94 Z"/>
+    <path android:fillColor="#2B5223"
+          android:pathData="M28,172  L48,172  L38,94 Z
+                            M68,172  L88,172  L78,94 Z
+                            M108,172 L128,172 L118,94 Z"/>
+
+    <!-- Center bar -->
+    <path android:fillColor="#200E05"
+          android:pathData="M132,8 H140 V172 H132 Z"/>
+
+    <!-- RIGHT QUADRANT: same structure starting at x=140 -->
+    <!-- top triangles: cream at 0,2,4; green at 1,3,5 (mirrored colors) -->
+    <path android:fillColor="#E8DDB5"
+          android:pathData="M140,8  L160,8  L150,86 Z
+                            M180,8  L200,8  L190,86 Z
+                            M220,8  L240,8  L230,86 Z"/>
+    <path android:fillColor="#2B5223"
+          android:pathData="M160,8  L180,8  L170,86 Z
+                            M200,8  L220,8  L210,86 Z
+                            M240,8  L260,8  L250,86 Z"/>
+
+    <!-- bottom triangles: green at 0,2,4; cream at 1,3,5 -->
+    <path android:fillColor="#2B5223"
+          android:pathData="M140,172 L160,172 L150,94 Z
+                            M180,172 L200,172 L190,94 Z
+                            M220,172 L240,172 L230,94 Z"/>
+    <path android:fillColor="#E8DDB5"
+          android:pathData="M160,172 L180,172 L170,94 Z
+                            M200,172 L220,172 L210,94 Z
+                            M240,172 L260,172 L250,94 Z"/>
+
+    <!-- Copper outlines on triangles (single combined path, stroke only) -->
+    <path android:fillColor="#00000000"
+          android:strokeColor="#B47834"
+          android:strokeWidth="0.7"
+          android:pathData="
+            M8,8   L28,8  L18,86 Z M28,8  L48,8  L38,86 Z
+            M48,8  L68,8  L58,86 Z M68,8  L88,8  L78,86 Z
+            M88,8  L108,8 L98,86 Z M108,8 L128,8 L118,86 Z
+            M8,172   L28,172  L18,94 Z M28,172  L48,172  L38,94 Z
+            M48,172  L68,172  L58,94 Z M68,172  L88,172  L78,94 Z
+            M88,172  L108,172 L98,94 Z M108,172 L128,172 L118,94 Z
+            M140,8  L160,8  L150,86 Z M160,8  L180,8  L170,86 Z
+            M180,8  L200,8  L190,86 Z M200,8  L220,8  L210,86 Z
+            M220,8  L240,8  L230,86 Z M240,8  L260,8  L250,86 Z
+            M140,172 L160,172 L150,94 Z M160,172 L180,172 L170,94 Z
+            M180,172 L200,172 L190,94 Z M200,172 L220,172 L210,94 Z
+            M220,172 L240,172 L230,94 Z M240,172 L260,172 L250,94 Z"/>
+
+    <!-- Copper frame inlay -->
+    <path android:fillColor="#00000000"
+          android:strokeColor="#8C6428"
+          android:strokeWidth="1.2"
+          android:pathData="M3,3 H269 V177 H3 Z"/>
+
+    <!-- Right panels column -->
+    <path android:fillColor="#140702"
+          android:pathData="M272,0 H320 V180 H272 Z"/>
+
+    <!-- Top panel -->
+    <path android:fillColor="#261408"
+          android:pathData="M276,8 H316 V86 H276 Z"/>
+    <path android:fillColor="#00000000"
+          android:strokeColor="#B47834"
+          android:strokeWidth="1.5"
+          android:pathData="M276,8 H316 V86 H276 Z"/>
+
+    <!-- Bottom panel -->
+    <path android:fillColor="#261408"
+          android:pathData="M276,94 H316 V172 H276 Z"/>
+    <path android:fillColor="#00000000"
+          android:strokeColor="#B47834"
+          android:strokeWidth="1.5"
+          android:pathData="M276,94 H316 V172 H276 Z"/>
+</vector>

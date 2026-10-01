@@ -2,10 +2,31 @@
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.NoActionBar">
-        <!-- Customize your theme here.
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>  -->
+        <!-- Customize your theme here. -->
     </style>
 
+    <style name="CustomBottomSheetDialogTheme" parent="Theme.MaterialComponents.Light.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/CustomBottomSheetModalStyle</item>
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:windowSoftInputMode">adjustResize</item>
+    </style>
+
+    <style name="CustomBottomSheetModalStyle" parent="Widget.MaterialComponents.BottomSheet.Modal">
+        <item name="android:background">@android:color/transparent</item>
+    </style>
+
+    <style name="DarkAlertDialogTheme" parent="Theme.AppCompat.Dialog.Alert">
+        <item name="android:background">@color/surface_base</item>
+        <item name="android:textColorPrimary">@color/text_primary</item>
+        <item name="android:textColorAlertDialogListItem">@color/text_primary</item>
+        <item name="colorAccent">@color/accent_gold</item>
+    </style>
+
+    <style name="ShopCategoryTabButton" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="android:textSize">13sp</item>
+        <item name="android:paddingHorizontal">14dp</item>
+        <item name="strokeColor">@color/color_gold_primary</item>
+        <item name="android:textColor">@color/color_gold_primary</item>
+        <item name="backgroundTint">@android:color/transparent</item>
+    </style>
 </resources>

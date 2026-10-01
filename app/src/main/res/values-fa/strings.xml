@@ -1,0 +1,816 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">تخته‌نرد سلطنتی</string>
+    <string name="royal_subtitle">هزار سال تخته‌نرد · نسخه سلطنتی</string>
+    <string name="studio_splash_content_description">لوگوی Battleheim Studio</string>
+
+    <string name="continue_game">ادامه بازی</string>
+    <string name="new_game">بازی جدید</string>
+    <string name="tutorial">آموزش</string>
+    <string name="scores">امتیازها</string>
+    <string name="settings">تنظیمات</string>
+    <string name="language_toggle">🌐 English</string>
+
+    <string name="player_one">بازیکن اول</string>
+    <string name="player_two">بازیکن دوم</string>
+    <string name="player_setup">تنظیم بازیکنان</string>
+    <string name="player_name">نام بازیکن</string>
+    <string name="human_player">انسان</string>
+    <string name="bot_player">ربات</string>
+    <string name="play">شروع بازی</string>
+    <string name="cancel">انصراف</string>
+
+    <string name="bot_difficulty">سطح ربات</string>
+    <string name="difficulty_easy">آسان</string>
+    <string name="difficulty_medium">متوسط</string>
+    <string name="difficulty_hard">سخت</string>
+    <string name="difficulty_royal">سلطنتی</string>
+
+    <string name="board_theme">طرح تخته</string>
+    <string name="bot_board_settings">تنظیمات ربات و تخته</string>
+    <string name="theme_royal">سلطنتی</string>
+    <string name="theme_pop_art">پاپ‌آرت</string>
+    <string name="theme_cyberpunk">سایبرپانک</string>
+    <string name="theme_luxury">لوکس ایرانی</string>
+
+    <string-array name="bot_difficulty_entries">
+        <item>@string/difficulty_easy</item>
+        <item>@string/difficulty_medium</item>
+        <item>@string/difficulty_hard</item>
+        <item>@string/difficulty_royal</item>
+    </string-array>
+
+    <string-array name="board_theme_entries">
+        <item>@string/theme_royal</item>
+        <item>@string/theme_pop_art</item>
+        <item>@string/theme_cyberpunk</item>
+        <item>@string/theme_luxury</item>
+    </string-array>
+
+    <string name="roll_dice">تاس بریزید</string>
+    <string name="roll_dice_button">ریختن تاس</string>
+    <string name="move_checkers">مهره‌ها را حرکت دهید</string>
+    <string name="opening_tie">مساوی شد! دوباره تاس بریزید</string>
+    <string name="current_turn_message">نوبت %1$s - %2$s</string>
+    <string name="initial_game_message">بازیکن اول، تاس بریزید</string>
+    <string name="tutorial_next">بعدی ◀</string>
+    <string name="tutorial_done">تمام</string>
+    <string name="tutorial_title">آموزش</string>
+    <string name="tutorial_player">شما</string>
+    <string name="tutorial_bot">ربات آموزشی</string>
+    <string name="tutorial_intro">خوش آمدید! هدف این است که همه مهره‌هایتان را دور تخته ببرید و زودتر از حریف خارج کنید. بیایید هر مهارت را تمرین کنیم!</string>
+    <string name="tutorial_setup">این چیدمان شروع بازی است. مهره‌های نارنجی شما به سمت خانه‌تان (پایین-راست) حرکت می‌کنند. بیایید تاس بریزیم!</string>
+    <string name="tutorial_roll">دکمه تاس را بزنید — یا گوشی را تکان دهید! هر تاس اجازه حرکت یک مهره به اندازه عددش را می‌دهد.</string>
+    <string name="tutorial_move">حالا یکی از مهره‌هایتان را به مقصد سبز بکشید. روی مهره بزنید تا ببینید کجا می‌تواند برود.</string>
+    <string name="tutorial_hit">آن مهره سفید تنها را می‌بینید؟ مهره‌تان را رویش ببرید تا بزنیدش! مهره تنهای حریف آسیب‌پذیر است.</string>
+    <string name="tutorial_bar">مهره شما روی بار است. باید اول آن را به تخته برگردانید. تاس بریزید و وارد کنید!</string>
+    <string name="tutorial_bear_off">همه مهره‌هایتان در خانه هستند! حالا با ریختن تاس آن‌ها را خارج کنید. خارج کنید تا ببرید!</string>
+    <string name="tutorial_finished">عالی! اصول بازی را یاد گرفتید. حالا واقعی بازی کنید!</string>
+
+    <string name="scores_title">جدول امتیازها</string>
+    <string name="results_title">نتیجه بازی‌ها</string>
+    <string name="score_empty">هنوز نتیجه‌ای ثبت نشده است</string>
+    <string name="reset_scores">پاک کردن امتیازها</string>
+    <string name="reset_results">پاک کردن نتایج</string>
+    <string name="reset_confirmation">آیا از پاک کردن نتایج مطمئن هستید؟</string>
+    <string name="yes">بله</string>
+    <string name="no">خیر</string>
+    <string name="win">برنده</string>
+    <string name="lose">بازنده</string>
+    <string name="game_time">زمان بازی</string>
+    <string name="label_with_colon">%1$s: </string>
+    <string name="game_time_with_value">زمان بازی: %1$s</string>
+    <string name="results_summary">%1$s %2$d:%3$d %4$s</string>
+
+    <string name="settings_title">تنظیمات بازی</string>
+    <string name="sound_enabled">صدا</string>
+    <string name="effects_enabled">افکت‌ها</string>
+    <string name="sound">میزان صدا</string>
+    <string name="music_volume">میزان موسیقی</string>
+    <string name="shake_sensitivity">حساسیت تکان دادن گوشی</string>
+    <string name="shake_duration">دقت تشخیص تکان</string>
+    <string name="dice_delay">تاخیر تشخیص تاس</string>
+    <string name="turn_delay">فاصله میان نوبت‌ها</string>
+    <string name="restore_defaults">↺ بازگردانی تنظیمات اولیه</string>
+    <string name="use_persian_digits">نمایش اعداد فارسی</string>
+
+    <string name="shake_threshold_value">حساسیت تکان: %1$d</string>
+    <string name="shake_precision_value">دقت تشخیص تکان: %1$d میلی‌ثانیه</string>
+    <string name="sound_value">میزان صدا: %1$d%%</string>
+    <string name="music_volume_value">میزان موسیقی: %1$d%%</string>
+    <string name="shake_delay_value">تاخیر تشخیص تاس: %1$d</string>
+    <string name="turn_delay_value">سرعت تعویض نوبت: %1$d</string>
+
+    <string name="percent_value">%1$d%%</string>
+    <string name="millisecond_value">%1$d میلی‌ثانیه</string>
+    <string name="second_value">%1$d ثانیه</string>
+    <string name="numeric_value">%1$d</string>
+
+    <string name="reset">بازنشانی</string>
+
+    <!-- Pass & Play -->
+    <string name="pass_and_play">دو نفره</string>
+    <string name="pass_and_play_subtitle">بازی روی یک گوشی</string>
+    <string name="pass_and_play_setup">تنظیم بازی دو نفره</string>
+    <string name="pass_and_play_player1_default">بازیکن ۱</string>
+    <string name="pass_and_play_player2_default">بازیکن ۲</string>
+    <string name="turn_switch_title">گوشی را رد کنید!</string>
+    <string name="turn_switch_message">نوبت %1$s است</string>
+    <string name="turn_switch_ready">آماده‌ام</string>
+    <string name="game_mode_vs_bot">مقابل ربات</string>
+    <string name="game_mode_pass_and_play">دو نفره</string>
+
+    <!-- Online Multiplayer (NOT YET ACTIVE) -->
+    <string name="online_play">آنلاین</string>
+    <string name="online_play_subtitle">به‌زودی</string>
+    <string name="online_coming_soon">بازی آنلاین به‌زودی اضافه می‌شود!</string>
+    <string name="online_random_match">پیدا کردن حریف</string>
+    <string name="online_invite_friend">دعوت دوست</string>
+    <string name="online_join_room">ورود به اتاق</string>
+    <string name="online_enter_code">کد دعوت را وارد کنید</string>
+    <string name="online_invite_code_label">کد دعوت</string>
+    <string name="online_share_code">این کد را با دوستتان به اشتراک بگذارید:</string>
+    <string name="online_searching">در حال جستجوی حریف…</string>
+    <string name="online_waiting_friend">منتظر پیوستن دوست…</string>
+    <string name="online_match_found">حریف پیدا شد!</string>
+    <string name="online_connecting">در حال اتصال…</string>
+    <string name="online_connection_lost">اتصال قطع شد</string>
+    <string name="online_reconnecting">در حال اتصال مجدد… (%1$d ثانیه)</string>
+    <string name="online_opponent_disconnected">حریف قطع شد (%1$d ثانیه)</string>
+    <string name="online_opponent_reconnected">حریف بازگشت</string>
+    <string name="online_match_forfeited">بازی به دلیل قطعی باخته شد</string>
+    <string name="online_opponent_resigned">حریف انصراف داد — شما برنده‌اید!</string>
+    <string name="online_invalid_move">حرکت نامعتبر از حریف تشخیص داده شد</string>
+    <string name="online_cancel">انصراف</string>
+    <string name="online_resign">تسلیم</string>
+    <string name="online_resign_confirm">آیا مطمئن هستید که می‌خواهید تسلیم شوید؟</string>
+
+    <!-- Leaderboard -->
+    <string name="leaderboard_title">جدول رتبه‌بندی</string>
+    <string name="leaderboard_this_week">این هفته</string>
+    <string name="leaderboard_this_month">این ماه</string>
+    <string name="leaderboard_all_time">کل</string>
+    <string name="leaderboard_empty">هنوز بازی‌ای انجام نشده. بازی کنید تا رتبه‌بندی ببینید!</string>
+    <string name="leaderboard_legacy_scores">تاریخچه بازی‌ها</string>
+    <string name="leaderboard_games_format">%1$d بازی • %2$d%% برد</string>
+    <string name="leaderboard_elo_label">امتیاز</string>
+    <string name="leaderboard_avatar_desc">آواتار بازیکن</string>
+    <string name="leaderboard_rank">رتبه</string>
+
+    <string name="play_game">بازی</string>
+    <string name="play_choice_title">انتخاب بازی</string>
+    <string name="play_choice_message">بازی ذخیره‌شده را ادامه بدهید یا از نو شروع کنید.</string>
+
+    <!-- Monetization -->
+    <string name="iap_remove_ads">حذف تبلیغات</string>
+    <string name="iap_remove_ads_desc">حذف دائمی تمام تبلیغات میان‌صفحه‌ای</string>
+    <string name="iap_theme_unlock">باز کردن طرح</string>
+    <string name="iap_restore_purchases">بازیابی خریدها</string>
+    <string name="iap_purchase_success">خرید موفقیت‌آمیز!</string>
+    <string name="iap_purchase_failed">خرید ناموفق. لطفاً دوباره تلاش کنید.</string>
+    <string name="hint_button">💡 راهنما</string>
+    <string name="hint_watch_ad">یک ویدیوی کوتاه ببینید تا بهترین حرکت نشان داده شود</string>
+    <string name="hint_best_move">بهترین حرکت مشخص شد!</string>
+    <string name="theme_locked">قفل — برای خرید بزنید</string>
+
+    <!-- Pause Menu -->
+    <string name="pause_title">مکث</string>
+    <string name="pause_resume">ادامه</string>
+    <string name="pause_restart">از نو</string>
+    <string name="pause_quit">خروج</string>
+    <string name="pause_volume_desc">صدا</string>
+    <string name="roll_button_label">بنداز</string>
+
+    <!-- Game Over / Rematch -->
+    <string name="game_over_title">پایان بازی</string>
+    <string name="game_over_winner">%1$s برنده شد!</string>
+    <string name="game_over_duration">مدت: %1$d:%2$02d</string>
+    <string name="game_over_game_number">بازی #%1$d</string>
+    <string name="game_over_win_streak">برد متوالی: %1$d 🔥</string>
+    <string name="game_over_best_streak">بهترین: %1$d</string>
+    <string name="daily_challenge_done">چالش روزانه انجام شد! ✓</string>
+    <string name="review_title">از بازی لذت می‌برید؟</string>
+    <string name="review_message">اگر تخته‌نرد سلطنتی رو دوست دارید، لطفاً در فروشگاه امتیاز بدید. خیلی کمک می‌کنه!</string>
+    <string name="review_rate">امتیاز بدم</string>
+    <string name="review_later">بعداً</string>
+    <string name="review_never">نه ممنون</string>
+    <string name="rematch">🔄 بازی مجدد</string>
+    <string name="change_settings">تغییر تنظیمات</string>
+    <string name="main_menu">🏠 منوی اصلی</string>
+
+    <!-- Coin Economy -->
+    <string name="coins">سکه</string>
+    <string name="coin_balance">%1$d سکه</string>
+    <string name="coin_earned">+%1$d سکه</string>
+    <string name="coin_spent">-%1$d سکه</string>
+    <string name="daily_login_title">پاداش روزانه</string>
+    <string name="daily_login_claim">دریافت</string>
+    <string name="daily_login_claimed">دریافت شد!</string>
+    <string name="daily_login_day">روز %1$d</string>
+    <string name="free_coins">سکهٔ رایگان</string>
+    <string name="watch_ad_for_coins">🎬 تماشای ویدئو برای %1$d سکه</string>
+    <string name="double_reward">سکه دوبرابر</string>
+    <string name="double_reward_desc">تماشای ویدئو برای دوبرابر شدن پاداش!</string>
+    <string name="save_streak">حفظ رکورد</string>
+    <string name="save_streak_desc">تماشای ویدئو برای حفظ رکورد %1$d بردت!</string>
+    <string name="bonus_chest">صندوق بونوس</string>
+    <string name="bonus_chest_desc">تماشای ویدئو برای %1$d سکه بونوس!</string>
+    <string name="hint_choice_title">💡 راهنمایی</string>
+    <string name="hint_use_coins">🪙 استفاده از %1$d سکه</string>
+    <string name="hint_watch_video">🎬 تماشای ویدئو (رایگان)</string>
+    <string name="insufficient_coins">سکه کافی نیست</string>
+    <string name="ad_on_cooldown">تبلیغ رایگان بعدی تا %1$s</string>
+    <string name="ad_daily_limit_reached">فردا دوباره سر بزن!</string>
+    <string name="reward_earned_title">جایزه گرفتی!</string>
+    <string name="weekly_challenge">چالش هفتگی</string>
+    <string name="weekly_player">بازیکن هفته</string>
+    <string name="weekly_warrior">جنگجوی هفته</string>
+    <string name="weekly_endurance">استقامت</string>
+    <string name="weekly_progress">%1$d / %2$d</string>
+    <string name="undo_move">↺ برگشت</string>
+    <string name="coin_shop">فروشگاه</string>
+    <string name="avatar_frames">فریم آواتار</string>
+    <string name="dice_skins">طرح تاس</string>
+    <string name="profile_titles">عنوانها</string>
+    <string name="theme_rental">اجاره تم (۲۴ ساعت)</string>
+    <string name="shop_category_all">همه</string>
+    <string name="shop_item_owned">خریداری شده</string>
+    <string name="shop_item_equip">انتخاب</string>
+    <string name="shop_item_equipped">فعال</string>
+    <string name="shop_item_buy">%1$d سکه</string>
+    <string name="shop_purchase_success">آیتم خریداری و فعال شد!</string>
+    <string name="shop_category_rental">اجاره‌ای (۲۴ ساعت)</string>
+    <string name="shop_rarity_common">معمولی</string>
+    <string name="shop_rarity_rare">نادر</string>
+    <string name="shop_rarity_epic">حماسی</string>
+    <string name="shop_rarity_legendary">افسانه‌ای</string>
+    <string name="shop_locked_format">🔒 %1$d برد لازم</string>
+    <string name="shop_already_purchased">قبلاً خریداری شده</string>
+    <string name="shop_locked_short">قفل</string>
+    <string name="shop_rental_button">اجاره %1$d 🪙</string>
+    <string name="shop_rental_active">در حال اجاره</string>
+    <string name="elo_rating_format">امتیاز %1$d</string>
+    <string name="elo_delta_positive">+%1$d رتبه</string>
+    <string name="elo_delta_negative">%1$d رتبه</string>
+    <string name="coins_breakdown">سکه‌های کسب شده</string>
+    <string name="coins_base_win">برد: +%1$d</string>
+    <string name="coins_diff_bonus">سختی: +%1$d</string>
+    <string name="coins_first_game">اولین بازی روز: +%1$d</string>
+    <string name="coins_streak_bonus">پاداش رکورد: +%1$d</string>
+    <string name="daily_login_subtitle">هر روز وارد بازی شوید و جوایز بزرگتر بگیرید!</string>
+    <string name="daily_login_already_claimed">پاداش بعدی فردا در دسترس خواهد بود!</string>
+    <string name="undo_cost_format">برگشت (%1$d سکه)</string>
+    <string name="undo_success">حرکت برگشت داده شد</string>
+    <string name="undo_unavailable">برگشت فقط در نوبت شما امکان‌پذیر است</string>
+
+    <!-- Settings screen section headers -->
+    <string name="settings_section_audio">صدا</string>
+    <string name="settings_section_gameplay">گیم‌پلی</string>
+    <string name="settings_section_shake">تکان دادن تاس</string>
+
+    <!-- Settings value labels -->
+    <string name="settings_sfx_value">جلوه صوتی: %1$d%%</string>
+    <string name="settings_music_value">موسیقی: %1$d%%</string>
+    <string name="settings_turn_value">سرعت: %1$d</string>
+    <string name="settings_threshold_value">%1$d</string>
+    <string name="settings_precision_value">%1$d میلی‌ثانیه</string>
+    <string name="settings_shake_delay">تاخیر تشخیص</string>
+    <string name="settings_delay_value">%1$d</string>
+
+    <!-- Theme unlock via ad -->
+    <string name="watch_ad_unlock">📺 تبلیغ</string>
+    <string name="theme_unlocked_toast">طرح باز شد!</string>
+    <string name="ad_not_ready">تبلیغ آماده نیست — کمی بعد تلاش کنید</string>
+    <string name="theme_woodland_name">جنگل</string>
+    <string name="theme_galaxy">کهکشان</string>
+    <string name="theme_ancient_egypt">مصر باستان</string>
+    <string name="theme_neon_retro">نئون رترو</string>
+    <string name="theme_buy_button">خرید — %1$d سکه</string>
+    <string name="theme_discount_button">تخفیف ۵۰٪ با تبلیغ (۱ ساعت)</string>
+    <string name="theme_not_enough_coins">سکه کافی ندارید!</string>
+    <string name="theme_discount_activated">تخفیف ۵۰٪ برای ۱ ساعت فعال شد!</string>
+
+    <!-- Shop Deepening: Consumables & Bundles -->
+    <string name="shop_hint_pack_3">۳ راهنما</string>
+    <string name="shop_hint_pack_10">۱۰ راهنما</string>
+    <string name="shop_undo_pack_3">۳ برگشت</string>
+    <string name="shop_starter_bundle">باندل شروع</string>
+    <string name="shop_hint_pack_3_desc">۳ شارژ راهنما برای بازی</string>
+    <string name="shop_hint_pack_10_desc">۱۰ شارژ راهنما برای بازی</string>
+    <string name="shop_undo_pack_3_desc">۳ شارژ برگشت حرکت رایگان</string>
+    <string name="shop_starter_bundle_desc">فریم نقره + تاس استیل + ۵۰ سکه هدیه + ۲ راهنما</string>
+
+    <!-- باندل‌های موضوع‌محور -->
+    <string name="bundle_nacre_title">صدف دریای عُمان</string>
+    <string name="bundle_nacre_desc">مهره صدف + تاس گردو + موج فرود — سه لایه از یک اقیانوس.</string>
+    <string name="bundle_nacre_story">پوسته‌ی صدف را زیر نور می‌شکنند تا رنگ‌های نهفته‌اش بیرون بیاید — صورتی، سبز و طلایی که با هر زاویه‌ای تغییر می‌کند. این مهره‌ها از پوسته‌هایی هستند که دیگر در خلیج پیدا نمی‌شوند.</string>
+
+    <string name="bundle_copper_title">مس اصفهان</string>
+    <string name="bundle_copper_desc">مهره مسی + تاس مسی + دودِ روشنایی — یادگار کوره‌های بازار مسگرها.</string>
+    <string name="bundle_copper_story">مسگرهای اصفهان سه نسل در یک کوچه کوبیده‌اند. رنگ مس با آتش تغییر می‌کند — از نارنجی نو به قهوه‌ای پیر — و این مهره‌ها درست در همان لحظه‌ای خاموش شده‌اند که رنگ در اوج بود.</string>
+
+    <string name="bundle_turquoise_title">فیروزه‌ی نیشابور</string>
+    <string name="bundle_turquoise_desc">مهره، تاس و جرقه‌ی فرود — همه از معادن نیشابور.</string>
+    <string name="bundle_turquoise_story">فیروزه نه در رگه‌ها بلکه در حفره‌ها نشسته، و هر حفره رنگ خودش را دارد. این مهره‌ها رنگ خود را از سه حفره‌ی متفاوت گرفته‌اند — هیچ دو تختی در نور یکسان آبی یکسانی نشان نمی‌دهند.</string>
+
+    <string name="bundle_lapis_title">لاجوردِ شیراز</string>
+    <string name="bundle_lapis_desc">آبی ژرف — مهره، تاس و شبی که پشت سر می‌گذارند.</string>
+    <string name="bundle_lapis_story">لاجورد از پیش از آنکه رنگ نامی داشته باشد برای رنگ‌پزی آسیاب شده. این مهره‌ها رنگ‌آمیزی نشده‌اند — خودِ سنگ هستند، شکل‌گرفته و صیقلی. رنگ اعمال نشده؛ خودِ ماده است، و محو نمی‌شود.</string>
+
+    <string name="bundle_saffron_title">زعفران یزد</string>
+    <string name="bundle_saffron_desc">رنگ طلایی یزد — مهره، تاس و مه‌ی طلایی که روی تخته می‌نشیند.</string>
+    <string name="bundle_saffron_story">بیش از صدهزار رشته برای یک کیلوگرم زعفران لازم است. رنگ این مهره‌ها دقیقاً همان است: رشته‌ی خشک‌شده، فشرده در چیزی که شکل خود را نگه می‌دارد. در غروب پرمایه‌تر می‌شود، در ظهر روشن‌تر.</string>
+
+    <string name="bundle_agate_title">عقیق یمنی</string>
+    <string name="bundle_agate_desc">سنگ نواری تراشیده در مهره، تاس و شعله‌ی فرود — محبوب‌ترین بسته.</string>
+    <string name="bundle_agate_story">راه کاروانی از یمن به ایران یک طرف ادویه می‌برد و طرف دیگر عقیق می‌آورد. هر نوار در سنگ یک سال زمین‌شناسی آرام است و صنعتگر تراشنده انتخاب نمی‌کند کدام نوارها نمایان شوند — به همین دلیل هر جفت مهره یکتاست.</string>
+
+    <string name="bundle_isfahan_title">اصفهان — نصف جهان</string>
+    <string name="bundle_isfahan_desc">تخته هفت‌رنگ + قاب اصفهان + صدای اصفهان — یک شهر در یک جعبه.</string>
+    <string name="bundle_isfahan_story">هفت‌رنگ سفالگری‌ای است که رنگ‌هایش در هشتصد درجه پخته می‌شوند تا هرگز محو نشوند. قاب اصفهان از همان نقش گره‌کاری‌ای گرفته شده که روی پل خواجو تکرار می‌شود. صدا هم از همان میدان بلند می‌شود.</string>
+
+    <string name="bundle_caravan_title">کاروان‌سرا</string>
+    <string name="bundle_caravan_desc">تخته پته + قاب کاروان + صدای کاروان — از راه‌های شاه‌عباسی.</string>
+    <string name="bundle_caravan_story">پته‌ی کرمان روی ابریشم با نخ پشمی دوخته می‌شود — طرح‌هایی که فهمیدنشان وقت می‌برد. این تخته سه ماه زیر دست یک خانواده در کرمان بوده. صدای آن از خان‌های جاده‌ی کرمان به اصفهان است.</string>
+
+    <string name="bundle_sound_pack_title">بازار صداها</string>
+    <string name="bundle_sound_pack_desc">چهار صدا از چهار شهر — نیشابور، شیراز، تبریز و یزد.</string>
+    <string name="bundle_sound_pack_story">هر شهر طنین خودش را دارد. این بسته چهار مجموعه صدا می‌دهد: سفال نیشابور، بازار شیراز، کارگاه‌های تبریز و بادگیرهای یزد — برای کسی که می‌خواهد هر مسابقه حس متفاوتی داشته باشد.</string>
+
+    <string name="bundle_boards_title">تخته‌های پیشه‌کاران</string>
+    <string name="bundle_boards_desc">سه تخته — خاتم، مینا و صدف — از سه کارگاه متفاوت.</string>
+    <string name="bundle_boards_story">خاتم برای سطحی به اندازه‌ی کف دست یک ماه مونتاژ نیاز دارد. مینا در هشتصد درجه روی مس پخته می‌شود. صدف از پوسته‌ی صدف‌هایی تراشیده شده که دیگر در خلیج وجود ندارند. این سه تخته از کارگاه‌هایی هستند که هنوز می‌دانند چطور.</string>
+
+    <string name="bundle_zari_title">زری یزد</string>
+    <string name="bundle_zari_desc">تخته زری + قاب یزد + صدای یزد — از بافنده‌های ابریشم.</string>
+    <string name="bundle_zari_story">زری از تار نقره یا طلا بافته می‌شود — پارچه‌ای که در خودش نور دارد. این تخته از بافته‌های شهر یزد الهام گرفته که سال‌هاست خلعت‌های درباری از آن‌جا آمده. صدای آن از بادگیرهای بلند شهر است.</string>
+
+    <string name="bundle_gold_title">طلا — فلزِ بی‌مرگ</string>
+    <string name="bundle_gold_desc">مهره‌ها و تاس‌ها ریخته‌شده از تنها فلزی که پیر نمی‌شود.</string>
+    <string name="bundle_gold_story">طلا خورده نمی‌شود و پیر نمی‌شود. این مهره‌ها آب‌طلا نشده‌اند — هیچ فلز پایه‌ای زیرشان نیست — و در یک قرن بازی دقیقاً همان‌طور که اکنون هستند خواهند بود.</string>
+
+    <string name="bundle_master_title">مجموعه‌ی استاد تبریز</string>
+    <string name="bundle_master_desc">تخته، مهره و تاس — همه از کارگاه‌های ملیله‌کاری تبریز.</string>
+    <string name="bundle_master_story">نقره‌کاران تبریز مفتول را به پهنای یک تار مو می‌کشند و آن را سرد، بی‌لحیم، به شکل‌هایی خم می‌کنند که وزن خود را نگه می‌دارند. تخته، مهره و تاس این مجموعه همه از یک کارگاه در همان کوچه در تبریزند — و چیزی گران‌تر از این در قفسه نیست.</string>
+
+    <string name="shop_category_cosmetic">زیبایی</string>
+    <string name="shop_category_consumable">مصرفی</string>
+    <string name="shop_category_bundle">باندل</string>
+    <string name="shop_hint_charges">%d راهنما</string>
+    <string name="shop_undo_charges">%d برگشت</string>
+    <string name="not_enough_coins">سکه کافی نیست</string>
+    <string name="purchase_successful">خرید موفق</string>
+
+    <!-- Shop badges -->
+    <string name="shop_badge_popular">پرطرفدار</string>
+    <string name="shop_badge_new">جدید</string>
+    <string name="shop_badge_discount">تخفیف</string>
+    <string name="shop_badge_special">ویژه</string>
+
+    <!-- Avatar Frames -->
+    <string name="frame_default_title">فریم کلاسیک</string>
+    <string name="frame_default_desc">حاشیه چوبی ساده</string>
+    <string name="frame_bronze_title">فریم برنز</string>
+    <string name="frame_bronze_desc">حاشیه برنز عتیقه صیقلی</string>
+    <string name="frame_silver_title">فریم نقره</string>
+    <string name="frame_silver_desc">حاشیه نقره استرلینگ درخشان</string>
+    <string name="frame_carpet_title">فریم فرش ایرانی</string>
+    <string name="frame_carpet_desc">نقوش سنتی فرش دستباف اصفهان</string>
+    <string name="frame_gold_title">فریم طلا</string>
+    <string name="frame_gold_desc">طلای ۲۴ عیار ایرانی با نقش شاهانه</string>
+    <string name="frame_peacock_title">فریم طاووس</string>
+    <string name="frame_peacock_desc">نقوش طاووس فارسی با جواهرات</string>
+    <string name="frame_diamond_title">تاج الماس</string>
+    <string name="frame_diamond_desc">تاج سلطنتی با الماس‌های درخشان</string>
+    <string name="frame_sultan_title">فریم سلطان</string>
+    <string name="frame_sultan_desc">فریم ویژه سلاطین تخته‌نرد</string>
+
+    <!-- Dice Skins -->
+    <string name="dice_default_title">تاس استخوانی</string>
+    <string name="dice_default_desc">تاس کلاسیک سفید</string>
+    <string name="dice_walnut_title">تاس گردو</string>
+    <string name="dice_walnut_desc">تاس ماهونی تیره طبیعی</string>
+    <string name="dice_ruby_title">تاس یاقوت</string>
+    <string name="dice_ruby_desc">تاس یاقوت قرمز آتشین</string>
+    <string name="dice_marble_title">تاس مرمر</string>
+    <string name="dice_marble_desc">تاس مرمر ابر و باد زیبا</string>
+    <string name="dice_crystal_title">تاس کریستال</string>
+    <string name="dice_crystal_desc">تاس بلور شفاف با درخش نور</string>
+    <string name="dice_dragon_title">تاس اژدها</string>
+    <string name="dice_dragon_desc">تاس اسطوره‌ای با نقش اژدها</string>
+
+    <!-- Titles -->
+    <string name="title_beginner_title">نوآموز</string>
+    <string name="title_beginner_desc">عنوان شروع بازیکن</string>
+    <string name="title_sharp_title">تیزهوش</string>
+    <string name="title_sharp_desc">بازیکن باهوش تخته‌نرد</string>
+    <string name="title_tactician_title">تاکتیسین</string>
+    <string name="title_tactician_desc">خبره استراتژی و تاکتیک</string>
+    <string name="title_master_title">استاد تخته</string>
+    <string name="title_master_desc">استاد شناخته‌شده تخته‌نرد</string>
+    <string name="title_king_title">شاهباز</string>
+    <string name="title_king_desc">بازیکن سلطنتی تخته‌نرد</string>
+    <string name="title_sultan_title">سلطان تخته</string>
+    <string name="title_sultan_desc">عنوان افسانه‌ای — فقط برای نخبگان</string>
+
+    <!-- Retention & Rewards -->
+    <string name="daily_login_reward">روز %1$d ورود — %2$d سکه دریافت کردی! 🎉</string>
+    <string name="achievement_unlocked">دستاورد جدید: %1$s (%2$d سکه)</string>
+    <string name="daily_challenge_complete">چالش روزانه تکمیل شد! +%1$d سکه</string>
+    <string name="streak_milestone">رکورد %1$d برد متوالی! +%2$d سکه 🔥</string>
+
+    <!-- Player Stats Screen -->
+    <string name="player_stats_title">آمار بازیکن</string>
+    <string name="stats_wld_label">برد / باخت / تساوی</string>
+    <string name="stats_win_rate_label">نرخ برد</string>
+    <string name="stats_best_streak_label">بهترین رکورد</string>
+    <string name="stats_elo_label">ELO فعلی</string>
+    <string name="stats_coins_label">موجودی سکه</string>
+    <string name="stats_achievements_label">دستاوردها</string>
+
+    <!-- Coin Shop Free Coins -->
+    <string name="free_coins_shop_button">سکهٔ رایگان</string>
+    <string name="free_coins_cooldown">%d دقیقه تا سکه رایگان بعدی</string>
+
+    <!-- Variants & matches -->
+    <string name="variant_standard">استاندارد</string>
+    <string name="variant_tavla">تاولا</string>
+    <string name="variant_portes">پورتس</string>
+    <string name="variant_standard_rules">قوانین بین‌المللی: شروع‌کننده با تاس‌های اولیه بازی می‌کند. مارس ۲ و بک‌گمون ۳ امتیاز.</string>
+    <string name="variant_tavla_rules">سبک ترکی: برندهٔ تاس اول دوباره تاس می‌ریزد (جفت هم ممکن است). مارس ۲ امتیاز، بدون برد سه‌برابر.</string>
+    <string name="variant_portes_rules">سبک یونانی (دست اول تاولی): برندهٔ تاس اول دوباره تاس می‌ریزد. مارس ۲ امتیاز، بدون برد سه‌برابر.</string>
+    <string name="variant_plakoto">پلاکوتو</string>
+    <string name="variant_plakoto_rules">سبک یونانی: ۱۵ مهره در گوشهٔ مقابل شروع می‌کنند. نشستن روی مهرهٔ تک حریف آن را حبس می‌کند تا وقتی بروی. حبس آخرین مهرهٔ خانهٔ شروع (مادر) یعنی برد دوبل.</string>
+    <string name="variant_fevga">فِوگا</string>
+    <string name="variant_fevga_rules">بازی یونانی: هر دو هم‌جهت از دو گوشهٔ مقابل حرکت می‌کنند، زدن نداریم و یک مهره خانه را می‌گیرد. تا وقتی مهرهٔ جلودار از خانهٔ شروع حریف رد نشده، فقط همان حرکت می‌کند.</string>
+    <string name="variant_tavli">تاولی</string>
+    <string name="variant_tavli_rules">مسابقهٔ یونانی: اول پورتس، بعد پلاکوتو، بعد فِوگا؛ تا رسیدن به امتیاز هدف تکرار می‌شود.</string>
+    <string name="next_variant">بعدی: %1$s</string>
+    <string name="variant_nardy">نرد بلند</string>
+    <string name="variant_nardy_rules">هر دو هم‌جهت از خانهٔ سرِ مقابل حرکت می‌کنند. زدن نداریم؛ یک مهره خانه را می‌گیرد. در هر نوبت فقط یک مهره از سر. مارس ۲ امتیاز.</string>
+    <string name="match_single">تک دست</string>
+    <string name="match_to_points">مسابقه تا %1$d</string>
+    <string name="game_over_result_line">%1$s — %2$s (%3$d امتیاز)</string>
+    <string name="win_type_single">برد ساده</string>
+    <string name="win_type_gammon">مارس!</string>
+    <string name="win_type_backgammon">بک‌گمون!</string>
+    <string name="win_type_mother">مادر حبس شد!</string>
+    <string name="win_type_draw">مساوی</string>
+    <string name="game_over_draw">مساوی — هر دو مادر حبس شدند</string>
+    <string name="game_over_match_score">مسابقه تا %1$d: %2$s %3$d – %4$d %5$s</string>
+    <string name="game_over_match_winner">برندهٔ مسابقه: %1$s</string>
+    <string name="next_game">بازی بعدی</string>
+    <string name="stats_variant_elo_label">%1$s (%2$d دست)</string>
+    <string name="game_review_title">تحلیل بازی</string>
+    <string name="review_back">بازگشت</string>
+    <string name="review_button">تحلیل بازی</string>
+    <string name="review_accuracy">دقت %1$d٪ در %2$d نوبت بررسی‌شده</string>
+    <string name="review_empty">در این بازی نوبتی برای بررسی نبود.</string>
+    <string name="review_turn_header">نوبت %1$d · تاس %2$s · حرکت شما %3$s</string>
+    <string name="review_better_move">%1$s — بهتر: %2$s</string>
+    <string name="review_grade_excellent">عالی</string>
+    <string name="review_grade_good">خوب</string>
+    <string name="review_grade_mistake">اشتباه</string>
+    <string name="review_grade_blunder">اشتباه فاحش</string>
+    <string name="review_working">در حال تحلیل بازی…</string>
+    <string name="journey_title">سفر</string>
+    <string name="journey_progress">%1$d از %2$d</string>
+    <string name="journey_stage_title">%1$d. %2$s</string>
+    <string name="journey_stage_detail">%1$s · %2$s · %3$s · %4$d سکه</string>
+    <string name="journey_locked">برای باز شدن این فصل، فصل قبلی را ببرید.</string>
+    <string name="journey_stage_done">فصل تمام شد! %1$d سکه گرفتید</string>
+    <string name="journey_1_title">خانه</string>
+    <string name="journey_1_flavor">جایی که همه شروع می‌کنند: یک بازی آرام با حریفی صبور.</string>
+    <string name="journey_1_opponent">عمو رضا</string>
+    <string name="journey_2_title">قهوه‌خانه</string>
+    <string name="journey_2_flavor">سه دست با پاتوقی‌ها؛ اینجا آرامش مهم‌تر از سرعت است.</string>
+    <string name="journey_2_opponent">استاد کاظم</string>
+    <string name="journey_3_title">استانبول</string>
+    <string name="journey_3_flavor">تاولا، سریع و بی‌رحم: شروع‌کننده دوباره تاس می‌ریزد و مارس دو امتیاز است.</string>
+    <string name="journey_3_opponent">امره</string>
+    <string name="journey_4_title">آتن</string>
+    <string name="journey_4_flavor">پورتس، دست اول تاولی و پسرعموی همان بازی‌ای که بلدید.</string>
+    <string name="journey_4_opponent">نیکوس</string>
+    <string name="journey_5_title">کرت</string>
+    <string name="journey_5_flavor">پلاکوتو: اینجا مهره را نمی‌زنند، حبس می‌کنند — و مادر همه‌چیز را تعیین می‌کند.</string>
+    <string name="journey_5_opponent">النی</string>
+    <string name="journey_6_title">سالونیک</string>
+    <string name="journey_6_flavor">فِوگا: یک مهره جلو می‌افتد و تا از خانهٔ شروع حریف رد نشود، بقیه تکان نمی‌خورند.</string>
+    <string name="journey_6_opponent">یانیس</string>
+    <string name="journey_7_title">کنار خزر</string>
+    <string name="journey_7_flavor">نرد بلند: زدن نداریم، از سر هر نوبت یک مهره، و بستن راه سرنوشت را می‌سازد.</string>
+    <string name="journey_7_opponent">فرید</string>
+    <string name="journey_9_title">استاد بزرگ</string>
+    <string name="journey_9_flavor">یک مسابقهٔ کامل تاولی: پورتس، پلاکوتو و فِوگا در برابر سرسخت‌ترین حریف.</string>
+    <string name="journey_9_opponent">استاد بزرگ</string>
+    <string name="variant_acey">آسی-دیوسی</string>
+    <string name="variant_acey_rules">سبک آمریکایی: همهٔ مهره‌ها بیرون از صفحه شروع می‌کنند و مثل مهرهٔ بار وارد می‌شوند. تاس ۱-۲ یک جفت به انتخاب شما و یک نوبت اضافه می‌دهد. بازندهٔ بازی به ازای هر مهرهٔ باقی‌مانده یک امتیاز می‌دهد.</string>
+    <string name="acey_bonus_title">جفت را انتخاب کنید</string>
+    <string name="acey_bonus_option">جفت %1$d</string>
+    <string name="journey_8_title">بندر</string>
+    <string name="journey_8_flavor">آسی-دیوسی، بازی ملوان‌ها: همهٔ مهره‌ها بیرون از صفحه شروع می‌کنند و یک تاس ۱-۲ همه‌چیز را عوض می‌کند.</string>
+    <string name="journey_8_opponent">ناخدا</string>
+    <string name="daily_challenge_line">امروز: %1$s (%2$d/%3$d)</string>
+    <string name="daily_challenge_line_done">امروز: %1$s — انجام شد</string>
+    <string name="challenge_win_games">%1$d دست ببرید</string>
+    <string name="challenge_complete_games">%1$d دست بازی کنید</string>
+    <string name="challenge_beat_difficulty">ربات %1$s را ببرید</string>
+    <string name="challenge_win_without_hit">بدون خورده شدن ببرید</string>
+    <string name="challenge_win_streak">%1$d برد پشت‌سرهم بگیرید</string>
+    <string name="challenge_win_variant">یک دست %1$s ببرید</string>
+    <string name="challenge_dialog_title">چالش</string>
+    <string name="challenge_play_today">بازی چالش امروز</string>
+    <string name="challenge_share_code">ساختن کد</string>
+    <string name="challenge_enter_code">وارد کردن کد دوست</string>
+    <string name="challenge_play_code">همین حالا بازی کن</string>
+    <string name="challenge_your_code">کد چالش شما</string>
+    <string name="challenge_code_message">%1$s\n\n%2$s — هر کسی این کد را بازی کند، تاس‌هایش دقیقاً همین است.</string>
+    <string name="challenge_share_text">این چالش تخته‌نرد را با من بازی کن — کد: %1$s</string>
+    <string name="challenge_code_hint">مثلاً PLA-3F9K2-7</string>
+    <string name="challenge_code_invalid">این کد معتبر نیست.</string>
+    <string name="challenge_banner">چالش · %1$s</string>
+    <string name="challenge_results">نتیجهٔ چالش‌ها</string>
+    <string name="challenge_results_empty">هنوز بازی چالشی انجام نشده.</string>
+    <string name="challenge_result_won">%1$s · %2$s · برد %3$d</string>
+    <string name="challenge_result_lost">%1$s · %2$s · باخت %3$d</string>
+    <string name="review_reward_button">دیدن ویدیو برای %1$d سکه</string>
+    <!-- Journey screen, royal layout -->
+    <string name="journey_progress_label">فصل‌های تمام‌شده</string>
+    <string name="journey_opponent_line">حریف: %1$s</string>
+    <string name="journey_reward_line">%1$d سکه</string>
+    <string name="journey_hint_current">فصل بعدی: %1$s</string>
+    <string name="journey_hint_complete">تمام راه را پشت سر گذاشتی. هر فصلی را خواستی دوباره بازی کن.</string>
+    <string name="journey_chapter_number">%1$d</string>
+    <string name="shop_collection_label">مجموعهٔ شما</string>
+    <string name="shop_collection_count">%1$d از %2$d</string>
+    <!-- مهره‌ها، به نام هنری که از آن می‌آیند -->
+    <string name="shop_category_checkers">مهره‌ها</string>
+    <string name="shop_category_dice">تاس‌ها</string>
+    <string name="shop_category_title">القاب</string>
+    <string name="checkers_walnut_title">گردو</string>
+    <string name="checkers_walnut_desc">از یک قطعه چوب تراشیده شده. همان دستی که همه با آن یاد می‌گیرند.</string>
+    <string name="checkers_bone_title">استخوان شتر</string>
+    <string name="checkers_bone_desc">گرم، ریزبافت، و در دست سنگین‌تر از آنچه به نظر می‌رسد.</string>
+    <string name="checkers_khatam_title">خاتم اصفهان</string>
+    <string name="checkers_khatam_desc">آبنوس با خاتم‌کاری اصفهان؛ ستاره در ستاره.</string>
+    <string name="checkers_nacre_title">صدف</string>
+    <string name="checkers_nacre_desc">درون صدف، که با چرخاندن تخته رنگ عوض می‌کند.</string>
+    <string name="checkers_turquoise_title">فیروزهٔ نیشابور</string>
+    <string name="checkers_turquoise_desc">همان آبی که ایران به آن شناخته می‌شود، از معدن‌های بالای نیشابور.</string>
+    <string name="checkers_agate_title">عقیق یمن</string>
+    <string name="checkers_agate_desc">عقیق رگه‌دار، تراشیده و صیقلی مثل نگین انگشتر.</string>
+    <string name="checkers_gold_title">زرورق</string>
+    <string name="checkers_gold_desc">دستی برای میزی که کسی رویش بازی نمی‌کند. تو بازی کن.</string>
+    <!-- تاس‌ها، از سنگ واقعی -->
+    <string name="dice_bone_title">استخوان</string>
+    <string name="dice_bone_desc">همان جفتی که هر تخته با آن شروع می‌شود. سبک، پرصدا، صادق.</string>
+    <string name="dice_ebony_title">آبنوس</string>
+    <string name="dice_ebony_desc">تقریباً سیاه، و آن‌قدر سنگین که همان‌جا بیفتد که انداختی.</string>
+    <string name="dice_turquoise_title">فیروزه</string>
+    <string name="dice_turquoise_desc">رگه‌دار از سنگی که در آن روییده. هیچ دو وجهی شبیه هم نیست.</string>
+    <string name="dice_agate_title">عقیق</string>
+    <string name="dice_agate_desc">سرتاسر رگه‌رگه؛ هر انداختن، برش تازه‌ای از سنگ را نشان می‌دهد.</string>
+    <string name="dice_gold_title">طلا</string>
+    <string name="dice_gold_desc">کندتر می‌غلتند. باز هم همه نگاهشان می‌کنند.</string>
+
+    <!-- القاب، به زبان خودِ بازی -->
+    <string name="title_none_title">بدون لقب</string>
+    <string name="title_none_desc">بگذار بازی حرف بزند.</string>
+    <string name="title_doubler_title">جفت‌آور</string>
+    <string name="title_doubler_desc">برای کسی که جفت‌هایش تمام نمی‌شوند.</string>
+    <string name="title_prime_title">شش‌دربند</string>
+    <string name="title_prime_desc">برای کسی که شش خانه را می‌بندد و باز نمی‌گذارد.</string>
+    <string name="title_gammon_title">مارس‌زن</string>
+    <string name="title_gammon_desc">بردن برای بیشتر آدم‌ها کافی است.</string>
+    <string name="title_plakoto_title">استاد پلاکوتو</string>
+    <string name="title_plakoto_desc">جایی که مهره را نمی‌زنند، حبس می‌کنند — و مادر تصمیم می‌گیرد.</string>
+    <string name="title_unbeaten_title">بی‌باخت</string>
+    <string name="title_unbeaten_desc">تا وقتی درست است، مال توست.</string>
+    <!-- فصل‌ها: یک کارگاه، یک هنر، شش هفته، بعد بسته -->
+    <string name="season_isfahan_name">فصل یکم — اصفهان</string>
+    <string name="season_isfahan_story">کارگاه‌های خاتم، جایی که یک ستاره از هزار تراشهٔ آبنوس و استخوان ساخته می‌شود.</string>
+    <string name="season_isfahan_bundle">دستِ اصفهان</string>
+    <string name="season_neyshabur_name">فصل دوم — نیشابور</string>
+    <string name="season_neyshabur_story">بالای شهر، معدن‌هایی که این رنگ نامش را از آن‌ها دارد. سنگ خوب هیچ‌وقت از ولایت بیرون نمی‌رود.</string>
+    <string name="season_neyshabur_bundle">دستِ نیشابور</string>
+    <string name="season_harbour_name">فصل سوم — بندر</string>
+    <string name="season_harbour_story">آنچه غواص‌ها بالا می‌آوردند، و آنچه کارگاه‌های لنگرگاه از آن می‌ساختند.</string>
+    <string name="season_harbour_bundle">دستِ بندر</string>
+    <string name="season_caravan_name">فصل چهارم — راه کاروان</string>
+    <string name="season_caravan_story">عقیق با کاروان‌ها به شمال می‌آمد؛ رگه‌دار، و از شتری که حملش می‌کرد گران‌تر.</string>
+    <string name="season_caravan_bundle">دستِ کاروان</string>
+
+    <string name="season_limited">نسخهٔ محدود</string>
+    <string name="season_days_left">%1$d روز مانده</string>
+    <string name="season_last_day">آخرین روز</string>
+    <string name="season_bundle_price">کل دست — %1$d سکه</string>
+    <string name="season_bundle_saving">جدا جدا %1$d</string>
+    <string name="season_bundle_owned">این دست را داری</string>
+    <string name="season_retires">با بسته شدن فصل، این دست جمع می‌شود و دیگر عرضه نخواهد شد.</string>
+    <!-- گنجینه -->
+    <string name="collection_title">گنجینه</string>
+    <string name="collection_total">%1$d از %2$d</string>
+    <string name="collection_season_open">%1$d روز مانده</string>
+    <string name="collection_season_closed">بسته</string>
+    <string name="collection_piece_held">داری</string>
+    <string name="collection_piece_missed">از دست رفته</string>
+    <string name="collection_piece_price">%1$d سکه</string>
+    <string name="collection_open">گنجینه</string>
+
+    <!-- Season pieces: boards, dice effects, banners and frames. -->
+    <string name="board_khatam_title">تختهٔ خاتم</string>
+    <string name="board_khatam_desc">ده هزار تراشه در هر وجب.</string>
+    <string name="board_khatam_story">خاتم یعنی مفتول برنج و آبنوس و استخوان شتر را به باریکی مو بکشند، شش‌گوش ببندند و از عرض برش بزنند. هر برش یک ستاره است. تخته‌ای به این اندازه یک ماه برش است که کنار هم چیده شده.</string>
+    <string name="effect_enamel_dust_title">غبار مینا</string>
+    <string name="effect_enamel_dust_desc">تاس‌ها در هاله‌ای از غبار کوره می‌نشینند.</string>
+    <string name="effect_enamel_dust_story">میناکارهای اصفهان آبی را سه بار می‌پزند و هر پخت گَردی نرم روی میز جا می‌گذارد. تاس‌ها همان را برمی‌دارند و با خود می‌برند.</string>
+    <string name="banner_isfahan_title">بیرق چهل‌ستون</string>
+    <string name="banner_isfahan_desc">به‌دست‌آوردنی، نه خریدنی.</string>
+    <string name="banner_isfahan_story">بیست ستون در هوا و بیست ستون در آبِ زیرشان. هیچ‌کس تا به حال چهل‌تا را یکجا نشمرده. این یکی به هیچ قیمتی فروخته نمی‌شود؛ پاداش تمام‌کردن فصل اصفهان است.</string>
+    <string name="frame_isfahan_title">قاب برنج قلم‌زده</string>
+    <string name="frame_isfahan_desc">از پشت بالا آمده، هشت پَر.</string>
+    <string name="frame_isfahan_story">قلم‌زن ورق را از پشت کار می‌کند و با چند صد ضربهٔ ریز فلز را بالا می‌آورد، بعد برش می‌گرداند و خط‌ها را از رو فرو می‌برد.</string>
+    <string name="board_mina_title">تختهٔ مینا</string>
+    <string name="board_mina_desc">آبیِ سه‌بار پخته.</string>
+    <string name="board_mina_story">میناکاری یعنی لعاب را در مسِ قلم‌زده بنشانند و برای هر رنگ دوباره به کوره ببرند. آبی اول می‌رود، چون از همه بیشتر حرارت تاب می‌آورد.</string>
+    <string name="effect_turquoise_spark_title">جرقهٔ فیروزه</string>
+    <string name="effect_turquoise_spark_desc">نورِ ضربه، به رنگ معدن.</string>
+    <string name="effect_turquoise_spark_story">به رگهٔ فیروزه که فولاد بخورد جرقه‌ای کوتاه و آبی می‌پراند. معدن‌چی‌ها در تاریکی رگه را از روی همین پیدا می‌کردند.</string>
+    <string name="banner_neyshabur_title">بیرق معدن آبی</string>
+    <string name="banner_neyshabur_desc">به‌دست‌آوردنی، نه خریدنی.</string>
+    <string name="banner_neyshabur_story">رگهٔ نیشابور را بیش از آنی که کسی شمرده باشد کار کرده‌اند. پاداش تمام‌کردن فصل نیشابور است.</string>
+    <string name="frame_neyshabur_title">قاب فیروزه</string>
+    <string name="frame_neyshabur_desc">همان‌طور که نگین انگشتر را می‌نشانند.</string>
+    <string name="frame_neyshabur_story">سنگ را تخت می‌تراشند، روی لبه‌ای از فلز می‌خوابانند و لبه را روی کنارهٔ سنگ می‌خوابانند تا بدون چسب نگهش دارد.</string>
+    <string name="board_nacre_title">تختهٔ صدف</string>
+    <string name="board_nacre_desc">درونِ صدف، اره‌شده و تخت.</string>
+    <string name="board_nacre_story">صدف پوششی است که نرم‌تن لایه‌لایه و نازک‌تر از کاغذ می‌سازد. وقتی از عرض اره شود، آن لایه‌ها نور را می‌شکنند؛ برای همین هیچ دو خانهٔ این تخته دقیقاً هم‌رنگ نیست.</string>
+    <string name="effect_pearl_ripple_title">موج مروارید</string>
+    <string name="effect_pearl_ripple_desc">حلقه‌ای از نور، رو به بیرون.</string>
+    <string name="effect_pearl_ripple_story">در آب‌های کم‌عمق هرچه بیندازی، حلقه‌اش زودتر از صدایش به قایق می‌رسد.</string>
+    <string name="banner_harbour_title">بیرق غواصان</string>
+    <string name="banner_harbour_desc">به‌دست‌آوردنی، نه خریدنی.</string>
+    <string name="banner_harbour_story">طناب غواص را یک نفر دیگر نگه می‌داشت و تمام تدبیر ایمنی همین بود. پاداش تمام‌کردن فصل بندر است.</string>
+    <string name="frame_harbour_title">قاب صدف</string>
+    <string name="frame_harbour_desc">از یک تکه بریده، نه خاتم‌کاری.</string>
+    <string name="frame_harbour_story">صدفی آن‌قدر بزرگ که تمام حلقه از یک قوسش دربیاید — کمیاب‌تر از سنگی که در آن نشانده‌اند.</string>
+    <string name="board_monabbat_title">تختهٔ منبت</string>
+    <string name="board_monabbat_desc">در چوب کنده شده، نه روی آن چسبانده.</string>
+    <string name="board_monabbat_story">منبت یعنی کنده‌کاری: نقش همان چیزی است که بعد از برداشتن زمینه باقی می‌ماند. چیزی اضافه نشده، پس چیزی هم کنده نمی‌شود.</string>
+    <string name="effect_agate_ember_title">اخگر عقیق</string>
+    <string name="effect_agate_ember_desc">از درون روشن.</string>
+    <string name="effect_agate_ember_story">عقیق رگه‌دار را جلوی چراغ بگیر، رگه‌ها یکی‌یکی از آن رد می‌شوند؛ مثل نگاه‌کردن به جاده در غروب.</string>
+    <string name="banner_caravan_title">بیرق جاده</string>
+    <string name="banner_caravan_desc">به‌دست‌آوردنی، نه خریدنی.</string>
+    <string name="banner_caravan_story">سنگ‌ها در گونی از جاده بالا می‌آمدند و به‌صورت مُهر برمی‌گشتند، با نامی که وارونه رویشان کنده شده بود. پاداش تمام‌کردن فصل کاروان است.</string>
+    <string name="frame_caravan_title">قاب عقیق</string>
+    <string name="frame_caravan_desc">شش پَر، یک سنگ.</string>
+    <string name="frame_caravan_story">طوری تراشیده که رگه‌ها از عرض حلقه رد شوند نه دور آن — بیشتر سنگ هدر می‌رود و تنها راهی است که نقش خوانده شود.</string>
+
+    <!-- Bundle page and item detail sheet. -->
+    <string name="shop_cat_board">تخته‌ها</string>
+    <string name="shop_cat_effect">افکت تاس</string>
+    <string name="shop_cat_banner">بیرق‌ها</string>
+    <string name="shop_cat_frame">قاب‌ها</string>
+    <string name="bundle_contents">داخل این مجموعه</string>
+    <string name="bundle_separately">جداگانه: %1$d</string>
+    <string name="bundle_set_price">به‌صورت مجموعه: %1$d</string>
+    <string name="bundle_saving">%1$d سکه می‌ماند</string>
+    <string name="bundle_buy_set">کل مجموعه را بردار</string>
+    <string name="bundle_owned">این مجموعه مال توست</string>
+    <string name="bundle_partial">%1$d از %2$d را داری</string>
+    <string name="bundle_days_left">%1$d روز تا بسته‌شدن</string>
+    <string name="detail_story">دربارهٔ این صنعت</string>
+    <string name="detail_how">چطور به دست می‌آید</string>
+    <string name="detail_earn_only">با بازی‌کردن. فروشی نیست.</string>
+    <string name="detail_buy_or_earn">بخر، یا با بازی به دستش بیاور</string>
+    <string name="detail_preview">روی تخته</string>
+    <string name="detail_held">در خزانهٔ توست</string>
+    <string name="detail_closed">این فصل بسته شده</string>
+    <string name="treasury_set_done">مجموعه کامل</string>
+    <string name="treasury_set_progress">%1$d از %2$d</string>
+
+    <!-- Seasons five to eight, and a sound set for all eight. -->
+    <string name="board_haftrang_title">تختهٔ هفت‌رنگ</string>
+    <string name="board_haftrang_desc">هر هفت رنگ، یک پخت.</string>
+    <string name="board_haftrang_story">معرق را از هفت لعاب می‌برند و کنار هم می‌چینند؛ هفت‌رنگ را با هفت لعاب نقاشی می‌کنند و یک بار می‌پزند. رنگ‌ها در کوره کمی در هم می‌دوند، و همین دویدن است که از یک نگاه این دو را از هم جدا می‌کند.</string>
+    <string name="checkers_lajvard_title">مهرهٔ لاجورد</string>
+    <string name="checkers_lajvard_desc">آبی، با طلای خودش.</string>
+    <string name="checkers_lajvard_story">لاجورد رنگ نشده. رگه‌های طلایی‌اش پیریت است که همان‌جا که سنگ بسته شده نشسته؛ برای همین هیچ دو مهره‌ای در یک ست شبیه هم نیست.</string>
+    <string name="dice_lajvard_title">تاس لاجورد</string>
+    <string name="dice_lajvard_desc">از عرض رگه بریده، نه از طولش.</string>
+    <string name="dice_lajvard_story">از طول که ببری هر وجه یک آبی دیگر می‌شود. از عرض که ببری، بالاخره هر شش وجه با هم می‌خوانند.</string>
+    <string name="effect_lapis_night_title">شب لاجورد</string>
+    <string name="effect_lapis_night_desc">غباری که نمی‌نشیند.</string>
+    <string name="effect_lapis_night_story">پیریت هنگام کار از سنگ جدا می‌شود و مدت‌ها بعد هنوز در نور چراغ معلق است.</string>
+    <string name="banner_shiraz_title">بیرق هفت‌رنگ</string>
+    <string name="banner_shiraz_desc">به‌دست‌آوردنی، نه خریدنی.</string>
+    <string name="banner_shiraz_story">پاداش تمام‌کردن فصل شیراز است و از هیچ راه دیگری.</string>
+    <string name="frame_shiraz_title">قاب لاجورد</string>
+    <string name="frame_shiraz_desc">هفت پَر، یک سنگ.</string>
+    <string name="frame_shiraz_story">تخت تراشیده و کم‌ارتفاع نشانده، چون لاجورد اگر لبه را محکم بخوابانی می‌پرد.</string>
+    <string name="title_backgame_title">بازی پشت</string>
+    <string name="title_backgame_desc">دو لنگر و هیچ عجله‌ای.</string>
+    <string name="title_backgame_story">دو خانه در خانهٔ حریف نگه می‌داری و صبر می‌کنی. وقتی ببازد بد می‌بازد، و این بهای همان شکلی است که می‌برد.</string>
+    <string name="board_pateh_title">تختهٔ پته</string>
+    <string name="board_pateh_desc">یک سوزن، یک زمستان.</string>
+    <string name="board_pateh_story">پته یعنی پشم را روی پشم بدوزند تا هیچ زمینه‌ای پیدا نماند. تمام پارچه را یک سوزن می‌پوشاند، و یک کار خوب، کار یک زمستان است.</string>
+    <string name="checkers_copper_title">مهرهٔ مس</string>
+    <string name="checkers_copper_desc">کوبیده، و رها شده تا تیره شود.</string>
+    <string name="checkers_copper_story">مسگرهای کرمان کارشان را لاک نمی‌زنند. قهوه‌ای می‌شود، بعد تقریباً سیاه، و با یک لیمو برمی‌گردد.</string>
+    <string name="dice_copper_title">تاس مس</string>
+    <string name="dice_copper_desc">پیش از پرتاب، گرم در دست.</string>
+    <string name="dice_copper_story">مس گرمای دست را زودتر از استخوان و سنگ می‌گیرد؛ حالا یا خرافات است یا همان دلیلی که آدم‌ها ترجیحش می‌دهند.</string>
+    <string name="effect_madder_thread_title">نخ روناس</string>
+    <string name="effect_madder_thread_desc">حلقه‌ای سرخ، رو به بیرون.</string>
+    <string name="effect_madder_thread_story">ریشهٔ روناس سرخی می‌دهد که پیش از آنکه صورتی شود قهوه‌ای می‌شود؛ قدمت یک پتهٔ کهنه را از همین می‌فهمند.</string>
+    <string name="banner_kerman_title">بیرق سوزن</string>
+    <string name="banner_kerman_desc">به‌دست‌آوردنی، نه خریدنی.</string>
+    <string name="banner_kerman_story">پاداش تمام‌کردن فصل کرمان است و از هیچ راه دیگری.</string>
+    <string name="frame_kerman_title">قاب روناس</string>
+    <string name="frame_kerman_desc">نُه پَر، پشم روی مس.</string>
+    <string name="frame_kerman_story">پشم را روی حلقهٔ مس می‌کشند و از پشت می‌دوزند، جایی که درزش دیده نشود.</string>
+    <string name="title_anchor_title">لنگر</string>
+    <string name="title_anchor_desc">خانه‌ای که تا آخر نگه داشته می‌شود.</string>
+    <string name="title_anchor_story">یک خانه در خانهٔ حریف که هرقدر هم بازی به ضررت برود، رهایش نمی‌کنی.</string>
+    <string name="board_melileh_title">تختهٔ ملیله</string>
+    <string name="board_melileh_desc">مفتولی که خودش را نگه می‌دارد.</string>
+    <string name="board_melileh_story">ملیله یعنی نقره را به باریکی مو بکشند و بدون هیچ زمینه‌ای خم کنند. نقش، خودِ سازه است؛ یک مفتول را دربیاور، بقیه می‌افتد.</string>
+    <string name="checkers_melileh_title">مهرهٔ ملیله</string>
+    <string name="checkers_melileh_desc">سبک‌تر از آنچه به نظر می‌رسد.</string>
+    <string name="checkers_melileh_story">بیشترش هوا است. یک ست کامل از یک مهرهٔ گردو هم سبک‌تر است، و بازیکن‌ها یا عاشقش‌اند یا اصلاً تحملش نمی‌کنند.</string>
+    <string name="dice_melileh_title">تاس ملیله</string>
+    <string name="dice_melileh_desc">نقره روی مغز استخوان.</string>
+    <string name="dice_melileh_story">ملیلهٔ توخالی درست نمی‌غلتد، پس این‌ها را دور استخوان پیچیده‌اند و همان وزنی را دارند که تاس باید داشته باشد.</string>
+    <string name="effect_filigree_glint_title">برق ملیله</string>
+    <string name="effect_filigree_glint_desc">نور از صد مفتول، یک‌باره.</string>
+    <string name="effect_filigree_glint_story">کار ملیله هیچ سطح تختی ندارد که نور را بگیرد، پس به‌جایش از هر زاویه تمامش را می‌گیرد.</string>
+    <string name="banner_tabriz_title">بیرق مفتول</string>
+    <string name="banner_tabriz_desc">به‌دست‌آوردنی، نه خریدنی.</string>
+    <string name="banner_tabriz_story">پاداش تمام‌کردن فصل تبریز است و از هیچ راه دیگری.</string>
+    <string name="frame_tabriz_title">قاب ملیله</string>
+    <string name="frame_tabriz_desc">یازده پَر، بدون زمینه.</string>
+    <string name="frame_tabriz_story">تنها قابی در این مجموعه که پشتش چیزی نیست. از لای شکاف‌هایش هرچه پشت صفحه باشد پیدا است.</string>
+    <string name="title_blitz_title">یورش</string>
+    <string name="title_blitz_desc">بزن، و باز بزن.</string>
+    <string name="title_blitz_story">پیش از آنکه خانهٔ حریف بسته شود به آن حمله می‌کنی، به این حساب که بازیِ زود تمام‌شده، بازی‌ای است که دیگر برنمی‌گردد.</string>
+    <string name="board_zari_title">تختهٔ زری</string>
+    <string name="board_zari_desc">روزی یک وجب.</string>
+    <string name="board_zari_story">ترمه آن‌قدر کند بافته می‌شود که بافنده پیشرفت را به بند انگشت می‌شمارد. نقش در خودِ بافت است، نه چاپ‌شده روی آن؛ پس پشتش همان رو است، وارونه.</string>
+    <string name="checkers_saffron_title">مهرهٔ زعفران</string>
+    <string name="checkers_saffron_desc">سنگ عسلی، مقابل نور.</string>
+    <string name="checkers_saffron_story">رنگش رنگرزی نیست. کاری است که سنگ وقتی آفتاب پشتش باشد می‌کند؛ برای همین یک ست در اتاق و همان ست در حیاط، دو ست به نظر می‌رسند.</string>
+    <string name="dice_saffron_title">تاس زعفران</string>
+    <string name="dice_saffron_desc">حتی در سایه، گرم.</string>
+    <string name="dice_saffron_story">از همان قطعه‌ای بریده شده که مهره‌ها؛ پس تاس و ست، پیش از آنکه کسی شکلشان بدهد، یک سنگ بودند.</string>
+    <string name="effect_saffron_haze_title">غبار زعفران</string>
+    <string name="effect_saffron_haze_desc">نورِ دیرهنگام، یک لحظه نگه‌داشته.</string>
+    <string name="effect_saffron_haze_story">ساعتِ پیش از تاریکی در یزد، وقتی دیوارها هرچه تمام روز گرفته‌اند پس می‌دهند.</string>
+    <string name="banner_yazd_title">بیرق دار</string>
+    <string name="banner_yazd_desc">به‌دست‌آوردنی، نه خریدنی.</string>
+    <string name="banner_yazd_story">پاداش تمام‌کردن فصل یزد است و از هیچ راه دیگری.</string>
+    <string name="frame_yazd_title">قاب زعفران</string>
+    <string name="frame_yazd_desc">هشت پَر، یک برش.</string>
+    <string name="frame_yazd_story">از یک قطعه تراشیده تا رگه‌ها بی‌وقفه دور تا دور بروند — و بیشتر قطعه هدر برود.</string>
+    <string name="title_bearoff_title">جمع‌کردن</string>
+    <string name="title_bearoff_desc">شمرده، نه امید‌بسته.</string>
+    <string name="title_bearoff_story">آخرین تکه از بازی، جایی که تاس دیگر شانس نیست و حساب می‌شود.</string>
+    <string name="sound_isfahan_title">صداهای اصفهان</string>
+    <string name="sound_isfahan_desc">چوب روی چوب، زیر گنبد.</string>
+    <string name="sound_isfahan_story">همان‌طور که یک قهوه‌خانه صدا می‌دهد: مهره‌ای که محکم گذاشته می‌شود و اتاقی که نیم‌ثانیه بعد پسش می‌دهد.</string>
+    <string name="sound_neyshabur_title">صداهای نیشابور</string>
+    <string name="sound_neyshabur_desc">سنگ، با دنبالهٔ بلند.</string>
+    <string name="sound_neyshabur_story">فیروزه روی تختهٔ سخت، به‌جای تق‌تق، زنگ می‌زند.</string>
+    <string name="sound_harbour_title">صداهای بندر</string>
+    <string name="sound_harbour_desc">صدف، و آبی زیر کف.</string>
+    <string name="sound_harbour_story">از همه آرام‌تر. صدف صدا را نمی‌برد.</string>
+    <string name="sound_caravan_title">صداهای کاروان</string>
+    <string name="sound_caravan_desc">سنگ روی سنگ، در فضای باز.</string>
+    <string name="sound_caravan_story">اتاقی نیست که چیزی پس بدهد؛ هر مهره یک بار می‌نشیند و تمام.</string>
+    <string name="sound_shiraz_title">صداهای شیراز</string>
+    <string name="sound_shiraz_desc">کاشی لعاب‌دار، ضربهٔ سبک.</string>
+    <string name="sound_shiraz_story">لعاب پخته یک نُت در خودش دارد. دو مهره که با هم بنشینند تقریباً یک آکورد می‌شوند — یا دل‌نشین است یا دیوانه‌کننده.</string>
+    <string name="sound_kerman_title">صداهای کرمان</string>
+    <string name="sound_kerman_desc">مس، و پارچه‌ای زیرش.</string>
+    <string name="sound_kerman_story">پشم تیزی هر ضربه را می‌گیرد؛ کلاً دلیل بازی‌کردن روی پته همین است.</string>
+    <string name="sound_tabriz_title">صداهای تبریز</string>
+    <string name="sound_tabriz_desc">نقره، بسیار کوتاه.</string>
+    <string name="sound_tabriz_story">ملیله تقریباً جرمی ندارد؛ تیک می‌کند و تمام.</string>
+    <string name="sound_yazd_title">صداهای یزد</string>
+    <string name="sound_yazd_desc">سنگ، و یک حیاط.</string>
+    <string name="sound_yazd_story">بالا باز است و دیوارها از چهار طرف نزدیک: یک ضربه و چهار جواب.</string>
+
+    <string name="season_shiraz_name">فصل پنجم — شیراز</string>
+    <string name="season_shiraz_story">هفت لعاب که با هم نقاشی و یک بار پخته می‌شوند، تا رنگ‌ها در کوره در هم بدوند.</string>
+    <string name="season_shiraz_bundle">هفت‌رنگ</string>
+    <string name="season_kerman_name">فصل ششم — کرمان</string>
+    <string name="season_kerman_story">پشم روی پشم دوخته می‌شود تا هیچ زمینه‌ای نماند — با یک سوزن، در یک زمستان.</string>
+    <string name="season_kerman_bundle">سوزن</string>
+    <string name="season_tabriz_name">فصل هفتم — تبریز</string>
+    <string name="season_tabriz_story">نقره‌ای که به باریکی مو کشیده شده و در نقشی خم می‌شود که بدون زمینه سرپا می‌ماند.</string>
+    <string name="season_tabriz_bundle">مفتول کشیده</string>
+    <string name="season_yazd_name">فصل هشتم — یزد</string>
+    <string name="season_yazd_story">بند‌انگشت‌بند‌انگشت بافته می‌شود؛ نقش در خودِ بافت است، نه چاپ‌شده روی آن.</string>
+    <string name="season_yazd_bundle">دار</string>
+</resources>

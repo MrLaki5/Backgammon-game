@@ -1,263 +1,290 @@
 package games.mrlaki5.backgammon.GameControllers;
 
+import androidx.annotation.Nullable;
+
+import com.royalbackgammon.core.model.GameResult;
+import com.royalbackgammon.core.scoring.MatchState;
+
+import games.mrlaki5.backgammon.Challenge.ChallengeCode;
+import games.mrlaki5.backgammon.Challenge.ChallengeHistory;
+import games.mrlaki5.backgammon.Journey.JourneyManager;
+import com.royalbackgammon.core.variant.Variant;
+
+import games.mrlaki5.backgammon.Menus.VariantPicker;
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.hardware.Sensor;
-import android.hardware.SensorEvent;
-import android.hardware.SensorEventListener;
-import android.hardware.SensorManager;
-import android.media.MediaPlayer;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.animation.AccelerateDecelerateInterpolator;
+import android.widget.Button;
+import android.widget.Toast;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.File;
 
-import games.mrlaki5.backgammon.Beans.DiceThrow;
+import games.mrlaki5.backgammon.Analytics.GameAnalytics;
 import games.mrlaki5.backgammon.Beans.NextJump;
-import games.mrlaki5.backgammon.Menus.MenuActivity;
+import games.mrlaki5.backgammon.Database.PlayerProfileManager;
+import games.mrlaki5.backgammon.Economy.CoinConfig;
+import games.mrlaki5.backgammon.Economy.CoinManager;
+import games.mrlaki5.backgammon.GameAudio;
 import games.mrlaki5.backgammon.GameModel.Model;
 import games.mrlaki5.backgammon.GameModel.ModelLoader;
+import games.mrlaki5.backgammon.GamePreferences;
 import games.mrlaki5.backgammon.GameView.OnBoardImage;
-import games.mrlaki5.backgammon.R;
+import games.mrlaki5.backgammon.GameView.themes.BoardTheme;
+import games.mrlaki5.backgammon.GameView.themes.BoardThemeFactory;
+import games.mrlaki5.backgammon.LocaleHelper;
+import games.mrlaki5.backgammon.Menus.MenuActivity;
 import games.mrlaki5.backgammon.Menus.SettingsActivity;
+import games.mrlaki5.backgammon.Monetization.ads.AdCallback;
+import games.mrlaki5.backgammon.Monetization.ads.AdManager;
+import games.mrlaki5.backgammon.Monetization.ads.RewardedAdPlacement;
+import games.mrlaki5.backgammon.Monetization.ads.RewardedAdTracker;
+import games.mrlaki5.backgammon.Players.BotMoveStrategy;
+import games.mrlaki5.backgammon.Players.Human;
+import games.mrlaki5.backgammon.Players.Player;
+import games.mrlaki5.backgammon.R;
+import games.mrlaki5.backgammon.Retention.AchievementManager;
+import games.mrlaki5.backgammon.Retention.WeeklyChallenge;
 
-//Game activity
+/**
+ * Main gameplay activity coordinating game loop, user interactions, audio,
+ * and specialized controllers (ShakeController, TutorialController, GameOverHandler,
+ * PauseMenuHandler, PassAndPlayManager).
+ */
 public class GameActivity extends AppCompatActivity {
 
-    //Player used for all game sounds
-    private MediaPlayer mPlayer;
-    //String used for synchronization on media player
-    private final String mPlayerSem="mPlayer";
-    //Current sound volume in which player should play
-    private int soundVolume=0;
-    //Object for some game related rules
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(LocaleHelper.applySelectedLocale(newBase));
+    }
+
+    // Audio & Settings
+    private int soundVolume = 0;
+    private boolean soundEnabled = true;
+    private boolean effectsEnabled = true;
+    private GameAudio gameAudio;
+    private int timeBetweenTurns = 0;
+
+    // Game Core Objects
     private GameLogic gameLogic;
-    //View
-    private OnBoardImage BoardImage;
-    //Object for loading model
+    private GameMoveExecutor moveExecutor;
     private ModelLoader modelLoader;
-    //Model (used for storing game state)
     private Model model;
-    //Thread in which game turns are run
     private GameTask gameTask;
-    //Flag used in onPause and in onStop to know cause of game stoping
-    private int pauseDone=0;
-    //Time between player turns
-    private int timeBetweenTurns=0;
-    //Used in touch listener to save starting field of moving chip
+    private OnBoardImage BoardImage;
+
+    // UI Controls
+    private View rollDiceButton;
+    private Button btnHint;
+    private Button btnUndo;
+
+    // Specialized Controllers
+    private ShakeController shakeController;
+    private TutorialController tutorialController;
+    private GameOverHandler gameOverHandler;
+    private PauseMenuHandler pauseMenuHandler;
+    private PassAndPlayManager passAndPlayManager;
+    private HintManager hintManager;
+    private UndoManager undoManager;
+
+    // Economy & Ads
+    private CoinManager coinManager;
+    private RewardedAdTracker rewardedAdTracker;
+    private PlayerProfileManager profileManager;
+
+    // Undo move snapshot
+    private static class TurnSnapshot {
+        final games.mrlaki5.backgammon.Beans.BoardFieldState[] boardFields;
+        final games.mrlaki5.backgammon.Beans.DiceThrow[] diceThrows;
+        final java.util.List<NextJump> nextMoves;
+
+        TurnSnapshot(games.mrlaki5.backgammon.Beans.BoardFieldState[] fields,
+                     games.mrlaki5.backgammon.Beans.DiceThrow[] dice,
+                     java.util.List<NextJump> moves) {
+            this.boardFields = new games.mrlaki5.backgammon.Beans.BoardFieldState[fields.length];
+            for (int i = 0; i < fields.length; i++) {
+                this.boardFields[i] = fields[i].copy();
+            }
+            this.diceThrows = new games.mrlaki5.backgammon.Beans.DiceThrow[dice.length];
+            for (int i = 0; i < dice.length; i++) {
+                this.diceThrows[i] = new games.mrlaki5.backgammon.Beans.DiceThrow(
+                        dice[i].getThrowNumber(), dice[i].getAlreadyUsed());
+            }
+            this.nextMoves = new java.util.ArrayList<>();
+            if (moves != null) {
+                for (NextJump j : moves) {
+                    this.nextMoves.add(new NextJump(j.getJumpNumber(), j.getSrcField(), j.getDstField()));
+                }
+            }
+        }
+
+        games.mrlaki5.backgammon.Beans.BoardFieldState[] copyBoard() {
+            games.mrlaki5.backgammon.Beans.BoardFieldState[] copy =
+                    new games.mrlaki5.backgammon.Beans.BoardFieldState[boardFields.length];
+            for (int i = 0; i < boardFields.length; i++) {
+                copy[i] = boardFields[i].copy();
+            }
+            return copy;
+        }
+
+        games.mrlaki5.backgammon.Beans.DiceThrow[] copyDice() {
+            games.mrlaki5.backgammon.Beans.DiceThrow[] copy =
+                    new games.mrlaki5.backgammon.Beans.DiceThrow[diceThrows.length];
+            for (int i = 0; i < diceThrows.length; i++) {
+                copy[i] = new games.mrlaki5.backgammon.Beans.DiceThrow(
+                        diceThrows[i].getThrowNumber(), diceThrows[i].getAlreadyUsed());
+            }
+            return copy;
+        }
+
+        java.util.List<NextJump> copyMoves() {
+            java.util.List<NextJump> copy = new java.util.ArrayList<>();
+            for (NextJump j : nextMoves) {
+                copy.add(new NextJump(j.getJumpNumber(), j.getSrcField(), j.getDstField()));
+            }
+            return copy;
+        }
+    }
+
+    private TurnSnapshot turnSnapshot = null;
+    private boolean undoUsedThisTurn = false;
+
+    // Game Flow State
+    private int pauseDone = 0;
     private int MoveFieldSrc;
-    //Used in touch listener to save id of chip moving finger
-    private int CurrentFingerPointer=-1;
-    //sensor manager for shake listener
-    private SensorManager sensorManager;
-    //sensor for shake listener
-    private Sensor sensor;
-    //Time of last update in shake listener
-    private long lastUpdate=0;
-    //x acceleration value in last update in shake listener
-    private float last_x=0;
-    //y acceleration value in last update in shake listener
-    private float last_y=0;
-    //z acceleration value in last update in shake listener
-    private float last_z=0;
-    //Treshold of shake listener
-    private int shake_treshold = 100;
-    //Time between two updates of shake listener
-    private int sample_time;
-    //Delay in starting and ending shake
-    private int dice_delay;
-    //Flag for determination if shake started
-    private int shakeStarted=0;
-    //Stability counter used for shake start delay
-    private int beforeShakeStability=0;
-    //Stability counter used for shake end delay
-    private int shakeStability=0;
+    private int CurrentFingerPointer = -1;
+    private long gameStartTimeMs;
+    private int sessionGameNumber = 1;
+    private boolean isRematchGame = false;
 
-    //Touch listener activated when human needs to move chips
-    private View.OnTouchListener BoardListener= new View.OnTouchListener() {
+    private static final String EXTRA_SESSION_GAME_NUMBER = "session_game_number";
+    private static final String EXTRA_IS_REMATCH = "is_rematch";
 
+    // Touch listener for human checker moves
+    private final View.OnTouchListener BoardListener = new View.OnTouchListener() {
         @Override
         public boolean onTouch(View v, MotionEvent event) {
-            //Get current touch x and y coordinates
-            float x_touch= event.getX();
-            float y_touch= event.getY();
-            //which touch action is done
-            switch(event.getActionMasked()) {
-                //First finger is put on screen
+            float x_touch = event.getX();
+            float y_touch = event.getY();
+
+            switch (event.getActionMasked()) {
                 case MotionEvent.ACTION_DOWN:
-                    //Find a number of currently touched triangle
-                    int touchedNum=BoardImage.triangleTouched(x_touch,y_touch);
-                    //Find if chips on that triangle are touched
-                    boolean isTouched=BoardImage.chipPTouched(touchedNum, x_touch, y_touch);
-                    if(isTouched){
-                        //Check if touched chips are from current player
-                        if(model.getBoardFields()[touchedNum].getPlayer()
-                                ==model.getCurrentPlayer()) {
-                            int[] currNextMoves;
-                            //Calculate moves for currently touched chip
-                            currNextMoves = gameLogic.calculateNextMovesForSpecificField(
+                    v.getParent().requestDisallowInterceptTouchEvent(true);
+                    v.performHapticFeedback(android.view.HapticFeedbackConstants.CLOCK_TICK);
+
+                    int touchedNum = BoardImage.triangleTouched(x_touch, y_touch);
+                    boolean isTouched = BoardImage.chipPTouched(touchedNum, x_touch, y_touch);
+
+                    if (isTouched && model != null) {
+                        if (model.getBoardFields()[touchedNum].getPlayer() == model.getCurrentPlayer()) {
+                            int[] currNextMoves = gameLogic.calculateNextMovesForSpecificField(
                                     model.getNextMoves(), touchedNum);
-                            if (currNextMoves !=null) {
-                                //Lower number of chips from touched triangle
+                            if (currNextMoves != null) {
                                 model.getBoardFields()[touchedNum].setNumberOfChips(
-                                        model.getBoardFields()[touchedNum].getNumberOfChips()-1);
-                                //If there are no left chips, remove player from triangle
-                                if(model.getBoardFields()[touchedNum].getNumberOfChips()==0) {
+                                        model.getBoardFields()[touchedNum].getNumberOfChips() - 1);
+                                if (model.getBoardFields()[touchedNum].getNumberOfChips() == 0) {
                                     model.getBoardFields()[touchedNum].setPlayer(0);
                                 }
-                                //Update view with hints where can picked chip move
                                 BoardImage.setNextMoveArray(currNextMoves);
-                                //Set source field of moving field
-                                MoveFieldSrc=touchedNum;
-                                //Update view, set moving chip
+                                MoveFieldSrc = touchedNum;
                                 BoardImage.setMoveChip(x_touch, y_touch, model.getCurrentPlayer());
-                                //Invalidate view to draw again
-                                BoardImage.invalidate();
-                                //Save current finger id
-                                CurrentFingerPointer=event.getPointerId(0);
+                                BoardImage.postInvalidateOnAnimation();
+                                CurrentFingerPointer = event.getPointerId(0);
+                            } else {
+                                v.performHapticFeedback(android.view.HapticFeedbackConstants.CLOCK_TICK);
                             }
+                        } else {
+                            v.performHapticFeedback(android.view.HapticFeedbackConstants.CLOCK_TICK);
                         }
                     }
                     break;
-                //Some finger moved
-                case MotionEvent.ACTION_MOVE:
-                    //Check if moving finger is chip finger
-                    for(int i=0; i<event.getPointerCount(); i++){
-                        if(event.getPointerId(i)==CurrentFingerPointer){
-                            x_touch=event.getX(i);
-                            y_touch=event.getY(i);
-                            break;
-                        }
-                    }
-                    //Move chip to finger position, update view
-                    if(BoardImage.moveMoveChip(x_touch, y_touch)) {
-                        BoardImage.invalidate();
-                    }
-                    break;
-                //Some finger left screen
-                case MotionEvent.ACTION_POINTER_UP:
-                //Last finger left screen
-                case MotionEvent.ACTION_UP:
-                    //Check if chip finger didnt left already (==-1)
-                    if(CurrentFingerPointer==-1){
-                        break;
-                    }
-                    //Check if chip finger is leaving now
-                    int tempFlag=1;
-                    for(int i=0; i<event.getPointerCount(); i++){
-                        if(event.getPointerId(i)==CurrentFingerPointer
-                                && event.getActionIndex()!=i){
-                            tempFlag=0;
-                            break;
-                        }
-                    }
-                    //If it is not break, if it is set it to -1
-                    if(tempFlag==0){
-                        break;
-                    }
-                    else{
-                        CurrentFingerPointer=-1;
-                    }
-                    //Get x and y chip coordinates from view
-                    x_touch=BoardImage.getXMovPos();
-                    y_touch=BoardImage.getYMovPos();
-                    //Unset move chip
-                    if(BoardImage.unsetMoveChip()) {
-                        //Calculate destination triangle
-                        int dstField = BoardImage.triangleTouched(x_touch,y_touch);
-                        if(dstField!=-1) {
-                            //Find in nextMoves if exists combination with source and destination
-                            //fields
-                            int throwNum = 0;
-                            for (NextJump tempJump: model.getNextMoves()) {
-                                if(tempJump.getSrcField()==MoveFieldSrc &&
-                                        tempJump.getDstField()==dstField){
-                                    throwNum=tempJump.getJumpNumber();
-                                    break;
-                                }
-                            }
-                            //If it doesnt find combination of source and destination, return chip
-                            if(throwNum==0){
-                                //Return one chip to source field
-                                model.getBoardFields()[MoveFieldSrc].setNumberOfChips(
-                                        model.getBoardFields()[MoveFieldSrc].getNumberOfChips()+1);
-                                //If there was no chips on source field set player of field
-                                if(model.getBoardFields()[MoveFieldSrc].getNumberOfChips()==1){
-                                    model.getBoardFields()[MoveFieldSrc].setPlayer(
-                                            model.getCurrentPlayer());
-                                }
-                            }
-                            //If it did find combination of source and destination
-                            else {
-                                //Find DiceThrow that is used and set it used
-                                for (DiceThrow tempThrow : model.getDiceThrows()) {
-                                    if (tempThrow.getThrowNumber() == throwNum &&
-                                            tempThrow.getAlreadyUsed() == 0) {
-                                        tempThrow.setAlreadyUsed(1);
-                                        BoardImage.setDices(model.getDiceThrows());
-                                        break;
-                                    }
-                                }
-                                //Get player of destination filed
-                                int tmpPlayer=model.getBoardFields()[dstField].getPlayer();
-                                //If there is one chip on destination field and player is different
-                                //from current playing (eat chip)
-                                if(model.getBoardFields()[dstField].getNumberOfChips()==1 &&
-                                        tmpPlayer!= model.getCurrentPlayer()){
-                                    //Add one chip to side board
-                                    model.getBoardFields()[23+tmpPlayer].setNumberOfChips(
-                                        model.getBoardFields()[23+tmpPlayer].getNumberOfChips()+1);
-                                    //If its first chip on side board add player too
-                                    if(model.getBoardFields()[23+tmpPlayer].getNumberOfChips()==1){
-                                        model.getBoardFields()[23+tmpPlayer].setPlayer(tmpPlayer);
-                                    }
-                                    //But dont remove chip from destination just change its player
-                                }
-                                else {
-                                    //If there is no other player chip, add one chip to
-                                    // destination field
-                                    model.getBoardFields()[dstField].setNumberOfChips(
-                                        model.getBoardFields()[dstField].getNumberOfChips() + 1);
-                                }
-                                //If number of chips on destination field is 1 set field player
-                                // to current
-                                if(model.getBoardFields()[dstField].getNumberOfChips()==1){
-                                    model.getBoardFields()[dstField].setPlayer(
-                                    model.getCurrentPlayer());
-                                }
-                                //Calculate next moves after chip move
-                                model.setNextMoves(gameLogic.calculateMoves(model.getBoardFields(),
-                                        model.getCurrentPlayer(), model.getDiceThrows()));
-                            }
 
+                case MotionEvent.ACTION_MOVE:
+                    for (int i = 0; i < event.getPointerCount(); i++) {
+                        if (event.getPointerId(i) == CurrentFingerPointer) {
+                            x_touch = event.getX(i);
+                            y_touch = event.getY(i);
+                            break;
                         }
-                        else{
-                            //If it doesnt find destination field, return chip
-                            model.getBoardFields()[MoveFieldSrc].setNumberOfChips(
-                                    model.getBoardFields()[MoveFieldSrc].getNumberOfChips()+1);
-                            //If there was no chips on source field set player of field
-                            if(model.getBoardFields()[MoveFieldSrc].getNumberOfChips()==1){
-                                model.getBoardFields()[MoveFieldSrc].setPlayer(
-                                model.getCurrentPlayer());
+                    }
+                    if (BoardImage.moveMoveChip(x_touch, y_touch)) {
+                        BoardImage.postInvalidateOnAnimation();
+                    }
+                    break;
+
+                case MotionEvent.ACTION_POINTER_UP:
+                case MotionEvent.ACTION_UP:
+                    if (CurrentFingerPointer == -1) {
+                        break;
+                    }
+                    int tempFlag = 1;
+                    for (int i = 0; i < event.getPointerCount(); i++) {
+                        if (event.getPointerId(i) == CurrentFingerPointer && event.getActionIndex() != i) {
+                            tempFlag = 0;
+                            break;
+                        }
+                    }
+                    if (tempFlag == 0) {
+                        break;
+                    } else {
+                        CurrentFingerPointer = -1;
+                    }
+
+                    x_touch = BoardImage.getXMovPos();
+                    y_touch = BoardImage.getYMovPos();
+
+                    if (BoardImage.unsetMoveChip()) {
+                        int dstField = BoardImage.triangleTouched(x_touch, y_touch);
+                        boolean moveApplied = false;
+
+                        if (dstField != -1) {
+                            GameMoveExecutor.MoveResult moveResult =
+                                    moveExecutor.applyPickedUpMoveWithResult(MoveFieldSrc, dstField, model.getNextMoves());
+                            moveApplied = moveResult.isApplied();
+                            if (moveApplied) {
+                                BoardImage.playMoveFeedback(moveResult.getDestinationField(), moveResult.isHit());
+                                playMoveEffect(moveResult);
+
+                                if (tutorialController.isTutorialMode()
+                                        && tutorialController.getTutorialStep() >= TutorialScenarios.STEP_MOVE) {
+                                    tutorialController.advanceToNextStep();
+                                }
                             }
+                        } else {
+                            moveExecutor.applyPickedUpMove(MoveFieldSrc, -1, model.getNextMoves());
                         }
-                        //Update view, remove hints
+
+                        if (moveApplied) {
+                            v.performHapticFeedback(android.view.HapticFeedbackConstants.VIRTUAL_KEY);
+                            BoardImage.setDices(model.getDiceThrows());
+                            model.setNextMoves(gameLogic.calculateMoves(model.getBoardFields(),
+                                    model.getCurrentPlayer(), model.getDiceThrows()));
+                        } else {
+                            v.performHapticFeedback(android.view.HapticFeedbackConstants.LONG_PRESS);
+                        }
+
                         BoardImage.setNextMoveArray(null);
-                        //If there are no more next moves return to GameTask and continue turns
-                        if(model.getNextMoves().isEmpty()){
-                            synchronized (model.getCurrentObjectPlayer()){
+
+                        if (model.getNextMoves().isEmpty()) {
+                            synchronized (model.getCurrentObjectPlayer()) {
                                 model.getCurrentObjectPlayer().setWaitCond(0);
                                 model.getCurrentObjectPlayer().notifyAll();
                             }
                         }
-                        //Draw view again
-                        BoardImage.invalidate();
+                        BoardImage.postInvalidateOnAnimation();
                     }
                     break;
+
                 default:
                     break;
             }
@@ -265,245 +292,434 @@ public class GameActivity extends AppCompatActivity {
         }
     };
 
-    //Shake listener activated when human needs to roll dices
-    private SensorEventListener DiceListener= new SensorEventListener() {
-
-        //Is called sensor reacts to change of values
-        @Override
-        public void onSensorChanged(SensorEvent event) {
-            //Find type of sensor reacting
-            switch(event.sensor.getType()){
-                //If its accelerometer
-                case Sensor.TYPE_ACCELEROMETER:
-                    //Get current time
-                    long curTime = System.currentTimeMillis();
-                    //Only allow one update every sample_time
-                    if ((curTime - lastUpdate) > sample_time) {
-                        long diffTime = (curTime - lastUpdate);
-                        //Update lastupdate time to current
-                        lastUpdate = curTime;
-                        //Get current x,y,z values
-                        float x = event.values[0];
-                        float y = event.values[1];
-                        float z = event.values[2];
-                        //Calculate speed
-                        float speed = Math.abs(x+y+z - last_x - last_y - last_z) / diffTime * 10000;
-                        //If speed is greater then Trashold
-                        if (speed > shake_treshold) {
-                            //If Shake didnt started yet and before shake delay is done
-                            if(shakeStarted==0 && beforeShakeStability>=dice_delay) {
-                                //Start roll dice sound
-                                setMPlayer(1);
-                                //Set shakeStarted flag
-                                shakeStarted=1;
-                            }
-                            else{
-                                //If delay is not over decrease it
-                                beforeShakeStability++;
-                            }
-                            //Set after shake stability to zero ass long as speed is more then
-                            // trashold (reset delay)
-                            shakeStability=0;
-                        }
-                        //If speed is lower then trashold
-                        else{
-                            //Decrease after shake stability
-                            shakeStability++;
-                            //While shake speed is not more then trashold set before shake stability
-                            //to zero (reset delay)
-                            beforeShakeStability=0;
-                            //If end delay is over and shake started, end shake
-                            if(shakeStability>=dice_delay && shakeStarted==1) {
-                                //Set shake flag so it cant detect again
-                                shakeStarted=2;
-                                //Play throw dice sound
-                                setMPlayer(2);
-                                //Update model with new dice rolls
-                                model.setDiceThrows(gameLogic.rollDices());
-                                //Update view with new dice rolls
-                                BoardImage.setDices(model.getDiceThrows());
-                                //Invalidate view so it can be drawn again
-                                BoardImage.invalidate();
-                                //Roll is over, call GameTask so it can continue turns
-                                synchronized (model.getCurrentObjectPlayer()){
-                                    model.getCurrentObjectPlayer().setWaitCond(0);
-                                    model.getCurrentObjectPlayer().notifyAll();
-                                }
-                            }
-                        }
-                        //Update last x, y, z values
-                        last_x = x;
-                        last_y = y;
-                        last_z = z;
-                    }
-                    break;
-            }
-        }
-
-        @Override
-        public void onAccuracyChanged(Sensor sensor, int accuracy) {
-            //Blank
-        }
-    };
-
-    //Method called when activating touch listener
-    public void activateTouchListener(){
-        BoardImage.setOnTouchListener(BoardListener);
-    }
-
-    //Method called when deactivating touch listener
-    public void deactivateTouchListener(){
-        BoardImage.setOnTouchListener(null);
-    }
-
-    //Method called when activating shake listener
-    public void activateShakeListener(){
-        //Reset all important values to starting
-        shakeStarted=0;
-        beforeShakeStability=0;
-        lastUpdate=0;
-        last_x=0;
-        last_y=0;
-        last_z=0;
-        //Register listener
-        sensorManager.registerListener(DiceListener, sensor, SensorManager.SENSOR_DELAY_GAME);
-    }
-
-    //Method called when deactivating shake listener
-    public void deactivateShakeListener(){
-        sensorManager.unregisterListener(DiceListener);
-    }
-
-    //Method called on creation of GameActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //Part for removing status bar from screen
+        profileManager = PlayerProfileManager.getInstance(this);
+        profileManager.checkAndExpireRentals();
+        undoManager = new UndoManager(profileManager);
+        undoManager.reset();
+        hintManager = new HintManager(this, profileManager);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_game);
-        //Get sent extras from menu activity (they dont exist if game is continued,
-        // only if its new game)
-        Bundle extras=getIntent().getExtras();
-        //Get values of shared preferences (game settings parameters)
+
+        applySelectedBoardTheme();
+        gameAudio = new GameAudio(this);
+
+        Bundle extras = getIntent().getExtras();
+        boolean tutorialMode = extras != null && extras.getBoolean(MenuActivity.EXTRA_TUTORIAL_MODE, false);
+        boolean passAndPlayMode = false;
+        if (extras != null) {
+            String gameMode = extras.getString(MenuActivity.EXTRA_GAME_MODE, "");
+            passAndPlayMode = MenuActivity.GAME_MODE_PASS_AND_PLAY.equals(gameMode);
+            sessionGameNumber = extras.getInt(EXTRA_SESSION_GAME_NUMBER, 1);
+            isRematchGame = extras.getBoolean(EXTRA_IS_REMATCH, false);
+        }
+
+        // Initialize Settings
         SharedPreferences preferences = getSharedPreferences("Settings", 0);
-        //Get shake treshold value
-        shake_treshold=preferences.getInt(SettingsActivity.KEY_DICE_TRESHOLD,
-                SettingsActivity.DEF_DICE_TRAESHOLD);
-        //Get time value between two shake sensor events
-        sample_time=preferences.getInt(SettingsActivity.KEY_TIME_SAMPLE,
-                SettingsActivity.DEF_TIME_SAMPLE);
-        //Get value of shake delays
-        dice_delay=preferences.getInt(SettingsActivity.KEY_DICE_SHAKE_DELAY,
-                SettingsActivity.DEF_DICE_SHAKE_DELAY);
-        //Get value of time between turns in game
-        timeBetweenTurns=preferences.getInt(SettingsActivity.KEY_TIME_BETWEEN_TURNS,
-                SettingsActivity.DEF_TIME_BETWEEN_TURNS);
-        //Get value of sound volume
-        soundVolume=preferences.getInt(SettingsActivity.KEY_SOUND_VOLUME,
-                SettingsActivity.DEF_SOUND_VOLUME);
-        //Get View
-        BoardImage=((OnBoardImage)findViewById(R.id.boardImage) );
-        //Create model loader
-        modelLoader=new ModelLoader();
-        //Build model
-        model=modelLoader.loadModel(extras, this);
-        //Create game logics
+        int shakeThreshold = preferences.getInt(SettingsActivity.KEY_DICE_TRESHOLD, SettingsActivity.DEF_DICE_TRAESHOLD);
+        int sampleTime = preferences.getInt(SettingsActivity.KEY_TIME_SAMPLE, SettingsActivity.DEF_TIME_SAMPLE);
+        int diceDelay = preferences.getInt(SettingsActivity.KEY_DICE_SHAKE_DELAY, SettingsActivity.DEF_DICE_SHAKE_DELAY);
+        timeBetweenTurns = preferences.getInt(SettingsActivity.KEY_TIME_BETWEEN_TURNS, SettingsActivity.DEF_TIME_BETWEEN_TURNS);
+
+        soundVolume = GamePreferences.getSfxVolume(this);
+        soundEnabled = preferences.getBoolean(SettingsActivity.KEY_SOUND_ENABLED, SettingsActivity.DEF_SOUND_ENABLED);
+        effectsEnabled = preferences.getBoolean(SettingsActivity.KEY_EFFECTS_ENABLED, SettingsActivity.DEF_EFFECTS_ENABLED);
+
+        if (gameAudio != null) {
+            gameAudio.startBackgroundMusic();
+        }
+
+        coinManager = new CoinManager(this);
+        rewardedAdTracker = new RewardedAdTracker(this);
+
+        // View Setup
+        BoardImage = findViewById(R.id.boardImage);
+        BoardImage.setBoardTheme(getBoardThemeForGame());
+
+        rollDiceButton = findViewById(R.id.rollDiceButton);
+        rollDiceButton.setOnClickListener(v -> rollDiceFromButton(v));
+        setRollDiceButtonVisible(false);
+
+        setupHintButton();
+
+        // Model & Logic
+        modelLoader = new ModelLoader();
+        model = modelLoader.loadModel(extras, this);
         gameLogic = new GameLogic(model);
-        //Create game task
-        gameTask=new GameTask(model, gameLogic, BoardImage,
-                timeBetweenTurns*1000, this);
-        //Update view with chip matrix from model
+        moveExecutor = new GameMoveExecutor(model);
+
+        // Subsystem Controllers
+        initControllers(tutorialMode, passAndPlayMode, shakeThreshold, sampleTime, diceDelay);
+
+        showVariantBanner(tutorialMode);
+
+        // Board initial draw
         BoardImage.setChipMatrix(model.getBoardFields());
-        //Update view with dice throws from model
         BoardImage.setDices(model.getDiceThrows());
-        //Invalidate view, it is drawn
         BoardImage.invalidate();
-        //Get sensor manager
-        sensorManager=(SensorManager) this.getSystemService(Context.SENSOR_SERVICE);
-        //Get sensor
-        sensor=sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-        //Start game thread
+
+        // Start Game Thread
+        gameTask = new GameTask(model, gameLogic, BoardImage, getTurnTransitionDelayMs(), this);
         gameTask.execute();
+
+        trackGameStartedEvent();
     }
 
-    //Method called when back button is pressed
+    private void initControllers(boolean tutorialMode, boolean passAndPlayMode,
+                                int shakeThreshold, int sampleTime, int diceDelay) {
+        // 1. ShakeController
+        shakeController = new ShakeController(this);
+        shakeController.updateSettings(shakeThreshold, sampleTime, diceDelay);
+        shakeController.setOnShakeListener(new ShakeController.OnShakeListener() {
+            @Override
+            public void onShakeStarted() {
+                setMPlayer(1);
+            }
+
+            @Override
+            public void onShakeCompleted() {
+                completeHumanDiceRoll();
+            }
+        });
+
+        // 2. TutorialController
+        LinearLayout tutorialPanel = findViewById(R.id.tutorialPanel);
+        TextView tutorialBody = findViewById(R.id.tutorialBody);
+        Button tutorialNextButton = findViewById(R.id.tutorialNextButton);
+        tutorialController = new TutorialController(this, tutorialMode,
+                tutorialPanel, tutorialBody, tutorialNextButton);
+        tutorialController.setGameDependencies(model, gameLogic, BoardImage);
+        tutorialController.setListener(new TutorialController.OnTutorialListener() {
+            @Override
+            public void onPlayEffect(int effectId) {
+                playEffect(effectId);
+            }
+
+            @Override
+            public void onTutorialStepCompleted(int step) {
+                trackTutorialStepCompleted(step);
+            }
+        });
+
+        // 3. PassAndPlayManager
+        FrameLayout turnSwitchOverlay = findViewById(R.id.turnSwitchRoot);
+        TextView turnSwitchMessage = findViewById(R.id.turnSwitchMessage);
+        Button turnSwitchReady = findViewById(R.id.turnSwitchReady);
+        passAndPlayManager = new PassAndPlayManager(this, passAndPlayMode,
+                turnSwitchOverlay, turnSwitchMessage, turnSwitchReady);
+        passAndPlayManager.setListener(effectId -> playEffect(effectId));
+
+        // 4. PauseMenuHandler
+        pauseMenuHandler = new PauseMenuHandler(this);
+        pauseMenuHandler.setListener(new PauseMenuHandler.OnPauseMenuActionListener() {
+            @Override
+            public void onPlayEffect(int effectId) {
+                playEffect(effectId);
+            }
+
+            @Override
+            public void onResumeGame() {}
+
+            @Override
+            public void onRestartGame() {
+                restartGame();
+            }
+
+            @Override
+            public void onQuitGame() {
+                String mode = isTutorialMode() ? "tutorial" : (isPassAndPlayMode() ? "pass_and_play" : "vs_bot");
+                GameAnalytics.get().trackGameAbandoned(mode, getDifficultyName(), getGameDurationSeconds());
+                if (!isTutorialMode() && !isPassAndPlayMode()) {
+                    new AchievementManager(GameActivity.this).onGameAbandoned();
+                }
+                leaveMethod();
+                Intent data = new Intent();
+                setResult(MenuActivity.GAME_PRESSED_BACK, data);
+                finish();
+            }
+
+            @Override
+            public void onVolumeChanged(int newVolume) {
+                soundVolume = newVolume;
+            }
+        });
+
+        findViewById(R.id.btnPause).setOnClickListener(v -> {
+            playEffect(GameAudio.EFFECT_MENU_TAP);
+            pauseMenuHandler.showPauseDialog();
+        });
+
+        // 5. GameOverHandler
+        gameOverHandler = new GameOverHandler(this, coinManager);
+        gameOverHandler.setListener(new GameOverHandler.OnGameOverActionListener() {
+            @Override
+            public void onPlayEffect(int effectId) {
+                playEffect(effectId);
+            }
+
+            @Override
+            public void onRematch() {
+                startRematch();
+            }
+
+            @Override
+            public void onChangeSettings(int winningPlayer, String p1Name, String p2Name, String gameMode) {
+                finishWithResult(winningPlayer, p1Name, p2Name, gameMode);
+            }
+
+            @Override
+            public java.util.List<games.mrlaki5.backgammon.Analysis.TurnRecord> onRequestTurnHistory() {
+                return model != null ? model.getTurnHistory() : null;
+            }
+
+            @Override
+            public int onRequestHumanPlayer() {
+                if (model == null || model.getPlayers() == null) return 0;
+                for (int i = 0; i < model.getPlayers().length; i++) {
+                    if (model.getPlayers()[i] instanceof games.mrlaki5.backgammon.Players.Human) {
+                        return i + 1;
+                    }
+                }
+                return 0;
+            }
+
+            @Override
+            public void onMainMenu(int winningPlayer, String p1Name, String p2Name, String gameMode) {
+                finishWithResult(winningPlayer, p1Name, p2Name, gameMode);
+            }
+        });
+    }
+
+    public void activateTouchListener() {
+        if (turnSnapshot == null && !undoUsedThisTurn && model != null) {
+            turnSnapshot = new TurnSnapshot(model.getBoardFields(), model.getDiceThrows(), model.getNextMoves());
+        }
+        BoardImage.setOnTouchListener(BoardListener);
+        if (tutorialController.isTutorialMode()) {
+            tutorialController.showTutorialText(tutorialController.getTutorialStep());
+        }
+    }
+
+    public void deactivateTouchListener() {
+        BoardImage.setOnTouchListener(null);
+    }
+
+    public void activateShakeListener() {
+        turnSnapshot = null;
+        undoUsedThisTurn = false;
+        waitForTutorialIntro();
+        if (tutorialController.isTutorialMode() && tutorialController.getTutorialStep() == TutorialScenarios.STEP_INTRO) {
+            tutorialController.setTutorialStep(TutorialScenarios.STEP_ROLL);
+            tutorialController.loadTutorialScenario(TutorialScenarios.STEP_ROLL);
+        } else if (tutorialController.isTutorialMode()) {
+            tutorialController.showTutorialText(tutorialController.getTutorialStep());
+        }
+        shakeController.startListening();
+        setRollDiceButtonVisible(true);
+    }
+
+    public void deactivateShakeListener() {
+        shakeController.stopListening();
+        setRollDiceButtonVisible(false);
+    }
+
+    private void setRollDiceButtonVisible(final boolean visible) {
+        if (rollDiceButton == null) return;
+        runOnUiThread(() -> {
+            rollDiceButton.animate().cancel();
+            rollDiceButton.setVisibility(visible ? View.VISIBLE : View.GONE);
+            rollDiceButton.setEnabled(visible);
+            if (visible) {
+                rollDiceButton.setScaleX(0.88F);
+                rollDiceButton.setScaleY(0.88F);
+                rollDiceButton.setAlpha(0F);
+                rollDiceButton.animate()
+                        .alpha(1F)
+                        .scaleX(1F)
+                        .scaleY(1F)
+                        .setDuration(170L)
+                        .setInterpolator(new AccelerateDecelerateInterpolator())
+                        .start();
+            }
+        });
+    }
+
+    private void completeHumanDiceRoll() {
+        if (model == null || gameLogic == null || BoardImage == null) return;
+
+        Player currentPlayer = model.getCurrentObjectPlayer();
+        if (currentPlayer == null || !(currentPlayer instanceof Human)) return;
+
+        synchronized (currentPlayer) {
+            if (currentPlayer.getWaitCond() != 1) return;
+
+            shakeController.setShakeStarted(2);
+            deactivateShakeListener();
+            setMPlayer(2);
+            model.setDiceThrows(gameLogic.rollDices());
+            BoardImage.setDices(model.getDiceThrows());
+            BoardImage.invalidate();
+            currentPlayer.setWaitCond(0);
+            currentPlayer.notifyAll();
+
+            if (tutorialController.isTutorialMode()
+                    && tutorialController.getTutorialStep() == TutorialScenarios.STEP_ROLL) {
+                tutorialController.advanceToNextStep();
+            }
+        }
+    }
+
+    public void rollDiceFromButton(View view) {
+        playEffect(GameAudio.EFFECT_MENU_TAP);
+        if (model == null) return;
+
+        int state = model.getState();
+        if (state == 0 || state == 1 || state == 3) {
+            completeHumanDiceRoll();
+        }
+    }
+
+    public void waitForTutorialIntro() {
+        if (tutorialController != null) {
+            tutorialController.waitForTutorialIntro();
+        }
+    }
+
+    public void advanceToNextTutorialStep() {
+        if (tutorialController != null) {
+            tutorialController.advanceToNextStep();
+        }
+    }
+
+    public void showTutorialMessage(final int step) {
+        if (tutorialController != null) {
+            tutorialController.showTutorialMessage(step);
+        }
+    }
+
+    public void advanceTutorial(View view) {
+        // XML onClick compat — no-op
+    }
+
+    public void showTurnSwitchAndWait(String nextPlayerName, int nextPlayer) {
+        if (passAndPlayManager != null) {
+            passAndPlayManager.showTurnSwitchAndWait(nextPlayerName, nextPlayer, BoardImage);
+        }
+    }
+
+    public boolean isPassAndPlayMode() {
+        return passAndPlayManager != null && passAndPlayManager.isPassAndPlayMode();
+    }
+
+    public boolean isTutorialMode() {
+        return tutorialController != null && tutorialController.isTutorialMode();
+    }
+
     @Override
     public void onBackPressed() {
-        //Call leave method to close stuff
-        leaveMethod();
-        //Create result intent
-        Intent data= new Intent();
-        setResult(MenuActivity.GAME_PRESSED_BACK, data);
-        super.onBackPressed();
+        if (gameOverHandler != null && gameOverHandler.isDialogShowing()) {
+            gameOverHandler.dismissDialog();
+            finish();
+            return;
+        }
+        if (pauseMenuHandler != null) {
+            pauseMenuHandler.showPauseDialog();
+        }
     }
 
-    //Method called after onCreate, before onResume. Must be called if on closing onStop was called
+    private void restartGame() {
+        String mode = isTutorialMode() ? "tutorial" : (isPassAndPlayMode() ? "pass_and_play" : "vs_bot");
+        GameAnalytics.get().trackGameRestarted(mode, getDifficultyName());
+        leaveMethod();
+        File file = new File(getFilesDir().getAbsolutePath(), MenuActivity.GAME_CONTINUE_SAVE_FILE_NAME);
+        file.delete();
+        Intent intent = getIntent();
+        finish();
+        startActivity(intent);
+    }
+
     @Override
     protected void onStart() {
         super.onStart();
-        //If pause was done it means that game was closed with onStop, so model was loaded from file
-        //and save file must be deleted
-        if(pauseDone==1){
-            File file=new File(GameActivity.this.getFilesDir().getAbsolutePath(),
-                    MenuActivity.GAME_CONTINUE_SAVE_FILE_NAME);
+        if (pauseDone == 1) {
+            File file = new File(getFilesDir().getAbsolutePath(), MenuActivity.GAME_CONTINUE_SAVE_FILE_NAME);
             file.delete();
         }
     }
 
-    //Method called after onStart. Must be called if on closing onPause was called
     @Override
     protected void onResume() {
         super.onResume();
-        //If onPause was called which shut down game thread, so new one must be created and started
-        if(pauseDone==1){
-            //Flag reset
-            pauseDone=0;
-            //New game thread created
-            gameTask=new GameTask(model, gameLogic, BoardImage,
-                    timeBetweenTurns*1000, this);
-            //New game thread started
+        if (pauseDone == 1) {
+            pauseDone = 0;
+            if (gameAudio != null) {
+                gameAudio.startBackgroundMusic();
+            }
+            gameTask = new GameTask(model, gameLogic, BoardImage, getTurnTransitionDelayMs(), this);
             gameTask.execute();
         }
     }
 
-    //Method called on pausing activity
+    private int getTurnTransitionDelayMs() {
+        return Math.max(80, Math.min(550, 80 + (timeBetweenTurns * 90)));
+    }
+
+    private void applySelectedBoardTheme() {
+        int themeId = getBoardThemeForGame();
+        BoardTheme theme = BoardThemeFactory.getTheme(themeId);
+        android.view.View root = findViewById(R.id.gameRoot);
+        android.graphics.drawable.Drawable programmatic = theme.createBackgroundDrawable();
+        if (programmatic != null) {
+            root.setBackground(programmatic);
+        } else {
+            root.setBackgroundResource(theme.getBackgroundDrawableRes());
+        }
+    }
+
     @Override
     protected void onPause() {
-        if(gameTask!=null) {
-            //Set work flag in game thread to 0
+        if (gameTask != null) {
             gameTask.setWorkFlag(0);
-            //Synchronize end of activity with setting endRoutineStarted to 1
-            //which will stop oll other endActivity attempts
             synchronized (gameTask) {
                 if (gameTask.getEndRoutineStarted() == 0) {
                     gameTask.setEndRoutineStarted(1);
-                    pauseDone=1;
+                    pauseDone = 1;
                 }
             }
-            //If current pause ending activity is first one
-            if(pauseDone==1){
-                //Shut down game thread if it was waiting
+            if (pauseDone == 1) {
                 synchronized (model.getCurrentObjectPlayer()) {
                     model.getCurrentObjectPlayer().setWaitCond(0);
                     model.getCurrentObjectPlayer().notifyAll();
                 }
-                //Stop sound player
                 clearMPlayer();
-                //Unregister shake listener if it was registered
-                sensorManager.unregisterListener(DiceListener);
+                if (gameAudio != null) {
+                    gameAudio.stopBackgroundMusic();
+                }
+                shakeController.stopListening();
             }
         }
         super.onPause();
     }
 
-    //Method called on stop activity, after onPause activity
+    @Override
+    protected void onDestroy() {
+        if (gameAudio != null) {
+            gameAudio.release();
+            gameAudio = null;
+        }
+        if (gameTask != null) {
+            gameTask.cancel();
+        }
+        super.onDestroy();
+    }
+
     @Override
     protected void onStop() {
-        //If current pause ending activity is first one
-        if(pauseDone==1){
-            synchronized (gameTask){
-                //Wait until game thread is finished
+        if (pauseDone == 1) {
+            synchronized (gameTask) {
                 while (gameTask.getFinishedFlag() != 1) {
                     try {
                         gameTask.wait();
@@ -512,35 +728,32 @@ public class GameActivity extends AppCompatActivity {
                     }
                 }
             }
-            //Save model to file
             modelLoader.saveModel(model, this);
         }
         super.onStop();
     }
 
-    //Method used on back pressed to shut down all resources
-    public void leaveMethod(){
-        if(gameTask!=null){
-            //Set work flag in game thread to 0
+    public void leaveMethod() {
+        if (passAndPlayManager != null) {
+            passAndPlayManager.release();
+        }
+        if (tutorialController != null) {
+            tutorialController.release();
+        }
+        if (gameTask != null) {
             gameTask.setWorkFlag(0);
-            //Shut down game thread if it was waiting
             synchronized (model.getCurrentObjectPlayer()) {
                 model.getCurrentObjectPlayer().setWaitCond(0);
                 model.getCurrentObjectPlayer().notifyAll();
             }
-            //Stop sound player
             clearMPlayer();
-            //Unregister shake listener if it was registered
-            sensorManager.unregisterListener(DiceListener);
-            int tempFlag=0;
-            //Synchronize end of activity with setting endRoutineStarted to 1
-            //which will stop oll other endActivity attempts
+            shakeController.stopListening();
+            int tempFlag = 0;
             synchronized (gameTask) {
-                if(gameTask.getEndRoutineStarted()==0){
+                if (gameTask.getEndRoutineStarted() == 0) {
                     gameTask.setEndRoutineStarted(1);
-                    tempFlag=1;
+                    tempFlag = 1;
                 }
-                //Wait until game thread is finished
                 while (gameTask.getFinishedFlag() != 1) {
                     try {
                         gameTask.wait();
@@ -549,69 +762,70 @@ public class GameActivity extends AppCompatActivity {
                     }
                 }
             }
-            //if back pressed is first end of activity save model to file
-            if(tempFlag==1) {
+            if (tempFlag == 1) {
                 modelLoader.saveModel(model, this);
             }
-        }
-    }
-
-    //Method for stopping and clearing sound player
-    public void clearMPlayer(){
-        //Synchronize on sound player string
-        synchronized (mPlayerSem){
-            //if sound player exists stop it and delete it
-            if(mPlayer!=null){
-                mPlayer.stop();
-                mPlayer.reset();
-                mPlayer.release();
-                mPlayer=null;
+            if (gameOverHandler != null && !gameOverHandler.isResultRecorded()
+                    && !isPassAndPlayMode() && !isTutorialMode()) {
+                WeeklyChallenge weeklyChallenge = new WeeklyChallenge(this);
+                weeklyChallenge.onGameAbandoned();
             }
         }
     }
 
-    //Method for playing sounds on media player
-    //SongNum= 1:diceShake, 2:diceRoll
-    public void setMPlayer(int SongNum){
-        //Synchronize on sound player string
-        synchronized (mPlayerSem){
-            //if sound player exists stop it and delete it
-            if(mPlayer!=null){
-                mPlayer.stop();
-                mPlayer.reset();
-                mPlayer.release();
-                mPlayer=null;
-            }
-            if(SongNum==1){
-                //Play dice_shake sound
-                mPlayer = MediaPlayer.create(getApplicationContext(), R.raw.dice_shake);
-                //Calculate volume
-                final float volume = (float) (1 -
-                        (Math.log(SettingsActivity.MAX_SOUND_VOLUME - soundVolume)
-                                / Math.log(SettingsActivity.MAX_SOUND_VOLUME)));
-                //Set volume
-                mPlayer.setVolume(volume, volume);
-                //Set sound looping so it doesnt end until its turned off
-                mPlayer.setLooping(true);
-                //Play sound
-                mPlayer.start();
-            }
-            else{
-                //Play dice_roll sound
-                mPlayer = MediaPlayer.create(getApplicationContext(), R.raw.dice_roll);
-                //Calculate volume
-                final float volume = (float) (1 -
-                        (Math.log(SettingsActivity.MAX_SOUND_VOLUME - soundVolume)
-                                / Math.log(SettingsActivity.MAX_SOUND_VOLUME)));
-                //Set volume
-                mPlayer.setVolume(volume, volume);
-                //Play sound
-                mPlayer.start();
-            }
+    public void clearMPlayer() {
+        if (gameAudio != null) {
+            gameAudio.stopDiceShake();
         }
     }
 
-    //Getters and setters
+    public void onCheckerMoved(final GameMoveExecutor.MoveResult moveResult) {
+        if (moveResult == null || !moveResult.isApplied() || BoardImage == null) {
+            return;
+        }
+        runOnUiThread(() -> {
+            BoardImage.playMoveFeedback(moveResult.getDestinationField(), moveResult.isHit());
+            playMoveEffect(moveResult);
+        });
+    }
+
+    public void playGameFinishedEffect() {
+        runOnUiThread(() -> playEffect(GameAudio.EFFECT_GAME_WIN));
+    }
+
+    private void playEffect(int effectNum) {
+        if (!soundEnabled || !effectsEnabled || soundVolume <= 0) {
+            return;
+        }
+        if (gameAudio != null) {
+            gameAudio.play(effectNum);
+        }
+    }
+
+    private void playMoveEffect(GameMoveExecutor.MoveResult moveResult) {
+        if (moveResult.getDestinationField() == 26 || moveResult.getDestinationField() == 27) {
+            playEffect(GameAudio.EFFECT_BEAR_OFF);
+        } else {
+            playEffect(moveResult.isHit()
+                    ? GameAudio.EFFECT_CHECKER_HIT
+                    : GameAudio.EFFECT_CHECKER_MOVE);
+        }
+    }
+
+    public void setMPlayer(int SongNum) {
+        if (!soundEnabled || GamePreferences.getSfxVolume(this) <= 0) {
+            clearMPlayer();
+            return;
+        }
+        if (gameAudio == null) return;
+        if (SongNum == 1) {
+            gameAudio.startDiceShake();
+        } else {
+            gameAudio.finishDiceRoll();
+        }
+    }
+
+    // Getters and Setters
     public GameLogic getGameLogic() {
         return gameLogic;
     }
@@ -634,5 +848,338 @@ public class GameActivity extends AppCompatActivity {
 
     public void setModel(Model model) {
         this.model = model;
+    }
+
+    // Analytics helpers
+    private void trackGameStartedEvent() {
+        gameStartTimeMs = System.currentTimeMillis();
+        String mode;
+        if (isTutorialMode()) {
+            mode = "tutorial";
+            GameAnalytics.get().trackTutorialStarted();
+        } else if (isPassAndPlayMode()) {
+            mode = "pass_and_play";
+        } else {
+            mode = "vs_bot";
+        }
+        GameAnalytics.get().trackGameStarted(mode, getDifficultyName(), getThemeName());
+        GameAnalytics.get().setUserProperty("last_game_number", String.valueOf(sessionGameNumber));
+    }
+
+    public void trackTutorialStepCompleted(int step) {
+        GameAnalytics.get().trackTutorialStep(step);
+        if (step >= TutorialScenarios.TOTAL_STEPS - 1) {
+            GameAnalytics.get().trackTutorialCompleted();
+            new AchievementManager(this).onTutorialCompleted();
+        }
+    }
+
+    public long getGameDurationSeconds() {
+        return (System.currentTimeMillis() - gameStartTimeMs) / 1000;
+    }
+
+    private String getDifficultyName() {
+        int diff = getBotDifficulty();
+        switch (diff) {
+            case 0: return "easy";
+            case 1: return "medium";
+            case 2: return "hard";
+            case 3: return "royal";
+            default: return "unknown";
+        }
+    }
+
+    private String getThemeName() {
+        int theme = getBoardThemeForGame();
+        switch (theme) {
+            case GamePreferences.THEME_POP_ART: return "pop_art";
+            case GamePreferences.THEME_CYBERPUNK: return "cyberpunk";
+            case GamePreferences.THEME_LUXURY: return "luxury";
+            case GamePreferences.THEME_WOODLAND: return "woodland";
+            case GamePreferences.THEME_GALAXY: return "galaxy";
+            case GamePreferences.THEME_ANCIENT_EGYPT: return "ancient_egypt";
+            case GamePreferences.THEME_NEON_RETRO: return "neon_retro";
+            default: return "royal";
+        }
+    }
+
+    private final Object bonusDoubleLock = new Object();
+    private volatile int bonusDoubleChoice = 0;
+
+    /**
+     * Acey-deucey: asks the player (or the bot) which double to play after a 1-2.
+     * Called from the game thread and blocks until a value is chosen.
+     */
+    public int chooseBonusDouble() {
+        if (!(model.getCurrentObjectPlayer() instanceof games.mrlaki5.backgammon.Players.Human)) {
+            return new games.mrlaki5.backgammon.Players.BotMoveStrategy()
+                    .chooseBonusDouble(model, getBotDifficulty(), new java.util.Random());
+        }
+        bonusDoubleChoice = 0;
+        runOnUiThread(this::showBonusDoubleDialog);
+        synchronized (bonusDoubleLock) {
+            while (bonusDoubleChoice == 0) {
+                try {
+                    bonusDoubleLock.wait();
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                    return 6;
+                }
+            }
+        }
+        return bonusDoubleChoice;
+    }
+
+    private void showBonusDoubleDialog() {
+        String[] options = new String[6];
+        for (int i = 0; i < 6; i++) {
+            options[i] = getString(R.string.acey_bonus_option, i + 1);
+        }
+        AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.DarkAlertDialogTheme);
+        builder.setTitle(R.string.acey_bonus_title);
+        builder.setCancelable(false);
+        builder.setItems(options, (dialog, which) -> setBonusDoubleChoice(which + 1));
+        builder.show();
+    }
+
+    private void setBonusDoubleChoice(int value) {
+        synchronized (bonusDoubleLock) {
+            bonusDoubleChoice = value;
+            bonusDoubleLock.notifyAll();
+        }
+    }
+
+    /** Board theme for this game: a journey chapter may override the player's choice. */
+    public int getBoardThemeForGame() {
+        int override = getIntent().getIntExtra(MenuActivity.EXTRA_BOARD_THEME, -1);
+        return override >= 0 ? override : GamePreferences.getBoardTheme(this);
+    }
+
+    /** Difficulty for this game: a journey chapter overrides the player's setting. */
+    public int getBotDifficulty() {
+        int override = getIntent().getIntExtra(MenuActivity.EXTRA_BOT_DIFFICULTY, -1);
+        return override >= 0 ? override : GamePreferences.getBotDifficulty(this);
+    }
+
+    //Marks a journey chapter finished once its match is won
+    private void checkJourneyCompletion(int winningPlayer) {
+        int stage = getIntent().getIntExtra(MenuActivity.EXTRA_JOURNEY_STAGE, -1);
+        if (stage < 0 || winningPlayer != 1) {
+            return;
+        }
+        MatchState match = model.getMatch();
+        if (match.getTargetPoints() > 1 && !match.isOver()) {
+            return;
+        }
+        int reward = new JourneyManager(this).completeStage(stage, new CoinManager(this));
+        if (reward > 0) {
+            runOnUiThread(() -> Toast.makeText(this,
+                    getString(R.string.journey_stage_done, reward), Toast.LENGTH_LONG).show());
+        }
+    }
+
+    //Challenge games are logged so the player can compare results with whoever shared the code
+    private void recordChallengeResult(int winningPlayer, @Nullable GameResult result) {
+        if (model.getDiceSeed() == 0 || result == null) {
+            return;
+        }
+        String code = ChallengeCode.encode(model.getVariant(), model.getDiceSeed(),
+                model.getMatch().getTargetPoints());
+        new ChallengeHistory(this).record(new ChallengeHistory.Entry(code, model.getVariant(),
+                winningPlayer == 1, result.getPoints()));
+    }
+
+    public void onGameFinished(int winningPlayer, String p1Name, String p2Name, String gameMode,
+                               @Nullable GameResult result) {
+        checkJourneyCompletion(winningPlayer);
+        recordChallengeResult(winningPlayer, result);
+        if (gameOverHandler != null) {
+            gameOverHandler.handleGameFinished(winningPlayer, p1Name, p2Name, gameMode,
+                    isPassAndPlayMode(), isTutorialMode(), isRematchGame,
+                    sessionGameNumber, getGameDurationSeconds(), getDifficultyName(),
+                    result, model.getVariant(), model.getMatch(), getBotDifficulty());
+        }
+    }
+
+    private void finishWithResult(int winningPlayer, String p1Name, String p2Name, String gameMode) {
+        Intent data = new Intent();
+        data.putExtra(MenuActivity.EXTRA_PLAYER1_NAME, p1Name);
+        data.putExtra(MenuActivity.EXTRA_PLAYER2_NAME, p2Name);
+        data.putExtra(MenuActivity.EXTRA_WINING_PLAYER, winningPlayer);
+        data.putExtra(MenuActivity.EXTRA_GAME_MODE, gameMode);
+        setResult(MenuActivity.GAME_ENDED_OK, data);
+        finish();
+    }
+
+    // Brief reminder of the variant and running match score when it is not a plain single game
+    private void showVariantBanner(boolean tutorialMode) {
+        MatchState match = model.getMatch();
+        if (tutorialMode || (model.getVariant() == Variant.STANDARD && match.getTargetPoints() <= 1
+                && model.getDiceSeed() == 0)) {
+            return;
+        }
+        String text = getString(VariantPicker.nameRes(model.getVariant()));
+        if (model.getDiceSeed() != 0) {
+            text = getString(R.string.challenge_banner, text);
+        }
+        if (match.getTargetPoints() > 1) {
+            text += " • " + getString(R.string.game_over_match_score, match.getTargetPoints(),
+                    model.getPlayers()[0].getPlayerName(), match.getWhiteScore(),
+                    match.getRedScore(), model.getPlayers()[1].getPlayerName());
+        }
+        Toast.makeText(this, text, Toast.LENGTH_LONG).show();
+    }
+
+    private void startRematch() {
+        sessionGameNumber++;
+        String mode = isPassAndPlayMode() ? "pass_and_play" : "vs_bot";
+        GameAnalytics.get().trackRematchStarted(mode, getDifficultyName());
+
+        File saveFile = new File(getFilesDir(), MenuActivity.GAME_CONTINUE_SAVE_FILE_NAME);
+        saveFile.delete();
+
+        Intent intent = getIntent();
+        // Continue the running match, or start a fresh one of the same length and variant
+        MatchState match = model.getMatch();
+        boolean matchOngoing = !match.isOver();
+        intent.putExtra(MenuActivity.EXTRA_VARIANT, model.getVariant().name());
+        intent.putExtra(MenuActivity.EXTRA_TAVLI, !match.getRotation().isEmpty());
+        intent.putExtra(MenuActivity.EXTRA_MATCH_TARGET, match.getTargetPoints());
+        intent.putExtra(MenuActivity.EXTRA_MATCH_WHITE_SCORE, matchOngoing ? match.getWhiteScore() : 0);
+        intent.putExtra(MenuActivity.EXTRA_MATCH_RED_SCORE, matchOngoing ? match.getRedScore() : 0);
+        intent.putExtra(MenuActivity.EXTRA_MATCH_GAMES, matchOngoing ? match.getGamesPlayed() : 0);
+        intent.putExtra(EXTRA_SESSION_GAME_NUMBER, sessionGameNumber);
+        intent.putExtra(EXTRA_IS_REMATCH, true);
+        finish();
+        startActivity(intent);
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+    }
+
+    private void setupHintButton() {
+        btnHint = findViewById(R.id.btnHint);
+        if (btnHint != null) {
+            btnHint.setOnClickListener(v -> showHintChoiceDialog());
+        }
+        btnUndo = findViewById(R.id.btnUndo);
+        if (btnUndo != null) {
+            btnUndo.setOnClickListener(v -> performUndo());
+        }
+    }
+
+    private void performUndo() {
+        if (model == null || model.getState() != 2 || turnSnapshot == null || undoUsedThisTurn) {
+            android.widget.Toast.makeText(this, R.string.undo_unavailable, android.widget.Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if (undoManager == null) {
+            undoManager = new UndoManager(PlayerProfileManager.getInstance(this));
+        }
+
+        undoManager.requestUndo(new UndoManager.UndoCallback() {
+            @Override
+            public void onUndoGranted() {
+                undoUsedThisTurn = true;
+                model.setBoardFields(turnSnapshot.copyBoard());
+                model.setDiceThrows(turnSnapshot.copyDice());
+                model.setNextMoves(turnSnapshot.copyMoves());
+                model.setHeadMovesThisTurn(0);
+                model.beginTurnRecord();
+                BoardImage.setChipMatrix(model.getBoardFields());
+                BoardImage.setDices(model.getDiceThrows());
+                BoardImage.setNextMoveArray(null);
+                BoardImage.postInvalidateOnAnimation();
+                android.widget.Toast.makeText(GameActivity.this, R.string.undo_success, android.widget.Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onUndoDenied(String reason) {
+                android.widget.Toast.makeText(GameActivity.this, R.string.insufficient_coins, android.widget.Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void showHintChoiceDialog() {
+        if (model == null || model.getState() != 2 || model.getNextMoves() == null || model.getNextMoves().isEmpty()) {
+            return;
+        }
+        AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.DarkAlertDialogTheme);
+        builder.setTitle(R.string.hint_choice_title);
+        String[] options = new String[]{
+                getString(R.string.hint_use_coins, CoinConfig.HINT_COST),
+                getString(R.string.hint_watch_video)
+        };
+        builder.setItems(options, (dialog, which) -> {
+            if (which == 0) {
+                if (hintManager == null) {
+                    hintManager = new HintManager(this, PlayerProfileManager.getInstance(this));
+                }
+                hintManager.requestHint(new HintManager.HintCallback() {
+                    @Override
+                    public void onHintGranted() {
+                        revealBestMove();
+                    }
+
+                    @Override
+                    public void onHintDenied(String reason) {
+                        android.widget.Toast.makeText(GameActivity.this, R.string.insufficient_coins, android.widget.Toast.LENGTH_SHORT).show();
+                    }
+                });
+            } else if (which == 1) {
+                if (rewardedAdTracker != null && rewardedAdTracker.canShow(RewardedAdPlacement.HINT)) {
+                    AdManager adMgr = MenuActivity.getSharedAdManager();
+                    if (adMgr != null && adMgr.isRewardedAdReady()) {
+                        adMgr.showRewardedAd(this, RewardedAdPlacement.HINT, new AdCallback() {
+                            @Override
+                            public void onAdLoaded() {}
+
+                            @Override
+                            public void onAdFailedToLoad(String error) {
+                                runOnUiThread(() -> android.widget.Toast.makeText(GameActivity.this,
+                                        R.string.iap_purchase_failed, android.widget.Toast.LENGTH_SHORT).show());
+                            }
+
+                            @Override
+                            public void onAdShown() {}
+
+                            @Override
+                            public void onAdDismissed() {}
+
+                            @Override
+                            public void onAdClicked() {}
+
+                            @Override
+                            public void onRewardEarned() {
+                                if (rewardedAdTracker != null) {
+                                    rewardedAdTracker.recordShow(RewardedAdPlacement.HINT);
+                                }
+                                GameAnalytics.get().trackRewardedAdWatched("hint");
+                                runOnUiThread(() -> revealBestMove());
+                            }
+                        });
+                    } else {
+                        if (adMgr != null) adMgr.preloadAds();
+                        android.widget.Toast.makeText(this, R.string.iap_purchase_failed, android.widget.Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    android.widget.Toast.makeText(this, R.string.insufficient_coins, android.widget.Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        builder.show();
+    }
+
+    private void revealBestMove() {
+        if (model == null || model.getNextMoves() == null || model.getNextMoves().isEmpty() || BoardImage == null || gameLogic == null) return;
+        BotMoveStrategy strategy = new BotMoveStrategy();
+        NextJump bestMove = strategy.chooseMove(model, model.getNextMoves(), 3, new java.util.Random());
+        if (bestMove != null) {
+            int[] currNextMoves = gameLogic.calculateNextMovesForSpecificField(model.getNextMoves(), bestMove.getSrcField());
+            if (currNextMoves != null) {
+                BoardImage.setNextMoveArray(currNextMoves);
+                BoardImage.invalidate();
+                android.widget.Toast.makeText(this, R.string.hint_best_move, android.widget.Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 }

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="320dp"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_dialog_rounded"
+    android:layoutDirection="rtl"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <!-- Title -->
+    <TextView
+        android:id="@+id/dialogThemeTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:textColor="@color/accent_gold"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <!-- Current Coin Balance -->
+    <TextView
+        android:id="@+id/dialogThemeCoins"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="4dp"
+        android:textColor="@color/text_muted"
+        android:textSize="12sp" />
+
+    <!-- Option A: Buy with coins -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnBuyTheme"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/bg_button_play"
+        app:backgroundTint="@null"
+        android:fontFamily="@font/vazirmatn_semibold"
+        android:textAllCaps="false"
+        android:textColor="#1A1A1A"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:cornerRadius="12dp"
+        app:elevation="4dp" />
+
+    <!-- Option B: 50% Off with Ad -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnDiscountAd"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/vazirmatn_semibold"
+        android:text="@string/theme_discount_button"
+        android:textAllCaps="false"
+        android:textColor="@color/accent_gold"
+        android:textSize="13sp"
+        android:textStyle="bold"
+        app:cornerRadius="12dp"
+        app:strokeColor="@color/accent_gold"
+        app:strokeWidth="1.5dp" />
+
+    <!-- Cancel Button -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnCancelThemeUnlock"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
+        android:layout_width="match_parent"
+        android:layout_height="38dp"
+        android:layout_marginTop="6dp"
+        android:fontFamily="@font/vazirmatn_semibold"
+        android:text="@string/cancel"
+        android:textAllCaps="false"
+        android:textColor="@color/color_cancel_button_text"
+        android:textSize="13sp" />
+</LinearLayout>

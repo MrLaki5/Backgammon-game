@@ -1,28 +1,158 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+
+// Apply google-services plugin only if google-services.json exists
+// This allows the project to build without Firebase configuration during development
+def googleServicesFile = file('google-services.json')
+def hasGoogleServices = googleServicesFile.exists()
+if (hasGoogleServices) {
+    apply plugin: 'com.google.gms.google-services'
+    apply plugin: 'com.google.firebase.crashlytics'
+}
+
+def localProps = new Properties()
+def localPropsFile = rootProject.file('local.properties')
+if (localPropsFile.exists()) {
+    localPropsFile.withInputStream { localProps.load(it) }
+}
+
+def releaseStoreFile = localProps.getProperty('RELEASE_STORE_FILE') ?: System.getenv('RELEASE_STORE_FILE')
+def releaseStorePassword = localProps.getProperty('RELEASE_STORE_PASSWORD') ?: System.getenv('RELEASE_STORE_PASSWORD')
+def releaseKeyAlias = localProps.getProperty('RELEASE_KEY_ALIAS') ?: System.getenv('RELEASE_KEY_ALIAS')
+def releaseKeyPassword = localProps.getProperty('RELEASE_KEY_PASSWORD') ?: System.getenv('RELEASE_KEY_PASSWORD')
+def hasReleaseSigning = releaseStoreFile && releaseStorePassword && releaseKeyAlias && releaseKeyPassword
+def requestedReleaseBuild = gradle.startParameter.taskNames.any { taskName ->
+    taskName.toLowerCase().contains('release')
+}
 
 android {
-    compileSdkVersion 26
+    namespace 'games.mrlaki5.backgammon'
+    compileSdk 35
+
     defaultConfig {
-        applicationId "games.mrlaki5.backgammon"
-        minSdkVersion 21
-        targetSdkVersion 26
-        versionCode 1
-        versionName "1.0"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        applicationId "com.royalbackgammon.offline"
+        minSdk 21
+        targetSdk 35
+
+        versionCode 5
+        versionName "2.0.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
     }
-    buildTypes {
+
+    signingConfigs {
         release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            if (hasReleaseSigning) {
+                storeFile rootProject.file(releaseStoreFile)
+                storePassword releaseStorePassword
+                keyAlias releaseKeyAlias
+                keyPassword releaseKeyPassword
+                enableV1Signing true
+                enableV2Signing true
+                enableV3Signing true
+                enableV4Signing true
+            }
         }
+    }
+
+    buildTypes {
+        debug {
+            debuggable true
+        }
+
+        release {
+            debuggable false
+            minifyEnabled true
+            shrinkResources true
+
+            proguardFiles getDefaultProguardFile(
+                    'proguard-android-optimize.txt'
+            ), 'proguard-rules.pro'
+
+            if (hasReleaseSigning) {
+                signingConfig signingConfigs.release
+            }
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    flavorDimensions += "store"
+    productFlavors {
+        bazaar {
+            dimension "store"
+            applicationIdSuffix ".bazaar"
+            buildConfigField "String", "STORE", "\"bazaar\""
+            buildConfigField "String", "TAPSELL_APP_KEY", "\"icqpgedfgrrbfflttiglpqbfneimtpltlnbodeaginjtfcreqkthhblofgmcegogkgpeij\""
+            buildConfigField "String", "TAPSELL_ZONE_INTERSTITIAL", "\"6a8b35a0f34d73758477ec0a\""
+            buildConfigField "String", "TAPSELL_ZONE_REWARDED", "\"6a8dddf3488ef01a725b3afd\""
+        }
+        myket {
+            dimension "store"
+            applicationIdSuffix ".myket"
+            buildConfigField "String", "STORE", "\"myket\""
+            buildConfigField "String", "TAPSELL_APP_KEY", "\"icqpgedfgrrbfflttiglpqbfneimtpltlnbodeaginjtfcreqkthhblofgmcegogkgpeij\""
+            buildConfigField "String", "TAPSELL_ZONE_INTERSTITIAL", "\"6a8b35a0f34d73758477ec0a\""
+            buildConfigField "String", "TAPSELL_ZONE_REWARDED", "\"6a8dddf3488ef01a725b3afd\""
+        }
+        foss {
+            // Free/open-source build without any store SDK (for testing/development)
+            dimension "store"
+            buildConfigField "String", "STORE", "\"foss\""
+            buildConfigField "String", "TAPSELL_APP_KEY", "\"\""
+            buildConfigField "String", "TAPSELL_ZONE_INTERSTITIAL", "\"\""
+            buildConfigField "String", "TAPSELL_ZONE_REWARDED", "\"\""
+        }
+    }
+
+    kotlinOptions {
+        jvmTarget = '17'
+    }
+
+    bundle {
+        language {
+            enableSplit = false
+        }
+    }
+
+    buildFeatures {
+        buildConfig true
     }
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'com.android.support:appcompat-v7:26.1.0'
-    implementation 'com.android.support.constraint:constraint-layout:1.1.0'
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:1.0.2'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    implementation project(':game-core')
+
+    implementation 'androidx.appcompat:appcompat:1.7.0'
+    implementation 'com.google.android.material:material:1.12.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.2.1'
+
+    // Firebase Analytics (works without google-services.json in debug, just logs warnings)
+    implementation platform('com.google.firebase:firebase-bom:33.7.0')
+    implementation 'com.google.firebase:firebase-analytics'
+    implementation 'com.google.firebase:firebase-crashlytics'
+
+    // Tapsell Plus Ad SDK
+    implementation 'ir.tapsell.plus:tapsell-plus-sdk-android:2.2.4'
+
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test:runner:1.6.2'
+    androidTestImplementation 'androidx.test:rules:1.6.1'
+    androidTestImplementation 'androidx.test.ext:junit:1.2.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.6.1'
+}
+
+gradle.taskGraph.whenReady {
+    if (requestedReleaseBuild && !hasReleaseSigning) {
+        throw new GradleException(
+                'Release signing is not configured. Add RELEASE_STORE_FILE, ' +
+                        'RELEASE_STORE_PASSWORD, RELEASE_KEY_ALIAS, and RELEASE_KEY_PASSWORD ' +
+                        'to local.properties or environment variables before building release.'
+        )
+    }
 }

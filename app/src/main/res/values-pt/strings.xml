@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- TODO: Placeholder machine-quality localization; requires human review before release. -->
+
+    <string name="app_name">Royal Backgammon</string>
+    <string name="royal_subtitle">Classic, but modern</string>
+    <string name="studio_splash_content_description">Battleheim Studio logo</string>
+
+    <string name="continue_game">Continue Game</string>
+    <string name="play_game">Play</string>
+    <string name="new_game">New Game</string>
+    <string name="play_choice_title">Choose Game</string>
+    <string name="play_choice_message">Continue your saved match or start fresh.</string>
+    <string name="tutorial">Tutorial</string>
+    <string name="scores">Scores</string>
+    <string name="settings">Settings</string>
+    <string name="language_toggle">فارسی</string>
+
+    <string name="player_one">Player One</string>
+    <string name="player_two">Player Two</string>
+    <string name="player_setup">Player setup</string>
+    <string name="player_name">Player name</string>
+    <string name="human_player">Human</string>
+    <string name="bot_player">Bot</string>
+    <string name="play">Play</string>
+    <string name="cancel">Cancel</string>
+
+    <string name="bot_difficulty">Bot Difficulty</string>
+    <string name="difficulty_easy">Easy</string>
+    <string name="difficulty_medium">Medium</string>
+    <string name="difficulty_hard">Hard</string>
+    <string name="difficulty_royal">Royal</string>
+
+    <string name="board_theme">Board Theme</string>
+    <string name="bot_board_settings">Bot and board settings</string>
+    <string name="theme_royal">Royal</string>
+    <string name="theme_pop_art">Pop Art</string>
+    <string name="theme_cyberpunk">Cyberpunk</string>
+    <string name="theme_luxury">Persian Luxury</string>
+
+    <string-array name="bot_difficulty_entries">
+        <item>@string/difficulty_easy</item>
+        <item>@string/difficulty_medium</item>
+        <item>@string/difficulty_hard</item>
+        <item>@string/difficulty_royal</item>
+    </string-array>
+
+    <string-array name="board_theme_entries">
+        <item>@string/theme_royal</item>
+        <item>@string/theme_pop_art</item>
+        <item>@string/theme_cyberpunk</item>
+        <item>@string/theme_luxury</item>
+    </string-array>
+
+    <string name="roll_dice">Roll the dice</string>
+    <string name="roll_dice_button">Roll Dice</string>
+    <string name="move_checkers">Move the checkers</string>
+    <string name="opening_tie">Tie! Roll again</string>
+    <string name="current_turn_message">Turn: %1$s - %2$s</string>
+    <string name="initial_game_message">Player One, roll the dice</string>
+    <string name="tutorial_next">Next</string>
+    <string name="tutorial_done">Done</string>
+    <string name="tutorial_title">Tutorial</string>
+    <string name="tutorial_player">You</string>
+    <string name="tutorial_bot">Tutor Bot</string>
+    <string name="tutorial_intro">Goal: move all your checkers around the board and bear them off before your opponent.</string>
+    <string name="tutorial_setup">Your checkers start on several points. Stacks protect each other; a single checker is vulnerable.</string>
+    <string name="tutorial_roll">Roll the dice. Each die can move one checker by that many points.</string>
+    <string name="tutorial_move">Drag one of your checkers. Green hints show legal destinations.</string>
+    <string name="tutorial_hit">If you land on one opposing checker, it is hit and sent to the bar.</string>
+    <string name="tutorial_bar">A checker on the bar must re-enter before you can move other checkers.</string>
+    <string name="tutorial_bear_off">When all your checkers are in your home board, move them off the board to win.</string>
+    <string name="tutorial_finished">Nice. Keep playing this guided game and use the hints whenever a move is available.</string>
+
+    <string name="scores_title">Scoreboard</string>
+    <string name="results_title">Game Results</string>
+    <string name="score_empty">No results have been saved yet</string>
+    <string name="reset_scores">Reset Scores</string>
+    <string name="reset_results">Reset Results</string>
+    <string name="reset_confirmation">Are you sure you want to clear the results?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="win">Win</string>
+    <string name="lose">Loss</string>
+    <string name="game_time">Game Time</string>
+    <string name="label_with_colon">%1$s: </string>
+    <string name="game_time_with_value">Game Time: %1$s</string>
+    <string name="results_summary">%1$s %2$d:%3$d %4$s</string>
+
+    <string name="settings_title">Game Settings</string>
+    <string name="sound_enabled">Sound</string>
+    <string name="effects_enabled">Effects</string>
+    <string name="sound">Sound Volume</string>
+    <string name="music_volume">Music Volume</string>
+    <string name="shake_sensitivity">Shake Sensitivity</string>
+    <string name="shake_duration">Shake Detection Precision</string>
+    <string name="dice_delay">Dice Detection Delay</string>
+    <string name="turn_delay">Delay Between Turns</string>
+    <string name="restore_defaults">Restore Defaults</string>
+    <string name="use_persian_digits">Use Persian Digits</string>
+
+    <string name="shake_threshold_value">Shake sensitivity: %1$d</string>
+    <string name="shake_precision_value">Shake detection precision: %1$d ms</string>
+    <string name="sound_value">Sound volume: %1$d%%</string>
+    <string name="music_volume_value">Music volume: %1$d%%</string>
+    <string name="shake_delay_value">Dice detection delay: %1$d</string>
+    <string name="turn_delay_value">Turn change speed: %1$d</string>
+
+    <string name="percent_value">%1$d%%</string>
+    <string name="millisecond_value">%1$d ms</string>
+    <string name="second_value">%1$d s</string>
+    <string name="numeric_value">%1$d</string>
+
+    <string name="reset">Reset</string>
+
+    <!-- Variants & matches -->
+    <string name="variant_standard">Standard</string>
+    <string name="variant_tavla">Tavla</string>
+    <string name="variant_portes">Portes</string>
+    <string name="variant_standard_rules">International rules: the starter plays the opening dice. Gammon 2, backgammon 3 points.</string>
+    <string name="variant_tavla_rules">Turkish style: the opening winner rolls again (doubles possible). Mars 2 points, no triple win.</string>
+    <string name="variant_portes_rules">Greek style (first game of Tavli): the opening winner rolls again. Gammon 2 points, no triple win.</string>
+    <string name="variant_plakoto">Plakoto</string>
+    <string name="variant_plakoto_rules">Greek style: all 15 start on the opposite corner. Landing on a lone checker pins it until you leave. Pin the last checker on its start (the mother) to win double.</string>
+    <string name="variant_fevga">Fevga</string>
+    <string name="variant_fevga_rules">Greek running game: both run the same way from opposite corners, no hitting, one checker holds a point. Your lead checker must pass the opponent\'s start before any other moves.</string>
+    <string name="variant_tavli">Tavli</string>
+    <string name="variant_tavli_rules">Greek match: Portes, then Plakoto, then Fevga, repeating until someone reaches the target score.</string>
+    <string name="next_variant">Next: %1$s</string>
+    <string name="variant_nardy">Long Nardy</string>
+    <string name="variant_nardy_rules">Both sides run the same way from opposite heads. No hitting: one checker holds a point. One checker leaves the head per turn. Mars 2 points.</string>
+    <string name="match_single">Single game</string>
+    <string name="match_to_points">Match to %1$d</string>
+    <string name="game_over_result_line">%1$s — %2$s (%3$d pts)</string>
+    <string name="win_type_single">Single win</string>
+    <string name="win_type_gammon">Gammon!</string>
+    <string name="win_type_backgammon">Backgammon!</string>
+    <string name="win_type_mother">Mother pinned!</string>
+    <string name="win_type_draw">Draw</string>
+    <string name="game_over_draw">Draw — both mothers are pinned</string>
+    <string name="game_over_match_score">Match to %1$d: %2$s %3$d – %4$d %5$s</string>
+    <string name="game_over_match_winner">Match winner: %1$s</string>
+    <string name="next_game">Next game</string>
+    <string name="stats_variant_elo_label">%1$s (%2$d games)</string>
+    <string name="review_title">Game review</string>
+    <string name="review_back">Back</string>
+    <string name="review_button">Review game</string>
+    <string name="review_accuracy">Accuracy %1$d%% over %2$d graded turns</string>
+    <string name="review_empty">No turns to grade in this game.</string>
+    <string name="review_turn_header">Turn %1$d · dice %2$s · you played %3$s</string>
+    <string name="review_better_move">%1$s — better: %2$s</string>
+    <string name="review_grade_excellent">Excellent</string>
+    <string name="review_grade_good">Good</string>
+    <string name="review_grade_mistake">Mistake</string>
+    <string name="review_grade_blunder">Blunder</string>
+    <string name="review_working">Analysing the game…</string>
+    <string name="journey_title">Journey</string>
+    <string name="journey_progress">%1$d of %2$d</string>
+    <string name="journey_stage_title">%1$d. %2$s</string>
+    <string name="journey_stage_detail">%1$s · %2$s · %3$s · %4$d coins</string>
+    <string name="journey_locked">Win the previous chapter to open this one.</string>
+    <string name="journey_stage_done">Chapter complete! +%1$d coins</string>
+    <string name="journey_1_title">Home board</string>
+    <string name="journey_1_flavor">Where every player starts: a quiet game and a patient opponent.</string>
+    <string name="journey_1_opponent">Uncle Reza</string>
+    <string name="journey_2_title">The tea house</string>
+    <string name="journey_2_flavor">Three games against the regulars, where speed matters less than steadiness.</string>
+    <string name="journey_2_opponent">Master Kazem</string>
+    <string name="journey_3_title">Istanbul</string>
+    <string name="journey_3_flavor">Tavla, played fast: the starter rolls again and mars is worth two.</string>
+    <string name="journey_3_opponent">Emre</string>
+    <string name="journey_4_title">Athens</string>
+    <string name="journey_4_flavor">Portes, the first game of Tavli, a cousin of the game you know.</string>
+    <string name="journey_4_opponent">Nikos</string>
+    <string name="journey_5_title">Crete</string>
+    <string name="journey_5_flavor">Plakoto: no hitting here, only pinning — and the mother decides everything.</string>
+    <string name="journey_5_opponent">Eleni</string>
+    <string name="journey_6_title">Thessaloniki</string>
+    <string name="journey_6_flavor">Fevga: one checker leads the way until it passes the opponent\'s start.</string>
+    <string name="journey_6_opponent">Yannis</string>
+    <string name="journey_7_title">By the Caspian</string>
+    <string name="journey_7_flavor">Long Nardy: no hitting, one checker per turn off the head, blocks decide the race.</string>
+    <string name="journey_7_opponent">Farid</string>
+    <string name="journey_9_title">The grand master</string>
+    <string name="journey_9_flavor">A full Tavli match: Portes, Plakoto and Fevga against the strongest opponent.</string>
+    <string name="journey_9_opponent">The grand master</string>
+    <string name="variant_acey">Acey-deucey</string>
+    <string name="variant_acey_rules">American style: all checkers start off the board and enter like from the bar. A 1-2 roll adds a double of your choice and another roll. The loser pays a point for every checker still on the board.</string>
+    <string name="acey_bonus_title">Name a double</string>
+    <string name="acey_bonus_option">Double %1$d</string>
+    <string name="journey_8_title">The harbour</string>
+    <string name="journey_8_flavor">Acey-deucey, the sailors\' game: every checker starts off the board and a 1-2 changes everything.</string>
+    <string name="journey_8_opponent">The captain</string>
+    <string name="daily_challenge_line">Today: %1$s (%2$d/%3$d)</string>
+    <string name="daily_challenge_line_done">Today: %1$s — done</string>
+    <string name="challenge_win_games">win %1$d game(s)</string>
+    <string name="challenge_complete_games">play %1$d games</string>
+    <string name="challenge_beat_difficulty">beat the %1$s bot</string>
+    <string name="challenge_win_without_hit">win without being hit</string>
+    <string name="challenge_win_streak">reach a streak of %1$d</string>
+    <string name="challenge_win_variant">win a game of %1$s</string>
+    <string name="challenge_dialog_title">Challenge</string>
+    <string name="challenge_play_today">Play today\'s challenge game</string>
+    <string name="challenge_share_code">Share a code</string>
+    <string name="challenge_enter_code">Enter a friend\'s code</string>
+    <string name="challenge_play_code">Play it now</string>
+    <string name="challenge_your_code">Your challenge code</string>
+    <string name="challenge_code_message">%1$s\n\n%2$s — the same dice for anyone who plays this code.</string>
+    <string name="challenge_share_text">Play this backgammon challenge with me — code: %1$s</string>
+    <string name="challenge_code_hint">e.g. PLA-3F9K2-7</string>
+    <string name="challenge_code_invalid">That code is not valid.</string>
+    <string name="challenge_banner">Challenge · %1$s</string>
+    <string name="challenge_results">Challenge results</string>
+    <string name="challenge_results_empty">No challenge games yet.</string>
+    <string name="challenge_result_won">%1$s · %2$s · won %3$d</string>
+    <string name="challenge_result_lost">%1$s · %2$s · lost %3$d</string>
+    <string name="review_reward_button">Watch a video for %1$d coins</string>
+</resources>

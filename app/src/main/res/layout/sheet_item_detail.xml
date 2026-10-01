@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    One piece, up close.
+
+    The shop card has room for a name and a price, which is enough to browse and
+    not enough to want something. This sheet is where a piece gets to be an
+    object: its own art at a size worth looking at, the same art standing on the
+    board it was made for, what the craft actually is, and one honest line about
+    how it is come by.
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="@dimen/panel_dialog_width"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_royal_panel"
+    android:orientation="vertical"
+    android:paddingStart="@dimen/screen_margin"
+    android:paddingTop="@dimen/space_l"
+    android:paddingEnd="@dimen/screen_margin"
+    android:paddingBottom="@dimen/space_l">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:baselineAligned="false"
+        android:orientation="horizontal">
+
+        <!-- The piece on its board: the preview the shop never had -->
+        <FrameLayout
+            android:id="@+id/detailPreview"
+            android:layout_width="@dimen/art_lg"
+            android:layout_height="@dimen/art_lg">
+
+            <ImageView
+                android:id="@+id/detailBoard"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:contentDescription="@null"
+                android:scaleType="fitCenter" />
+
+            <ImageView
+                android:id="@+id/detailArt"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:contentDescription="@null"
+                android:padding="@dimen/space_s"
+                android:scaleType="fitCenter" />
+        </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/space_m"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/detailRarity"
+                style="@style/RoyalText.Caption"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:letterSpacing="0.06"
+                android:textSize="@dimen/text_micro" />
+
+            <TextView
+                android:id="@+id/detailTitle"
+                style="@style/RoyalText.Display"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLines="2"
+                android:textSize="@dimen/text_title" />
+
+            <TextView
+                android:id="@+id/detailDesc"
+                style="@style/RoyalText.Story"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_xs"
+                android:maxLines="2"
+                android:textSize="@dimen/text_caption" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/space_m"
+        android:layout_marginTop="@dimen/space_s"
+        android:contentDescription="@null"
+        android:scaleType="fitXY"
+        android:src="@drawable/ic_arabesque_divider" />
+
+    <TextView
+        style="@style/RoyalText.Title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_xs"
+        android:text="@string/detail_story"
+        android:textSize="@dimen/text_caption" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="92dp"
+        android:layout_marginTop="@dimen/space_xs"
+        android:scrollbars="none">
+
+        <TextView
+            android:id="@+id/detailStory"
+            style="@style/RoyalText.Story"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:lineSpacingMultiplier="1.15"
+            android:textSize="@dimen/text_caption" />
+    </ScrollView>
+
+    <TextView
+        android:id="@+id/detailHow"
+        style="@style/RoyalText.Caption"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_s"
+        android:textSize="@dimen/text_micro" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_s"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btnDetailClose"
+            style="@style/RoyalButton.Wood"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/control_md"
+            android:layout_weight="1"
+            android:text="@string/review_back"
+            android:textSize="@dimen/text_body" />
+
+        <Button
+            android:id="@+id/btnDetailAction"
+            style="@style/RoyalButton.Gold"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/control_md"
+            android:layout_marginStart="@dimen/space_s"
+            android:layout_weight="1.4"
+            android:paddingStart="@dimen/space_xs"
+            android:paddingEnd="@dimen/space_xs"
+            android:textSize="@dimen/text_body" />
+    </LinearLayout>
+</LinearLayout>

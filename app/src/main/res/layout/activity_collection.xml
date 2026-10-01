@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    The treasury: every season laid out in order, with what is held, what is
+    still on sale, and what closed before it was bought.
+
+    A shop shows what you can have. This shows what you did have the chance at,
+    which is the half that gives a collection its weight.
+-->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_royal_backdrop"
+    android:layoutDirection="locale">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <!-- Header -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingStart="@dimen/space_l"
+            android:paddingTop="@dimen/space_m"
+            android:paddingEnd="@dimen/space_l"
+            android:paddingBottom="@dimen/space_xs">
+
+            <ImageButton
+                android:id="@+id/btnCollectionBack"
+                android:layout_width="@dimen/control_md"
+                android:layout_height="@dimen/control_md"
+                android:background="@drawable/bg_round_button_royal"
+                android:contentDescription="@string/review_back"
+                android:src="@drawable/gold_back" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/control_sm"
+                android:layout_marginStart="@dimen/space_m"
+                android:adjustViewBounds="true"
+                android:contentDescription="@string/collection_title"
+                android:src="@drawable/title_collection" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="1" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_royal_well"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingStart="@dimen/space_m"
+                android:paddingTop="@dimen/space_s"
+                android:paddingEnd="@dimen/space_m"
+                android:paddingBottom="@dimen/space_s">
+
+                <ImageView
+                    android:layout_width="@dimen/icon_md"
+                    android:layout_height="@dimen/icon_md"
+                    android:contentDescription="@null"
+                    android:src="@drawable/gold_trophy" />
+
+                <TextView
+                    android:id="@+id/collectionTotal"
+                    style="@style/RoyalText.Display"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/space_s"
+                    android:textSize="@dimen/text_body" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/icon_sm"
+            android:contentDescription="@null"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_arabesque_divider" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:clipToPadding="false"
+            android:paddingStart="@dimen/space_l"
+            android:paddingTop="@dimen/space_s"
+            android:paddingEnd="@dimen/space_l"
+            android:paddingBottom="@dimen/space_l"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:id="@+id/collectionSeasons"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" />
+        </ScrollView>
+    </LinearLayout>
+</FrameLayout>

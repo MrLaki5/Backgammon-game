@@ -1,0 +1,228 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_pause_dialog"
+    android:layoutDirection="rtl"
+    android:orientation="horizontal"
+    android:paddingStart="20dp"
+    android:paddingTop="18dp"
+    android:paddingEnd="20dp"
+    android:paddingBottom="16dp">
+
+    <!-- ===== LEFT COLUMN: Theme Thumbnails (2Ã—4) ===== -->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="6dp">
+
+        <!-- Row 1: themes 0â€“3 (original) -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <FrameLayout android:id="@+id/pnpThemeThumb0"
+                android:layout_width="0dp" android:layout_height="52dp"
+                android:layout_margin="3dp" android:layout_weight="1"
+                android:background="@drawable/bg_theme_thumb_selected" android:padding="3dp">
+                <ImageView android:layout_width="match_parent" android:layout_height="match_parent"
+                    android:scaleType="centerCrop" android:src="@drawable/preview_theme_royal"/>
+            </FrameLayout>
+
+            <FrameLayout android:id="@+id/pnpThemeThumb1"
+                android:layout_width="0dp" android:layout_height="52dp"
+                android:layout_margin="3dp" android:layout_weight="1"
+                android:background="@drawable/bg_theme_thumb_normal" android:padding="3dp">
+                <ImageView android:layout_width="match_parent" android:layout_height="match_parent"
+                    android:scaleType="centerCrop" android:src="@drawable/preview_theme_pop_art"/>
+                <LinearLayout android:id="@+id/pnpLockOverlay1"
+                    android:layout_width="match_parent" android:layout_height="match_parent"
+                    android:background="@color/color_lock_overlay" android:gravity="center"
+                    android:orientation="vertical" android:visibility="gone">
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="ðŸ”’" android:textSize="13sp"/>
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="@string/watch_ad_unlock" android:textColor="@color/color_gold_primary"
+                        android:textSize="6sp" android:textStyle="bold" android:gravity="center"/>
+                </LinearLayout>
+            </FrameLayout>
+
+            <FrameLayout android:id="@+id/pnpThemeThumb2"
+                android:layout_width="0dp" android:layout_height="52dp"
+                android:layout_margin="3dp" android:layout_weight="1"
+                android:background="@drawable/bg_theme_thumb_normal" android:padding="3dp">
+                <ImageView android:layout_width="match_parent" android:layout_height="match_parent"
+                    android:scaleType="centerCrop" android:src="@drawable/preview_theme_cyberpunk"/>
+                <LinearLayout android:id="@+id/pnpLockOverlay2"
+                    android:layout_width="match_parent" android:layout_height="match_parent"
+                    android:background="@color/color_lock_overlay" android:gravity="center"
+                    android:orientation="vertical" android:visibility="gone">
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="ðŸ”’" android:textSize="13sp"/>
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="@string/watch_ad_unlock" android:textColor="@color/color_gold_primary"
+                        android:textSize="6sp" android:textStyle="bold" android:gravity="center"/>
+                </LinearLayout>
+            </FrameLayout>
+
+            <FrameLayout android:id="@+id/pnpThemeThumb3"
+                android:layout_width="0dp" android:layout_height="52dp"
+                android:layout_margin="3dp" android:layout_weight="1"
+                android:background="@drawable/bg_theme_thumb_normal" android:padding="3dp">
+                <ImageView android:layout_width="match_parent" android:layout_height="match_parent"
+                    android:scaleType="centerCrop" android:src="@drawable/preview_theme_luxury"/>
+                <LinearLayout android:id="@+id/pnpLockOverlay3"
+                    android:layout_width="match_parent" android:layout_height="match_parent"
+                    android:background="@color/color_lock_overlay" android:gravity="center"
+                    android:orientation="vertical" android:visibility="gone">
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="ðŸ”’" android:textSize="13sp"/>
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="@string/watch_ad_unlock" android:textColor="@color/color_gold_primary"
+                        android:textSize="6sp" android:textStyle="bold" android:gravity="center"/>
+                </LinearLayout>
+            </FrameLayout>
+
+        </LinearLayout>
+
+        <!-- Row 2: themes 4â€“7 (new; 5/6/7 hidden until added) -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <FrameLayout android:id="@+id/pnpThemeThumb4"
+                android:layout_width="0dp" android:layout_height="52dp"
+                android:layout_margin="3dp" android:layout_weight="1"
+                android:background="@drawable/bg_theme_thumb_normal" android:padding="3dp">
+                <ImageView android:layout_width="match_parent" android:layout_height="match_parent"
+                    android:scaleType="centerCrop" android:src="@drawable/preview_theme_woodland"/>
+                <LinearLayout android:id="@+id/pnpLockOverlay4"
+                    android:layout_width="match_parent" android:layout_height="match_parent"
+                    android:background="@color/color_lock_overlay" android:gravity="center"
+                    android:orientation="vertical" android:visibility="gone">
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="ðŸ”’" android:textSize="13sp"/>
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="@string/watch_ad_unlock" android:textColor="@color/color_gold_primary"
+                        android:textSize="6sp" android:textStyle="bold" android:gravity="center"/>
+                </LinearLayout>
+            </FrameLayout>
+
+            <FrameLayout android:id="@+id/pnpThemeThumb5"
+                android:layout_width="0dp" android:layout_height="52dp"
+                android:layout_margin="3dp" android:layout_weight="1"
+                android:background="@drawable/bg_theme_thumb_normal"
+                android:visibility="gone"/>
+
+            <FrameLayout android:id="@+id/pnpThemeThumb6"
+                android:layout_width="0dp" android:layout_height="52dp"
+                android:layout_margin="3dp" android:layout_weight="1"
+                android:background="@drawable/bg_theme_thumb_normal"
+                android:visibility="gone"/>
+
+            <FrameLayout android:id="@+id/pnpThemeThumb7"
+                android:layout_width="0dp" android:layout_height="52dp"
+                android:layout_margin="3dp" android:layout_weight="1"
+                android:background="@drawable/bg_theme_thumb_normal"
+                android:visibility="gone"/>
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- ===== RIGHT COLUMN: Names + Buttons ===== -->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="14dp"
+        android:layout_weight="1"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <!-- Player 1 Name -->
+        <EditText
+            android:id="@+id/pnpName1"
+            android:layout_width="match_parent"
+            android:layout_height="38dp"
+            android:background="@drawable/bg_name_field_normal"
+            android:fontFamily="@font/vazirmatn_semibold"
+            android:gravity="center"
+            android:hint="@string/player_one"
+            android:importantForAutofill="no"
+            android:inputType="textPersonName"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp"
+            android:singleLine="true"
+            android:text="@string/pass_and_play_player1_default"
+            android:textColor="@color/color_player_name_text"
+            android:textColorHint="@color/color_player_name_hint"
+            android:textDirection="rtl"
+            android:textSize="14sp" />
+
+        <!-- Player 2 Name -->
+        <EditText
+            android:id="@+id/pnpName2"
+            android:layout_width="match_parent"
+            android:layout_height="38dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/bg_name_field_normal"
+            android:fontFamily="@font/vazirmatn_semibold"
+            android:gravity="center"
+            android:hint="@string/player_two"
+            android:importantForAutofill="no"
+            android:inputType="textPersonName"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp"
+            android:singleLine="true"
+            android:text="@string/pass_and_play_player2_default"
+            android:textColor="@color/color_player_name_text"
+            android:textColorHint="@color/color_player_name_hint"
+            android:textDirection="rtl"
+            android:textSize="14sp" />
+
+        <!-- Action Buttons -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/pnpCancel"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_pause_button"
+                android:fontFamily="@font/vazirmatn_semibold"
+                android:minHeight="0dp"
+                android:minWidth="0dp"
+                android:text="@string/cancel"
+                android:textAllCaps="false"
+                android:textColor="@color/color_cancel_button_text"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/pnpPlay"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="8dp"
+                android:layout_weight="1.4"
+                android:background="@drawable/neuro_primary_button"
+                android:fontFamily="@font/vazirmatn_semibold"
+                android:minHeight="0dp"
+                android:minWidth="0dp"
+                android:text="@string/play"
+                android:textAllCaps="false"
+                android:textColor="@color/color_play_button_text"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>
+

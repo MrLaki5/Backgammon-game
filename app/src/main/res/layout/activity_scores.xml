@@ -1,51 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/meny_background"
+    android:layoutDirection="locale"
     tools:context=".Menus.ScoresActivity">
-s
-    <TextView
-        android:id="@+id/mainScoreText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textAlignment="center"
-        android:fontFamily="casual"
-        android:textColor="#d9fddf"
-        android:layout_marginTop="15dp"
-        android:layout_marginBottom="15dp"
-        android:textSize="25dp"
-        android:text="Scores"
-        android:textStyle="bold"/>
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/mainScoreText"
-        android:layout_above="@id/scoreReset">
+        android:layout_width="520dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:layout_marginTop="22dp"
+        android:layout_marginBottom="22dp"
+        android:background="@drawable/royal_panel"
+        android:elevation="10dp"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:paddingStart="24dp"
+        android:paddingTop="18dp"
+        android:paddingEnd="24dp"
+        android:paddingBottom="18dp">
+
+        <TextView
+            android:id="@+id/mainScoreText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/scores_title"
+            android:textColor="@color/accent_gold"
+            android:textSize="27sp"
+            android:textStyle="bold" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="10dp"
+            android:background="@color/accent_gold" />
+
+        <TextView
+            android:id="@+id/emptyScoreText"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/score_empty"
+            android:textColor="@color/text_muted"
+            android:textSize="18sp"
+            android:visibility="gone" />
 
         <ListView
             android:id="@+id/scoreList"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"></ListView>
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:cacheColorHint="@android:color/transparent"
+            android:divider="@android:color/transparent"
+            android:dividerHeight="8dp"
+            android:listSelector="@android:color/transparent"
+            android:overScrollMode="never" />
+
+        <Button
+            android:id="@+id/scoreReset"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/royal_secondary_button"
+            android:fontFamily="@font/vazirmatn_regular"
+            android:onClick="resetScores"
+            android:text="@string/reset_scores"
+            android:textAllCaps="false"
+            android:textColor="@color/text_primary"
+            android:textSize="17sp"
+            android:textStyle="bold" />
 
     </LinearLayout>
 
-    <Button
-        android:id="@+id/scoreReset"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@null"
-        android:fontFamily="casual"
-        android:onClick="resetScores"
-        android:text="Reset"
-        android:textAllCaps="false"
-        android:textColor="#d9fddf"
-        android:textSize="20dp"
-        android:textStyle="bold"/>
-
-</RelativeLayout>
+</FrameLayout>

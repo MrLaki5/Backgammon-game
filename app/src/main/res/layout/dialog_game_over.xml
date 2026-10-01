@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="440dp"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:background="@drawable/bg_pause_dialog"
+    android:elevation="8dp"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:paddingStart="24dp"
+    android:paddingTop="20dp"
+    android:paddingEnd="24dp"
+    android:paddingBottom="18dp"
+    android:layoutDirection="locale">
+
+    <!-- Title -->
+    <TextView
+        android:id="@+id/gameOverTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/lalezar_regular"
+        android:text="@string/game_over_title"
+        android:textColor="@color/accent_gold"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
+    <!-- Winner message -->
+    <TextView
+        android:id="@+id/gameOverWinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:fontFamily="@font/vazirmatn_semibold"
+        android:textColor="@color/text_primary"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <!-- Post-game review -->
+    <Button
+        android:id="@+id/gameOverReview"
+        android:layout_width="wrap_content"
+        android:layout_height="36dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="6dp"
+        android:background="@drawable/bg_difficulty_normal"
+        android:minHeight="0dp"
+        android:minWidth="0dp"
+        android:paddingStart="18dp"
+        android:paddingEnd="18dp"
+        android:text="@string/review_button"
+        android:textAllCaps="false"
+        android:textColor="@color/color_difficulty_text_normal"
+        android:textSize="13sp"
+        android:visibility="gone" />
+
+    <!-- Variant, win type and points -->
+    <TextView
+        android:id="@+id/gameOverResultType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:fontFamily="@font/vazirmatn_semibold"
+        android:gravity="center"
+        android:textColor="#E6A100"
+        android:textSize="14sp"
+        android:visibility="gone" />
+
+    <!-- Match score (matches longer than one point) -->
+    <TextView
+        android:id="@+id/gameOverMatchScore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:fontFamily="@font/vazirmatn_regular"
+        android:gravity="center"
+        android:textColor="@color/text_primary"
+        android:textSize="13sp"
+        android:visibility="gone" />
+
+    <!-- Game duration & info -->
+    <TextView
+        android:id="@+id/gameOverDuration"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:textColor="@color/accent_slate"
+        android:textSize="12sp" />
+
+    <!-- ELO Rating & Delta -->
+    <TextView
+        android:id="@+id/gameOverEloDelta"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:background="@drawable/bg_pause_button"
+        android:paddingStart="12dp"
+        android:paddingTop="3dp"
+        android:paddingEnd="12dp"
+        android:paddingBottom="3dp"
+        android:fontFamily="@font/vazirmatn_semibold"
+        android:textColor="#4CAF50"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:visibility="gone" />
+
+    <!-- Coins Earned Breakdown -->
+    <LinearLayout
+        android:id="@+id/gameOverCoinsContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/bg_pause_button"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="8dp"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/gameOverCoinsEarned"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/vazirmatn_semibold"
+            android:textColor="@color/accent_gold"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/gameOverCoinsDetails"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:textColor="@color/accent_slate"
+            android:textSize="11sp" />
+    </LinearLayout>
+
+    <!-- Win streak / Daily Challenge status -->
+    <TextView
+        android:id="@+id/gameOverStreak"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:textColor="@color/accent_gold"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:visibility="gone" />
+
+    <!-- Double Reward (Rewarded Ad) -->
+    <Button
+        android:id="@+id/gameOverDoubleReward"
+        android:layout_width="match_parent"
+        android:layout_height="38dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/neuro_primary_button"
+        android:fontFamily="@font/vazirmatn_semibold"
+        android:minHeight="0dp"
+        android:text="@string/double_reward_desc"
+        android:textAllCaps="false"
+        android:textColor="@color/surface_base"
+        android:textSize="13sp"
+        android:textStyle="bold"
+        android:visibility="gone" />
+
+    <!-- Save Streak (Rewarded Ad on loss) -->
+    <Button
+        android:id="@+id/gameOverSaveStreak"
+        android:layout_width="match_parent"
+        android:layout_height="38dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/neuro_primary_button"
+        android:fontFamily="@font/vazirmatn_semibold"
+        android:minHeight="0dp"
+        android:text="@string/save_streak"
+        android:textAllCaps="false"
+        android:textColor="@color/surface_base"
+        android:textSize="13sp"
+        android:textStyle="bold"
+        android:visibility="gone" />
+
+    <!-- Divider -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="12dp"
+        android:background="#33FFFFFF" />
+
+    <!-- Actions Row -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <!-- Main Menu -->
+        <Button
+            android:id="@+id/gameOverMainMenu"
+            android:layout_width="0dp"
+            android:layout_height="44dp"
+            android:layout_weight="1"
+            android:layout_marginEnd="6dp"
+            android:background="@drawable/neuro_secondary_button"
+            android:fontFamily="@font/vazirmatn_semibold"
+            android:text="@string/main_menu"
+            android:textAllCaps="false"
+            android:textColor="@color/text_primary"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <!-- Rematch (primary) -->
+        <Button
+            android:id="@+id/gameOverRematch"
+            android:layout_width="0dp"
+            android:layout_height="44dp"
+            android:layout_weight="1.2"
+            android:layout_marginStart="6dp"
+            android:background="@drawable/neuro_primary_button"
+            android:fontFamily="@font/vazirmatn_semibold"
+            android:text="@string/rematch"
+            android:textAllCaps="false"
+            android:textColor="@color/surface_base"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+</LinearLayout>

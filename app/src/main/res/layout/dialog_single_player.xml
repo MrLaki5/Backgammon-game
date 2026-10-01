@@ -1,0 +1,280 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_pause_dialog"
+    android:layoutDirection="rtl"
+    android:orientation="horizontal"
+    android:paddingStart="20dp"
+    android:paddingTop="18dp"
+    android:paddingEnd="20dp"
+    android:paddingBottom="16dp">
+
+    <!-- ===== LEFT COLUMN: Theme Thumbnails (2Ã—4) ===== -->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="6dp">
+
+        <!-- Row 1: themes 0â€“3 (original) -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <FrameLayout android:id="@+id/themeThumb0"
+                android:layout_width="0dp" android:layout_height="52dp"
+                android:layout_margin="3dp" android:layout_weight="1"
+                android:background="@drawable/bg_theme_thumb_selected" android:padding="3dp">
+                <ImageView android:layout_width="match_parent" android:layout_height="match_parent"
+                    android:scaleType="centerCrop" android:src="@drawable/preview_theme_royal"/>
+            </FrameLayout>
+
+            <FrameLayout android:id="@+id/themeThumb1"
+                android:layout_width="0dp" android:layout_height="52dp"
+                android:layout_margin="3dp" android:layout_weight="1"
+                android:background="@drawable/bg_theme_thumb_normal" android:padding="3dp">
+                <ImageView android:layout_width="match_parent" android:layout_height="match_parent"
+                    android:scaleType="centerCrop" android:src="@drawable/preview_theme_pop_art"/>
+                <LinearLayout android:id="@+id/lockOverlay1"
+                    android:layout_width="match_parent" android:layout_height="match_parent"
+                    android:background="@color/color_lock_overlay" android:gravity="center"
+                    android:orientation="vertical" android:visibility="gone">
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="ðŸ”’" android:textSize="13sp"/>
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="@string/watch_ad_unlock" android:textColor="@color/color_gold_primary"
+                        android:textSize="6sp" android:textStyle="bold" android:gravity="center"/>
+                </LinearLayout>
+            </FrameLayout>
+
+            <FrameLayout android:id="@+id/themeThumb2"
+                android:layout_width="0dp" android:layout_height="52dp"
+                android:layout_margin="3dp" android:layout_weight="1"
+                android:background="@drawable/bg_theme_thumb_normal" android:padding="3dp">
+                <ImageView android:layout_width="match_parent" android:layout_height="match_parent"
+                    android:scaleType="centerCrop" android:src="@drawable/preview_theme_cyberpunk"/>
+                <LinearLayout android:id="@+id/lockOverlay2"
+                    android:layout_width="match_parent" android:layout_height="match_parent"
+                    android:background="@color/color_lock_overlay" android:gravity="center"
+                    android:orientation="vertical" android:visibility="gone">
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="ðŸ”’" android:textSize="13sp"/>
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="@string/watch_ad_unlock" android:textColor="@color/color_gold_primary"
+                        android:textSize="6sp" android:textStyle="bold" android:gravity="center"/>
+                </LinearLayout>
+            </FrameLayout>
+
+            <FrameLayout android:id="@+id/themeThumb3"
+                android:layout_width="0dp" android:layout_height="52dp"
+                android:layout_margin="3dp" android:layout_weight="1"
+                android:background="@drawable/bg_theme_thumb_normal" android:padding="3dp">
+                <ImageView android:layout_width="match_parent" android:layout_height="match_parent"
+                    android:scaleType="centerCrop" android:src="@drawable/preview_theme_luxury"/>
+                <LinearLayout android:id="@+id/lockOverlay3"
+                    android:layout_width="match_parent" android:layout_height="match_parent"
+                    android:background="@color/color_lock_overlay" android:gravity="center"
+                    android:orientation="vertical" android:visibility="gone">
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="ðŸ”’" android:textSize="13sp"/>
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="@string/watch_ad_unlock" android:textColor="@color/color_gold_primary"
+                        android:textSize="6sp" android:textStyle="bold" android:gravity="center"/>
+                </LinearLayout>
+            </FrameLayout>
+
+        </LinearLayout>
+
+        <!-- Row 2: themes 4â€“7 (new; 5/6/7 hidden until added) -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <FrameLayout android:id="@+id/themeThumb4"
+                android:layout_width="0dp" android:layout_height="52dp"
+                android:layout_margin="3dp" android:layout_weight="1"
+                android:background="@drawable/bg_theme_thumb_normal" android:padding="3dp">
+                <ImageView android:layout_width="match_parent" android:layout_height="match_parent"
+                    android:scaleType="centerCrop" android:src="@drawable/preview_theme_woodland"/>
+                <LinearLayout android:id="@+id/lockOverlay4"
+                    android:layout_width="match_parent" android:layout_height="match_parent"
+                    android:background="@color/color_lock_overlay" android:gravity="center"
+                    android:orientation="vertical" android:visibility="gone">
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="ðŸ”’" android:textSize="13sp"/>
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="@string/watch_ad_unlock" android:textColor="@color/color_gold_primary"
+                        android:textSize="6sp" android:textStyle="bold" android:gravity="center"/>
+                </LinearLayout>
+            </FrameLayout>
+
+            <FrameLayout android:id="@+id/themeThumb5"
+                android:layout_width="0dp" android:layout_height="52dp"
+                android:layout_margin="3dp" android:layout_weight="1"
+                android:background="@drawable/bg_theme_thumb_normal"
+                android:visibility="gone"/>
+
+            <FrameLayout android:id="@+id/themeThumb6"
+                android:layout_width="0dp" android:layout_height="52dp"
+                android:layout_margin="3dp" android:layout_weight="1"
+                android:background="@drawable/bg_theme_thumb_normal"
+                android:visibility="gone"/>
+
+            <FrameLayout android:id="@+id/themeThumb7"
+                android:layout_width="0dp" android:layout_height="52dp"
+                android:layout_margin="3dp" android:layout_weight="1"
+                android:background="@drawable/bg_theme_thumb_normal"
+                android:visibility="gone"/>
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- ===== RIGHT COLUMN: Name + Difficulty + Buttons ===== -->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="14dp"
+        android:layout_weight="1"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <!-- Player Name -->
+        <EditText
+            android:id="@+id/singlePlayerName"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@drawable/bg_name_field_normal"
+            android:cursorVisible="true"
+            android:fontFamily="@font/vazirmatn_semibold"
+            android:gravity="center"
+            android:hint="@string/player_name"
+            android:importantForAutofill="no"
+            android:inputType="textPersonName"
+            android:maxLines="1"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp"
+            android:singleLine="true"
+            android:text="@string/player_one"
+            android:textColor="@color/color_player_name_text"
+            android:textColorHint="@color/color_player_name_hint"
+            android:textDirection="rtl"
+            android:textSize="14sp" />
+
+        <!-- Difficulty: 2x2 grid -->
+        <GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:columnCount="2"
+            android:rowCount="2">
+
+            <Button
+                android:id="@+id/diffEasy"
+                android:layout_width="0dp"
+                android:layout_height="36dp"
+                android:layout_columnWeight="1"
+                android:layout_marginEnd="3dp"
+                android:layout_marginBottom="4dp"
+                android:background="@drawable/bg_difficulty_normal"
+                android:fontFamily="@font/vazirmatn_semibold"
+                android:minHeight="0dp"
+                android:minWidth="0dp"
+                android:text="@string/difficulty_easy"
+                android:textAllCaps="false"
+                android:textColor="@color/color_difficulty_text_normal"
+                android:textSize="13sp" />
+
+            <Button
+                android:id="@+id/diffMedium"
+                android:layout_width="0dp"
+                android:layout_height="36dp"
+                android:layout_columnWeight="1"
+                android:layout_marginStart="3dp"
+                android:layout_marginBottom="4dp"
+                android:background="@drawable/bg_difficulty_selected"
+                android:fontFamily="@font/vazirmatn_semibold"
+                android:minHeight="0dp"
+                android:minWidth="0dp"
+                android:text="@string/difficulty_medium"
+                android:textAllCaps="false"
+                android:textColor="@color/color_difficulty_text_selected"
+                android:textSize="13sp" />
+
+            <Button
+                android:id="@+id/diffHard"
+                android:layout_width="0dp"
+                android:layout_height="36dp"
+                android:layout_columnWeight="1"
+                android:layout_marginEnd="3dp"
+                android:background="@drawable/bg_difficulty_normal"
+                android:fontFamily="@font/vazirmatn_semibold"
+                android:minHeight="0dp"
+                android:minWidth="0dp"
+                android:text="@string/difficulty_hard"
+                android:textAllCaps="false"
+                android:textColor="@color/color_difficulty_text_normal"
+                android:textSize="13sp" />
+
+            <Button
+                android:id="@+id/diffRoyal"
+                android:layout_width="0dp"
+                android:layout_height="36dp"
+                android:layout_columnWeight="1"
+                android:layout_marginStart="3dp"
+                android:background="@drawable/bg_difficulty_normal"
+                android:fontFamily="@font/vazirmatn_semibold"
+                android:minHeight="0dp"
+                android:minWidth="0dp"
+                android:text="@string/difficulty_royal"
+                android:textAllCaps="false"
+                android:textColor="@color/color_difficulty_text_normal"
+                android:textSize="13sp" />
+        </GridLayout>
+
+        <!-- Action Buttons -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/singleCancel"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_pause_button"
+                android:fontFamily="@font/vazirmatn_semibold"
+                android:minHeight="0dp"
+                android:minWidth="0dp"
+                android:text="@string/cancel"
+                android:textAllCaps="false"
+                android:textColor="@color/color_cancel_button_text"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/singlePlay"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="8dp"
+                android:layout_weight="1.4"
+                android:background="@drawable/neuro_primary_button"
+                android:fontFamily="@font/vazirmatn_semibold"
+                android:minHeight="0dp"
+                android:minWidth="0dp"
+                android:text="@string/play"
+                android:textAllCaps="false"
+                android:textColor="@color/color_play_button_text"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>
+

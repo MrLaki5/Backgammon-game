@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Type scale for the royal screens. Vazirmatn carries Persian and Latin in one
+    family, so a Persian and an English build look like the same product.
+
+    app:fontFamily (not android:fontFamily) is deliberate: AppCompat resolves it
+    back to API 14, while the framework attribute needs API 26.
+-->
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <style name="RoyalText">
+        <item name="android:includeFontPadding">false</item>
+        <item name="android:textColor">@color/ink_parchment</item>
+    </style>
+
+    <!-- Screen title: the one piece of gold at the top of a screen.
+         Lalezar is a poster face out of Iranian signage — it has the character
+         a game title needs, which a UI sans never will. -->
+    <style name="RoyalText.Display" parent="RoyalText">
+        <item name="fontFamily">@font/lalezar_regular</item>
+        <item name="android:textSize">@dimen/text_display</item>
+        <item name="android:textColor">@color/gold_bright</item>
+        <item name="android:letterSpacing">0.01</item>
+        <item name="android:shadowColor">@color/royal_night</item>
+        <item name="android:shadowDx">0</item>
+        <item name="android:shadowDy">2</item>
+        <item name="android:shadowRadius">6</item>
+    </style>
+
+    <!-- Card heading -->
+    <style name="RoyalText.Title" parent="RoyalText">
+        <item name="fontFamily">@font/lalezar_regular</item>
+        <item name="android:textSize">@dimen/text_title</item>
+    </style>
+
+    <!-- The story lines: chapter flavour, the voice of the manuscript.
+         Amiri is a classical Naskh, so these read as written rather than set. -->
+    <style name="RoyalText.Story" parent="RoyalText">
+        <item name="fontFamily">@font/amiri_bold</item>
+        <item name="android:textSize">@dimen/text_body</item>
+        <item name="android:textColor">@color/ink_soft</item>
+        <item name="android:lineSpacingMultiplier">1.15</item>
+    </style>
+
+    <!-- Body copy inside cards -->
+    <style name="RoyalText.Body" parent="RoyalText">
+        <item name="fontFamily">@font/vazirmatn_regular</item>
+        <item name="android:textSize">@dimen/text_body</item>
+        <item name="android:textColor">@color/ink_soft</item>
+        <item name="android:lineSpacingMultiplier">1.25</item>
+    </style>
+
+    <!-- The quiet line: flavour text, hints, locked messages -->
+    <style name="RoyalText.Caption" parent="RoyalText">
+        <item name="fontFamily">@font/vazirmatn_regular</item>
+        <item name="android:textSize">@dimen/text_caption</item>
+        <item name="android:textColor">@color/ink_muted</item>
+        <item name="android:lineSpacingMultiplier">1.25</item>
+    </style>
+
+    <!-- Fact chips: variant, match length, reward -->
+    <style name="RoyalText.Chip" parent="RoyalText">
+        <item name="fontFamily">@font/vazirmatn_semibold</item>
+        <item name="android:textSize">@dimen/text_chip</item>
+        <item name="android:textColor">@color/gold_bright</item>
+        <item name="android:background">@drawable/bg_chip_royal</item>
+        <item name="android:paddingStart">@dimen/space_m</item>
+        <item name="android:paddingEnd">@dimen/space_m</item>
+        <item name="android:paddingTop">@dimen/space_xs</item>
+        <item name="android:paddingBottom">@dimen/space_xs</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <!-- The chapter number inside its seal -->
+    <style name="RoyalText.Seal" parent="RoyalText">
+        <item name="fontFamily">@font/vazirmatn_extrabold</item>
+        <item name="android:textSize">17sp</item>
+        <item name="android:textColor">@color/ink_on_gold</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <!-- ── Components ─────────────────────────────────────────────────────── -->
+
+    <style name="RoyalButton">
+        <item name="android:textAllCaps">false</item>
+        <item name="android:minWidth">0dp</item>
+        <item name="android:minHeight">0dp</item>
+        <item name="fontFamily">@font/vazirmatn_semibold</item>
+        <item name="android:includeFontPadding">false</item>
+        <item name="android:stateListAnimator">@null</item>
+    </style>
+
+    <style name="RoyalButton.Gold" parent="RoyalButton">
+        <item name="fontFamily">@font/lalezar_regular</item>
+        <item name="android:background">@drawable/bg_gold_button</item>
+        <item name="android:textColor">@color/ink_on_gold</item>
+        <item name="android:textSize">@dimen/text_body</item>
+    </style>
+
+    <style name="RoyalButton.Gold.Small" parent="RoyalButton.Gold">
+        <item name="android:textSize">@dimen/text_caption</item>
+        <item name="android:paddingStart">@dimen/space_m</item>
+        <item name="android:paddingEnd">@dimen/space_m</item>
+    </style>
+
+    <style name="RoyalButton.Wood" parent="RoyalButton">
+        <item name="fontFamily">@font/lalezar_regular</item>
+        <item name="android:background">@drawable/bg_wood_button</item>
+        <item name="android:textColor">@color/gold_bright</item>
+        <item name="android:textSize">@dimen/text_body</item>
+    </style>
+
+    <!-- The six secondary menu actions: identical plaques, icon beside label -->
+    <style name="RoyalMenuTile">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">@dimen/control_md</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:background">@drawable/bg_wood_button</item>
+        <item name="android:clickable">true</item>
+        <item name="android:focusable">true</item>
+        <item name="android:gravity">center</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:paddingStart">@dimen/space_s</item>
+        <item name="android:paddingEnd">@dimen/space_s</item>
+    </style>
+
+    <style name="RoyalMenuTile.Icon">
+        <item name="android:layout_width">@dimen/icon_md</item>
+        <item name="android:layout_height">@dimen/icon_md</item>
+        <item name="android:contentDescription">@null</item>
+    </style>
+
+    <style name="RoyalMenuTile.Label" parent="RoyalText">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_marginStart">@dimen/space_s</item>
+        <item name="fontFamily">@font/lalezar_regular</item>
+        <item name="android:gravity">center_vertical|start</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:textColor">@color/gold_bright</item>
+        <item name="autoSizeTextType">uniform</item>
+        <item name="autoSizeMinTextSize">@dimen/text_micro</item>
+        <item name="autoSizeMaxTextSize">@dimen/text_body</item>
+        <item name="autoSizeStepGranularity">0.5sp</item>
+    </style>
+</resources>

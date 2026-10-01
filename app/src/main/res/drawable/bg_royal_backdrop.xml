@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    The ground every royal screen sits on. It is the menu's own wood panel, so the
+    journey, the game and the menu read as one room rather than three apps: the
+    board art, a kashi field tiled over it, and a wash that keeps text legible.
+
+    The tile's opacity is baked into the PNG, because android:alpha on <bitmap>
+    only exists from API 31 and this app ships to 21.
+-->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item>
+        <bitmap
+            android:src="@drawable/meny_background"
+            android:gravity="fill" />
+    </item>
+
+    <item>
+        <bitmap
+            android:src="@drawable/tex_kashi"
+            android:tileMode="repeat"
+            android:tint="@color/gold" />
+    </item>
+
+    <item>
+        <shape android:shape="rectangle">
+            <gradient
+                android:angle="135"
+                android:startColor="#B3150D06"
+                android:centerColor="#73150D06"
+                android:endColor="#CC150D06"
+                android:type="linear" />
+        </shape>
+    </item>
+</layer-list>

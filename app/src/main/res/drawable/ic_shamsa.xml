@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Shamsa (شمسه) — the eight-pointed star of Persian tilework, built the way the
+    craftsmen build it: one square laid over the same square turned 45 degrees.
+    Filled solid so it can be tinted and used as a watermark, a medallion ground
+    or a badge behind a number.
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="96dp"
+    android:height="96dp"
+    android:viewportWidth="100"
+    android:viewportHeight="100"
+    android:tint="@color/gold">
+
+    <path
+        android:fillColor="#FFFFFFFF"
+        android:pathData="M16,16 H84 V84 H16 Z M50,2 L98,50 L50,98 L2,50 Z" />
+</vector>

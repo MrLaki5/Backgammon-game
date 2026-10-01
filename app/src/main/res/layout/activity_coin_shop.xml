@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_royal_backdrop"
+    android:orientation="vertical"
+    android:layoutDirection="locale"
+    tools:context=".Economy.CoinShopActivity">
+
+    <!-- Top Bar -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingStart="@dimen/space_l"
+        android:paddingTop="@dimen/space_m"
+        android:paddingEnd="@dimen/space_l"
+        android:paddingBottom="@dimen/space_s">
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/btnShopBack"
+            android:layout_width="@dimen/control_md"
+            android:layout_height="@dimen/control_md"
+            android:background="@drawable/bg_round_button_royal"
+            android:contentDescription="@string/review_back"
+            android:src="@drawable/gold_back" />
+
+        <LinearLayout
+            android:id="@+id/btnOpenCollection"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/control_md"
+            android:layout_marginStart="@dimen/space_s"
+            android:background="@drawable/bg_wood_button"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingStart="@dimen/space_m"
+            android:paddingEnd="@dimen/space_m">
+
+            <ImageView
+                android:layout_width="@dimen/icon_sm"
+                android:layout_height="@dimen/icon_sm"
+                android:contentDescription="@null"
+                android:src="@drawable/gold_trophy" />
+
+            <TextView
+                style="@style/RoyalText.Chip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/space_s"
+                android:background="@null"
+                android:paddingStart="0dp"
+                android:paddingEnd="0dp"
+                android:text="@string/collection_open"
+                android:textSize="@dimen/text_caption" />
+        </LinearLayout>
+
+        <TextView
+            style="@style/RoyalText.Display"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/space_m"
+            android:layout_weight="1"
+            android:text="@string/coin_shop"
+            android:textSize="@dimen/text_display" />
+
+        <!-- Free coins ad button — small pill beside the balance -->
+        <Button
+            android:id="@+id/btnFreeCoinsShop"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/control_sm"
+            android:layout_marginEnd="@dimen/space_s"
+            android:text="@string/free_coins_shop_button"
+            android:textSize="@dimen/text_micro"
+            android:textColor="@color/text_primary"
+            android:background="@drawable/bg_wood_button"
+            android:paddingStart="@dimen/space_s"
+            android:paddingEnd="@dimen/space_s" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/control_sm"
+            android:background="@drawable/bg_pause_button"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingStart="@dimen/space_s"
+            android:paddingEnd="@dimen/space_m">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="🪙"
+                android:textSize="@dimen/text_title" />
+
+            <TextView
+                android:id="@+id/tvShopCoinBalance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/space_xs"
+                android:fontFamily="@font/vazirmatn_semibold"
+                android:textColor="@color/accent_gold"
+                android:textSize="@dimen/text_body"
+                android:textStyle="bold"
+                android:text="0" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <!-- Category Tab Bar -->
+    <HorizontalScrollView
+        android:id="@+id/shopCategoryScroll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/space_l"
+        android:layout_marginEnd="@dimen/space_l"
+        android:layout_marginBottom="@dimen/space_s"
+        android:scrollbars="none">
+        <LinearLayout
+            android:id="@+id/shopCategoryTabs"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/control_md"
+            android:background="@drawable/bg_shop_tabs_track"
+            android:orientation="horizontal"
+            android:paddingHorizontal="4dp"
+            android:paddingVertical="4dp"
+            android:gravity="center_vertical" />
+    </HorizontalScrollView>
+
+    <!-- Season bundle — compact horizontal strip -->
+    <LinearLayout
+        android:id="@+id/seasonBundle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/space_s"
+        android:layout_marginTop="@dimen/space_xs"
+        android:layout_marginEnd="@dimen/space_s"
+        android:background="@drawable/bg_royal_panel"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingStart="@dimen/space_s"
+        android:paddingTop="@dimen/space_s"
+        android:paddingEnd="@dimen/space_s"
+        android:paddingBottom="@dimen/space_s">
+
+        <ImageView
+            android:id="@+id/seasonHero"
+            android:layout_width="96dp"
+            android:layout_height="56dp"
+            android:adjustViewBounds="true"
+            android:contentDescription="@null"
+            android:scaleType="fitCenter" />
+
+        <ImageView
+            android:id="@+id/seasonSeal"
+            android:layout_width="@dimen/icon_md"
+            android:layout_height="@dimen/icon_md"
+            android:layout_marginStart="@dimen/space_xs"
+            android:contentDescription="@null" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/space_s"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/seasonName"
+                    style="@style/RoyalText.Display"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/text_caption" />
+
+                <TextView
+                    android:id="@+id/seasonLimited"
+                    style="@style/RoyalText.Chip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/space_xs"
+                    android:background="@drawable/bg_chip_turquoise"
+                    android:text="@string/season_limited"
+                    android:textColor="@color/turquoise"
+                    android:textSize="@dimen/text_micro" />
+
+                <TextView
+                    android:id="@+id/seasonCountdown"
+                    style="@style/RoyalText.Caption"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/space_xs"
+                    android:layout_weight="1"
+                    android:gravity="end"
+                    android:textColor="@color/terracotta"
+                    android:textSize="@dimen/text_micro" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/seasonStory"
+                style="@style/RoyalText.Story"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:textSize="@dimen/text_micro" />
+
+            <LinearLayout
+                android:id="@+id/seasonContents"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:orientation="horizontal" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/space_s"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/seasonFullPrice"
+                style="@style/RoyalText.Caption"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/text_micro" />
+
+            <Button
+                android:id="@+id/seasonBuy"
+                style="@style/RoyalButton.Gold"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/control_sm"
+                android:layout_marginTop="2dp"
+                android:paddingStart="@dimen/space_m"
+                android:paddingEnd="@dimen/space_m"
+                android:textSize="@dimen/text_micro" />
+        </LinearLayout>
+    </LinearLayout>
+
+<!-- Collection progress — compact single row -->
+    <LinearLayout
+        android:id="@+id/shopCollectionBar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/control_sm"
+        android:layout_marginStart="@dimen/space_s"
+        android:layout_marginTop="@dimen/space_xs"
+        android:layout_marginEnd="@dimen/space_s"
+        android:background="@drawable/bg_royal_well"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingStart="@dimen/space_m"
+        android:paddingEnd="@dimen/space_m">
+
+        <ImageView
+            android:layout_width="@dimen/icon_sm"
+            android:layout_height="@dimen/icon_sm"
+            android:contentDescription="@null"
+            android:src="@drawable/gold_trophy" />
+
+        <TextView
+            android:id="@+id/tvShopCollectionLabel"
+            style="@style/RoyalText.Caption"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/space_s"
+            android:layout_weight="1"
+            android:maxLines="1"
+            android:textSize="@dimen/text_micro" />
+
+        <ProgressBar
+            android:id="@+id/shopCollectionProgress"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="80dp"
+            android:layout_height="@dimen/space_xs"
+            android:layout_marginStart="@dimen/space_s"
+            android:layout_marginEnd="@dimen/space_s"
+            android:max="100"
+            android:progressDrawable="@drawable/bg_progress_track_royal" />
+
+        <TextView
+            android:id="@+id/tvShopCollectionCount"
+            style="@style/RoyalText.Caption"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/accent_gold"
+            android:textSize="@dimen/text_caption" />
+    </LinearLayout>
+
+<androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/shopRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:paddingStart="@dimen/space_s"
+        android:paddingEnd="@dimen/space_s"
+        android:paddingBottom="@dimen/space_m"
+        android:clipToPadding="false" />
+
+</LinearLayout>

@@ -1,3 +1,815 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Backgammon</string>
+
+    <string name="app_name">Royal Backgammon</string>
+    <string name="royal_subtitle">هزار سال تخته‌نرد · Royal Edition</string>
+    <string name="studio_splash_content_description">Battleheim Studio logo</string>
+
+    <string name="continue_game">Continue Game</string>
+    <string name="play_game">Play</string>
+    <string name="new_game">New Game</string>
+    <string name="play_choice_title">Choose Game</string>
+    <string name="play_choice_message">Continue your saved match or start fresh.</string>
+    <string name="tutorial">Tutorial</string>
+    <string name="scores">Scores</string>
+    <string name="settings">Settings</string>
+    <string name="language_toggle">🌐 فارسی</string>
+
+    <string name="player_one">Player One</string>
+    <string name="player_two">Player Two</string>
+    <string name="player_setup">Player setup</string>
+    <string name="player_name">Player name</string>
+    <string name="human_player">Human</string>
+    <string name="bot_player">Bot</string>
+    <string name="play">Play</string>
+    <string name="cancel">Cancel</string>
+
+    <string name="bot_difficulty">Bot Difficulty</string>
+    <string name="difficulty_easy">Easy</string>
+    <string name="difficulty_medium">Medium</string>
+    <string name="difficulty_hard">Hard</string>
+    <string name="difficulty_royal">Royal</string>
+
+    <string name="board_theme">Board Theme</string>
+    <string name="bot_board_settings">Bot and board settings</string>
+    <string name="theme_royal">Royal</string>
+    <string name="theme_pop_art">Pop Art</string>
+    <string name="theme_cyberpunk">Cyberpunk</string>
+    <string name="theme_luxury">Persian Luxury</string>
+
+    <string-array name="bot_difficulty_entries">
+        <item>@string/difficulty_easy</item>
+        <item>@string/difficulty_medium</item>
+        <item>@string/difficulty_hard</item>
+        <item>@string/difficulty_royal</item>
+    </string-array>
+
+    <string-array name="board_theme_entries">
+        <item>@string/theme_royal</item>
+        <item>@string/theme_pop_art</item>
+        <item>@string/theme_cyberpunk</item>
+        <item>@string/theme_luxury</item>
+    </string-array>
+
+    <string name="roll_dice">Roll the dice</string>
+    <string name="roll_dice_button">Roll Dice</string>
+    <string name="move_checkers">Move the checkers</string>
+    <string name="opening_tie">Tie! Roll again</string>
+    <string name="current_turn_message">Turn: %1$s - %2$s</string>
+    <string name="initial_game_message">Player One, roll the dice</string>
+    <string name="tutorial_next">Next ▶</string>
+    <string name="tutorial_done">Done</string>
+    <string name="tutorial_title">Tutorial</string>
+    <string name="tutorial_player">You</string>
+    <string name="tutorial_bot">Tutor Bot</string>
+    <string name="tutorial_intro">Welcome! Your goal is to move all your checkers around the board and bear them off before your opponent. Let\'s practice each skill!</string>
+    <string name="tutorial_setup">This is the starting position. Your orange checkers move toward your home board (bottom-right). Let\'s roll!</string>
+    <string name="tutorial_roll">Tap the dice button to roll — or shake your phone! Each die lets you move one checker by that many points.</string>
+    <string name="tutorial_move">Now drag one of your checkers to a green-highlighted destination. Tap a checker to see where it can go.</string>
+    <string name="tutorial_hit">See that lone white checker? Move your checker onto it to hit it! A single opponent checker is vulnerable.</string>
+    <string name="tutorial_bar">Your checker is on the bar. You must re-enter it onto the board before moving any other checker. Roll and enter!</string>
+    <string name="tutorial_bear_off">All your checkers are in your home board! Now bear them off by rolling and moving past position 24. Bear off to win!</string>
+    <string name="tutorial_finished">Excellent! You\'ve mastered the basics. Enjoy playing for real!</string>
+
+    <string name="scores_title">Scoreboard</string>
+    <string name="results_title">Game Results</string>
+    <string name="score_empty">No results have been saved yet</string>
+    <string name="reset_scores">Reset Scores</string>
+    <string name="reset_results">Reset Results</string>
+    <string name="reset_confirmation">Are you sure you want to clear the results?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="win">Win</string>
+    <string name="lose">Loss</string>
+    <string name="game_time">Game Time</string>
+    <string name="label_with_colon">%1$s: </string>
+    <string name="game_time_with_value">Game Time: %1$s</string>
+    <string name="results_summary">%1$s %2$d:%3$d %4$s</string>
+
+    <string name="settings_title">Game Settings</string>
+    <string name="sound_enabled">Sound</string>
+    <string name="effects_enabled">Effects</string>
+    <string name="sound">Sound Volume</string>
+    <string name="music_volume">Music Volume</string>
+    <string name="shake_sensitivity">Shake Sensitivity</string>
+    <string name="shake_duration">Shake Detection Precision</string>
+    <string name="dice_delay">Dice Detection Delay</string>
+    <string name="turn_delay">Delay Between Turns</string>
+    <string name="restore_defaults">↺ Restore Defaults</string>
+    <string name="use_persian_digits">Use Persian Digits</string>
+
+    <string name="shake_threshold_value">Shake sensitivity: %1$d</string>
+    <string name="shake_precision_value">Shake detection precision: %1$d ms</string>
+    <string name="sound_value">Sound volume: %1$d%%</string>
+    <string name="music_volume_value">Music volume: %1$d%%</string>
+    <string name="shake_delay_value">Dice detection delay: %1$d</string>
+    <string name="turn_delay_value">Turn change speed: %1$d</string>
+
+    <string name="percent_value">%1$d%%</string>
+    <string name="millisecond_value">%1$d ms</string>
+    <string name="second_value">%1$d s</string>
+    <string name="numeric_value">%1$d</string>
+
+    <string name="reset">Reset</string>
+
+    <!-- Pass & Play -->
+    <string name="pass_and_play">Two Player</string>
+    <string name="pass_and_play_subtitle">Play on one device</string>
+    <string name="pass_and_play_setup">Two Player Setup</string>
+    <string name="pass_and_play_player1_default">Player 1</string>
+    <string name="pass_and_play_player2_default">Player 2</string>
+    <string name="turn_switch_title">Pass the device!</string>
+    <string name="turn_switch_message">It\'s %1$s\'s turn</string>
+    <string name="turn_switch_ready">I\'m Ready</string>
+    <string name="game_mode_vs_bot">vs Bot</string>
+    <string name="game_mode_pass_and_play">Two Player</string>
+
+    <!-- Online Multiplayer (NOT YET ACTIVE — architecture exists, no backend) -->
+    <string name="online_play">Online</string>
+    <string name="online_play_subtitle">Coming Soon</string>
+    <string name="online_coming_soon">Online multiplayer is coming soon!</string>
+    <string name="online_random_match">Find Opponent</string>
+    <string name="online_invite_friend">Invite Friend</string>
+    <string name="online_join_room">Join Room</string>
+    <string name="online_enter_code">Enter invite code</string>
+    <string name="online_invite_code_label">Invite Code</string>
+    <string name="online_share_code">Share this code with your friend:</string>
+    <string name="online_searching">Searching for opponent…</string>
+    <string name="online_waiting_friend">Waiting for friend to join…</string>
+    <string name="online_match_found">Opponent found!</string>
+    <string name="online_connecting">Connecting…</string>
+    <string name="online_connection_lost">Connection lost</string>
+    <string name="online_reconnecting">Reconnecting… (%1$d s)</string>
+    <string name="online_opponent_disconnected">Opponent disconnected (%1$d s)</string>
+    <string name="online_opponent_reconnected">Opponent reconnected</string>
+    <string name="online_match_forfeited">Match forfeited due to timeout</string>
+    <string name="online_opponent_resigned">Opponent resigned — you win!</string>
+    <string name="online_invalid_move">Invalid move detected from opponent</string>
+    <string name="online_cancel">Cancel</string>
+    <string name="online_resign">Resign</string>
+    <string name="online_resign_confirm">Are you sure you want to resign?</string>
+
+    <!-- Leaderboard -->
+    <string name="leaderboard_title">Leaderboard</string>
+    <string name="leaderboard_this_week">This Week</string>
+    <string name="leaderboard_this_month">This Month</string>
+    <string name="leaderboard_all_time">All Time</string>
+    <string name="leaderboard_empty">No games played yet. Play to see rankings!</string>
+    <string name="leaderboard_legacy_scores">Match History</string>
+    <string name="leaderboard_games_format">%1$d games • %2$d%% win</string>
+    <string name="leaderboard_elo_label">ELO</string>
+    <string name="leaderboard_avatar_desc">Player avatar</string>
+    <string name="leaderboard_rank">Rank</string>
+
+    <!-- Monetization -->
+    <string name="iap_remove_ads">Remove Ads</string>
+    <string name="iap_remove_ads_desc">Remove all interstitial ads permanently</string>
+    <string name="iap_theme_unlock">Unlock Theme</string>
+    <string name="iap_restore_purchases">Restore Purchases</string>
+    <string name="iap_purchase_success">Purchase successful!</string>
+    <string name="iap_purchase_failed">Purchase failed. Please try again.</string>
+    <string name="hint_button">💡 Hint</string>
+    <string name="hint_watch_ad">Watch a short video to see the best move</string>
+    <string name="hint_best_move">Best move highlighted!</string>
+    <string name="theme_locked">Locked — tap to purchase</string>
+
+    <!-- Pause Menu -->
+    <string name="pause_title">PAUSE</string>
+    <string name="pause_resume">Resume</string>
+    <string name="pause_restart">Restart</string>
+    <string name="pause_quit">Quit</string>
+    <string name="pause_volume_desc">Volume</string>
+    <string name="roll_button_label">ROLL</string>
+
+    <!-- Game Over / Rematch -->
+    <string name="game_over_title">Game Over</string>
+    <string name="game_over_winner">%1$s wins!</string>
+    <string name="game_over_duration">Duration: %1$d:%2$02d</string>
+    <string name="game_over_game_number">Game #%1$d</string>
+    <string name="game_over_win_streak">Win streak: %1$d 🔥</string>
+    <string name="game_over_best_streak">Best: %1$d</string>
+    <string name="daily_challenge_done">Daily challenge complete! ✓</string>
+    <string name="review_title">Enjoying the game?</string>
+    <string name="review_message">If you like Royal Backgammon, please rate us in the store. It helps a lot!</string>
+    <string name="review_rate">Rate Now</string>
+    <string name="review_later">Maybe Later</string>
+    <string name="review_never">No Thanks</string>
+    <string name="rematch">🔄 Rematch</string>
+    <string name="change_settings">Change Settings</string>
+    <string name="main_menu">🏠 Main Menu</string>
+
+    <!-- Coin Economy -->
+    <string name="coins">Coins</string>
+    <string name="coin_balance">%1$d coins</string>
+    <string name="coin_earned">+%1$d coins</string>
+    <string name="coin_spent">-%1$d coins</string>
+    <string name="daily_login_title">Daily Bonus</string>
+    <string name="daily_login_claim">Claim</string>
+    <string name="daily_login_claimed">Claimed!</string>
+    <string name="daily_login_day">Day %1$d</string>
+    <string name="free_coins">Free coins</string>
+    <string name="watch_ad_for_coins">🎬 Watch video for %1$d coins</string>
+    <string name="double_reward">Double Coins</string>
+    <string name="double_reward_desc">Watch a video to double your reward!</string>
+    <string name="save_streak">Save Streak</string>
+    <string name="save_streak_desc">Watch a video to keep your %1$d win streak!</string>
+    <string name="bonus_chest">Bonus Chest</string>
+    <string name="bonus_chest_desc">Watch a video for %1$d bonus coins!</string>
+    <string name="hint_choice_title">💡 Get Hint</string>
+    <string name="hint_use_coins">🪙 Use %1$d coins</string>
+    <string name="hint_watch_video">🎬 Watch video (free)</string>
+    <string name="insufficient_coins">Not enough coins</string>
+    <string name="ad_on_cooldown">Next free ad in %1$s</string>
+    <string name="ad_daily_limit_reached">Come back tomorrow for more!</string>
+    <string name="reward_earned_title">Reward Earned!</string>
+    <string name="weekly_challenge">Weekly Challenge</string>
+    <string name="weekly_player">Player of the Week</string>
+    <string name="weekly_warrior">Weekly Warrior</string>
+    <string name="weekly_endurance">Endurance</string>
+    <string name="weekly_progress">%1$d / %2$d</string>
+    <string name="undo_move">↺ Undo</string>
+    <string name="coin_shop">Shop</string>
+    <string name="avatar_frames">Avatar Frames</string>
+    <string name="dice_skins">Dice Skins</string>
+    <string name="profile_titles">Titles</string>
+    <string name="theme_rental">Rent Theme (24h)</string>
+    <string name="shop_category_all">All</string>
+    <string name="shop_item_owned">Owned</string>
+    <string name="shop_item_equip">Equip</string>
+    <string name="shop_item_equipped">Equipped</string>
+    <string name="shop_item_buy">%1$d Coins</string>
+    <string name="shop_purchase_success">Item purchased and equipped!</string>
+    <string name="shop_category_rental">Rentals (24h)</string>
+    <string name="shop_rarity_common">Common</string>
+    <string name="shop_rarity_rare">Rare</string>
+    <string name="shop_rarity_epic">Epic</string>
+    <string name="shop_rarity_legendary">Legendary</string>
+    <string name="shop_locked_format">🔒 %1$d wins required</string>
+    <string name="shop_already_purchased">Already purchased</string>
+    <string name="shop_locked_short">Locked</string>
+    <string name="shop_rental_button">Rent %1$d 🪙</string>
+    <string name="shop_rental_active">Rented</string>
+    <string name="elo_rating_format">ELO %1$d</string>
+    <string name="elo_delta_positive">+%1$d ELO</string>
+    <string name="elo_delta_negative">%1$d ELO</string>
+    <string name="coins_breakdown">Coins Earned</string>
+    <string name="coins_base_win">Win: +%1$d</string>
+    <string name="coins_diff_bonus">Difficulty: +%1$d</string>
+    <string name="coins_first_game">First game of day: +%1$d</string>
+    <string name="coins_streak_bonus">Streak milestone: +%1$d</string>
+    <string name="daily_login_subtitle">Log in daily to claim bigger coin rewards!</string>
+    <string name="daily_login_already_claimed">Next reward available tomorrow!</string>
+    <string name="undo_cost_format">Undo (%1$d coins)</string>
+    <string name="undo_success">Move reverted</string>
+    <string name="undo_unavailable">Undo only available during your turn</string>
+
+    <!-- Settings screen section headers -->
+    <string name="settings_section_audio">Sound</string>
+    <string name="settings_section_gameplay">Gameplay</string>
+    <string name="settings_section_shake">Shake Dice</string>
+
+    <!-- Settings value labels -->
+    <string name="settings_sfx_value">SFX: %1$d%%</string>
+    <string name="settings_music_value">Music: %1$d%%</string>
+    <string name="settings_turn_value">Speed: %1$d</string>
+    <string name="settings_threshold_value">%1$d</string>
+    <string name="settings_precision_value">%1$d ms</string>
+    <string name="settings_shake_delay">Detection Delay</string>
+    <string name="settings_delay_value">%1$d</string>
+
+    <!-- Theme unlock via ad -->
+    <string name="watch_ad_unlock">📺 Ad</string>
+    <string name="theme_unlocked_toast">Theme unlocked!</string>
+    <string name="ad_not_ready">Ad not ready — try again shortly</string>
+    <string name="theme_woodland_name">Woodland</string>
+    <string name="theme_galaxy">Galaxy</string>
+    <string name="theme_ancient_egypt">Ancient Egypt</string>
+    <string name="theme_neon_retro">Neon Retro</string>
+    <string name="theme_buy_button">Buy — %1$d Coins</string>
+    <string name="theme_discount_button">50%% Off with Ad (1 Hour)</string>
+    <string name="theme_not_enough_coins">Not enough coins!</string>
+    <string name="theme_discount_activated">50%% discount activated for 1 hour!</string>
+
+    <!-- Shop Deepening: Consumables & Bundles -->
+    <string name="shop_hint_pack_3">3 Hints</string>
+    <string name="shop_hint_pack_10">10 Hints</string>
+    <string name="shop_undo_pack_3">3 Undos</string>
+    <string name="shop_starter_bundle">Starter Bundle</string>
+    <string name="shop_hint_pack_3_desc">3 hint charges for your games</string>
+    <string name="shop_hint_pack_10_desc">10 hint charges for your games</string>
+    <string name="shop_undo_pack_3_desc">3 free move-undo charges</string>
+    <string name="shop_starter_bundle_desc">Silver Frame + Steel Dice + 50 bonus coins + 2 hints</string>
+
+    <!-- Themed bundles -->
+    <string name="bundle_nacre_title">Gulf Nacre Bundle</string>
+    <string name="bundle_nacre_desc">Nacre checkers, walnut dice, and pearl ripple — three layers of one ocean.</string>
+    <string name="bundle_nacre_story">Nacre is broken under light to release its hidden colours — pink, green, and gold that shift with angle. These pieces are cut from shells no longer found in the Gulf.</string>
+
+    <string name="bundle_copper_title">Isfahan Copper Bundle</string>
+    <string name="bundle_copper_desc">Copper checkers, copper dice, and madder smoke — from the coppersmiths\' bazaar.</string>
+    <string name="bundle_copper_story">Isfahan\'s coppersmiths have hammered in one alley for three generations. Copper\'s colour changes with heat — from fresh orange to old brown — and these pieces were quenched at exactly the moment the colour was best.</string>
+
+    <string name="bundle_turquoise_title">Neyshabur Turquoise Bundle</string>
+    <string name="bundle_turquoise_desc">Checkers, dice, and turquoise spark — all from the mines of Neyshabur.</string>
+    <string name="bundle_turquoise_story">Turquoise does not sit in veins but in pockets, each one its own shade. These pieces take their colour from three different pockets — no two boards lit the same way will show the same blue.</string>
+
+    <string name="bundle_lapis_title">Lapis of Shiraz Bundle</string>
+    <string name="bundle_lapis_desc">The deep blue — checkers, dice, and the night they leave behind.</string>
+    <string name="bundle_lapis_story">Lapis lazuli has been ground for paint since before paint had a name. These pieces are not painted — they are the stone itself, shaped and polished. The colour is not applied: it is the material, and it does not fade.</string>
+
+    <string name="bundle_saffron_title">Yazd Saffron Bundle</string>
+    <string name="bundle_saffron_desc">The golden colour of Yazd — checkers, dice, and the golden haze they leave.</string>
+    <string name="bundle_saffron_story">More than a hundred thousand filaments go into a kilogram of saffron. The colour of these pieces is exactly that: the dried thread, pressed into something that holds its shape. The hue shifts in different light — richer at dusk, paler at noon.</string>
+
+    <string name="bundle_agate_title">Yemeni Agate Bundle</string>
+    <string name="bundle_agate_desc">Banded stone cut into checkers, dice, and the ember of landing — the most popular bundle.</string>
+    <string name="bundle_agate_story">The caravan road from Yemen to Persia carried spices one way and agate the other. Each band in the stone is a year of slow geology, and the craftsman cutting it does not choose which bands show. Every pair of checkers is therefore unique.</string>
+
+    <string name="bundle_isfahan_title">Isfahan — Half the World</string>
+    <string name="bundle_isfahan_desc">Haft-rang board, Isfahan frame, and Isfahan sound — a city in one box.</string>
+    <string name="bundle_isfahan_story">Haft-rang is a ceramic tradition whose colours are fired at eight hundred degrees so they will never fade. The Isfahan frame is taken from the same geometric knotwork that repeats across Khaju Bridge. The sound rises from the same square.</string>
+
+    <string name="bundle_caravan_title">Caravanserai Bundle</string>
+    <string name="bundle_caravan_desc">Pateh board, caravan frame, and caravan sound — from the Safavid road.</string>
+    <string name="bundle_caravan_story">Pateh from Kerman is embroidered on silk with wool thread — patterns that require the reader to know where to look. This board was under one family\'s hands in Kerman for three months. The sound is from the khans along the road from Kerman to Isfahan.</string>
+
+    <string name="bundle_sound_pack_title">Sound Market</string>
+    <string name="bundle_sound_pack_desc">Four sounds from four cities — Neyshabur, Shiraz, Tabriz, and Yazd.</string>
+    <string name="bundle_sound_pack_story">Each city has its own resonance. This bundle gives four sound sets: Neyshabur pottery, Shiraz bazaar, Tabriz workshops, and Yazd badgirs — for anyone who wants each match to feel different.</string>
+
+    <string name="bundle_boards_title">Artisan Boards</string>
+    <string name="bundle_boards_desc">Three boards — khatam, mina, and nacre — from three different workshops.</string>
+    <string name="bundle_boards_story">Khatam needs a month of assembly for a surface the size of your palm. Mina is enamel fired on copper at eight hundred degrees. Nacre is cut from shells of oysters no longer found in the Gulf. These three boards are from the workshops that still know how.</string>
+
+    <string name="bundle_zari_title">Yazd Zari Bundle</string>
+    <string name="bundle_zari_desc">Zari board, Yazd frame, and Yazd sound — from the silk weavers.</string>
+    <string name="bundle_zari_story">Zari is woven from silver or gold thread — fabric that carries light inside it. The board in this set is drawn from the Yazd weavings that have supplied court robes for centuries. The sound is from the city\'s tall badgirs.</string>
+
+    <string name="bundle_gold_title">Gold — The Deathless Metal</string>
+    <string name="bundle_gold_desc">Checkers and dice cast in the only metal that does not age.</string>
+    <string name="bundle_gold_story">Gold does not corrode and gold does not age. The pieces in this set are not gilded — there is no base metal underneath — and in a century of playing they will look exactly as they do now.</string>
+
+    <string name="bundle_master_title">Tabriz Master Set</string>
+    <string name="bundle_master_desc">Board, checkers, and dice — all from the filigree workshops of Tabriz.</string>
+    <string name="bundle_master_story">Tabriz silversmiths flatten wire to the width of a hair and bend it cold, without solder, into shapes that support their own weight. The board, checkers, and dice in this set all come from the same workshop on the same street — and nothing on the shelf costs more.</string>
+
+    <string name="shop_category_cosmetic">Cosmetic</string>
+    <string name="shop_category_consumable">Consumable</string>
+    <string name="shop_category_bundle">Bundle</string>
+    <string name="shop_hint_charges">%d hints</string>
+    <string name="shop_undo_charges">%d undos</string>
+    <string name="not_enough_coins">Not enough coins</string>
+    <string name="purchase_successful">Purchase successful</string>
+
+    <!-- Shop badges -->
+    <string name="shop_badge_popular">Popular</string>
+    <string name="shop_badge_new">New</string>
+    <string name="shop_badge_discount">Discount</string>
+    <string name="shop_badge_special">Special</string>
+
+    <!-- Avatar Frames -->
+    <string name="frame_default_title">Classic Frame</string>
+    <string name="frame_default_desc">Simple wooden border</string>
+    <string name="frame_bronze_title">Bronze Frame</string>
+    <string name="frame_bronze_desc">Polished antique bronze border</string>
+    <string name="frame_silver_title">Silver Frame</string>
+    <string name="frame_silver_desc">Shining sterling silver border</string>
+    <string name="frame_carpet_title">Persian Carpet Frame</string>
+    <string name="frame_carpet_desc">Traditional hand-woven Isfahan carpet motifs</string>
+    <string name="frame_gold_title">Gold Frame</string>
+    <string name="frame_gold_desc">24-karat Persian gold with a royal pattern</string>
+    <string name="frame_peacock_title">Peacock Frame</string>
+    <string name="frame_peacock_desc">Persian peacock motifs with jewels</string>
+    <string name="frame_diamond_title">Diamond Crown</string>
+    <string name="frame_diamond_desc">Royal crown with sparkling diamonds</string>
+    <string name="frame_sultan_title">Sultan Frame</string>
+    <string name="frame_sultan_desc">Exclusive frame for backgammon sultans</string>
+
+    <!-- Dice Skins -->
+    <string name="dice_default_title">Bone Dice</string>
+    <string name="dice_default_desc">Classic white dice</string>
+    <string name="dice_walnut_title">Walnut Dice</string>
+    <string name="dice_walnut_desc">Natural dark mahogany dice</string>
+    <string name="dice_ruby_title">Ruby Dice</string>
+    <string name="dice_ruby_desc">Fiery red ruby dice</string>
+    <string name="dice_marble_title">Marble Dice</string>
+    <string name="dice_marble_desc">Beautiful swirled marble dice</string>
+    <string name="dice_crystal_title">Crystal Dice</string>
+    <string name="dice_crystal_desc">Clear crystal dice with a light shimmer</string>
+    <string name="dice_dragon_title">Dragon Dice</string>
+    <string name="dice_dragon_desc">Legendary dice with a dragon motif</string>
+
+    <!-- Titles -->
+    <string name="title_beginner_title">Beginner</string>
+    <string name="title_beginner_desc">Starting title for players</string>
+    <string name="title_sharp_title">Sharp</string>
+    <string name="title_sharp_desc">A clever backgammon player</string>
+    <string name="title_tactician_title">Tactician</string>
+    <string name="title_tactician_desc">Expert in strategy and tactics</string>
+    <string name="title_master_title">Board Master</string>
+    <string name="title_master_desc">A recognized backgammon master</string>
+    <string name="title_king_title">Royal Falcon</string>
+    <string name="title_king_desc">A royal backgammon player</string>
+    <string name="title_sultan_title">Board Sultan</string>
+    <string name="title_sultan_desc">Legendary title — for elites only</string>
+
+    <!-- Retention & Rewards -->
+    <string name="daily_login_reward">Day %1$d login — you earned %2$d coins! 🎉</string>
+    <string name="achievement_unlocked">New achievement: %1$s (%2$d coins)</string>
+    <string name="daily_challenge_complete">Daily challenge complete! +%1$d coins</string>
+    <string name="streak_milestone">%1$d-win streak! +%2$d coins 🔥</string>
+
+    <!-- Player Stats Screen -->
+    <string name="player_stats_title">Player Stats</string>
+    <string name="stats_wld_label">Wins / Losses / Draws</string>
+    <string name="stats_win_rate_label">Win Rate</string>
+    <string name="stats_best_streak_label">Best Streak</string>
+    <string name="stats_variant_elo_label">%1$s (%2$d games)</string>
+    <string name="stats_elo_label">Current ELO</string>
+    <string name="stats_coins_label">Coin Balance</string>
+    <string name="stats_achievements_label">Achievements</string>
+
+    <!-- Coin Shop Free Coins -->
+    <string name="free_coins_shop_button">Free coins</string>
+    <string name="free_coins_cooldown">%d min until next free coins</string>
+
+    <!-- Variants & matches -->
+    <string name="variant_standard">Standard</string>
+    <string name="variant_tavla">Tavla</string>
+    <string name="variant_portes">Portes</string>
+    <string name="variant_standard_rules">International rules: the starter plays the opening dice. Gammon 2, backgammon 3 points.</string>
+    <string name="variant_tavla_rules">Turkish style: the opening winner rolls again (doubles possible). Mars 2 points, no triple win.</string>
+    <string name="variant_portes_rules">Greek style (first game of Tavli): the opening winner rolls again. Gammon 2 points, no triple win.</string>
+    <string name="variant_plakoto">Plakoto</string>
+    <string name="variant_plakoto_rules">Greek style: all 15 start on the opposite corner. Landing on a lone checker pins it until you leave. Pin the last checker on its start (the mother) to win double.</string>
+    <string name="variant_fevga">Fevga</string>
+    <string name="variant_fevga_rules">Greek running game: both run the same way from opposite corners, no hitting, one checker holds a point. Your lead checker must pass the opponent\'s start before any other moves.</string>
+    <string name="variant_tavli">Tavli</string>
+    <string name="variant_tavli_rules">Greek match: Portes, then Plakoto, then Fevga, repeating until someone reaches the target score.</string>
+    <string name="next_variant">Next: %1$s</string>
+    <string name="variant_nardy">Long Nardy</string>
+    <string name="variant_nardy_rules">Both sides run the same way from opposite heads. No hitting: one checker holds a point. One checker leaves the head per turn. Mars 2 points.</string>
+    <string name="match_single">Single game</string>
+    <string name="match_to_points">Match to %1$d</string>
+    <string name="game_over_result_line">%1$s — %2$s (%3$d pts)</string>
+    <string name="win_type_single">Single win</string>
+    <string name="win_type_gammon">Gammon!</string>
+    <string name="win_type_backgammon">Backgammon!</string>
+    <string name="win_type_mother">Mother pinned!</string>
+    <string name="win_type_draw">Draw</string>
+    <string name="game_over_draw">Draw — both mothers are pinned</string>
+    <string name="game_over_match_score">Match to %1$d: %2$s %3$d – %4$d %5$s</string>
+    <string name="game_over_match_winner">Match winner: %1$s</string>
+    <string name="next_game">Next game</string>
+    <string name="game_review_title">Game review</string>
+    <string name="review_back">Back</string>
+    <string name="review_button">Review game</string>
+    <string name="review_accuracy">Accuracy %1$d%% over %2$d graded turns</string>
+    <string name="review_empty">No turns to grade in this game.</string>
+    <string name="review_turn_header">Turn %1$d · dice %2$s · you played %3$s</string>
+    <string name="review_better_move">%1$s — better: %2$s</string>
+    <string name="review_grade_excellent">Excellent</string>
+    <string name="review_grade_good">Good</string>
+    <string name="review_grade_mistake">Mistake</string>
+    <string name="review_grade_blunder">Blunder</string>
+    <string name="review_working">Analysing the game…</string>
+    <string name="journey_title">Journey</string>
+    <string name="journey_progress">%1$d of %2$d</string>
+    <string name="journey_stage_title">%1$d. %2$s</string>
+    <string name="journey_stage_detail">%1$s · %2$s · %3$s · %4$d coins</string>
+    <string name="journey_locked">Win the previous chapter to open this one.</string>
+    <string name="journey_stage_done">Chapter complete! +%1$d coins</string>
+    <string name="journey_1_title">Home board</string>
+    <string name="journey_1_flavor">Where every player starts: a quiet game and a patient opponent.</string>
+    <string name="journey_1_opponent">Uncle Reza</string>
+    <string name="journey_2_title">The tea house</string>
+    <string name="journey_2_flavor">Three games against the regulars, where speed matters less than steadiness.</string>
+    <string name="journey_2_opponent">Master Kazem</string>
+    <string name="journey_3_title">Istanbul</string>
+    <string name="journey_3_flavor">Tavla, played fast: the starter rolls again and mars is worth two.</string>
+    <string name="journey_3_opponent">Emre</string>
+    <string name="journey_4_title">Athens</string>
+    <string name="journey_4_flavor">Portes, the first game of Tavli, a cousin of the game you know.</string>
+    <string name="journey_4_opponent">Nikos</string>
+    <string name="journey_5_title">Crete</string>
+    <string name="journey_5_flavor">Plakoto: no hitting here, only pinning — and the mother decides everything.</string>
+    <string name="journey_5_opponent">Eleni</string>
+    <string name="journey_6_title">Thessaloniki</string>
+    <string name="journey_6_flavor">Fevga: one checker leads the way until it passes the opponent\'s start.</string>
+    <string name="journey_6_opponent">Yannis</string>
+    <string name="journey_7_title">By the Caspian</string>
+    <string name="journey_7_flavor">Long Nardy: no hitting, one checker per turn off the head, blocks decide the race.</string>
+    <string name="journey_7_opponent">Farid</string>
+    <string name="journey_9_title">The grand master</string>
+    <string name="journey_9_flavor">A full Tavli match: Portes, Plakoto and Fevga against the strongest opponent.</string>
+    <string name="journey_9_opponent">The grand master</string>
+    <string name="variant_acey">Acey-deucey</string>
+    <string name="variant_acey_rules">American style: all checkers start off the board and enter like from the bar. A 1-2 roll adds a double of your choice and another roll. The loser pays a point for every checker still on the board.</string>
+    <string name="acey_bonus_title">Name a double</string>
+    <string name="acey_bonus_option">Double %1$d</string>
+    <string name="journey_8_title">The harbour</string>
+    <string name="journey_8_flavor">Acey-deucey, the sailors\' game: every checker starts off the board and a 1-2 changes everything.</string>
+    <string name="journey_8_opponent">The captain</string>
+    <string name="daily_challenge_line">Today: %1$s (%2$d/%3$d)</string>
+    <string name="daily_challenge_line_done">Today: %1$s — done</string>
+    <string name="challenge_win_games">win %1$d game(s)</string>
+    <string name="challenge_complete_games">play %1$d games</string>
+    <string name="challenge_beat_difficulty">beat the %1$s bot</string>
+    <string name="challenge_win_without_hit">win without being hit</string>
+    <string name="challenge_win_streak">reach a streak of %1$d</string>
+    <string name="challenge_win_variant">win a game of %1$s</string>
+    <string name="challenge_dialog_title">Challenge</string>
+    <string name="challenge_play_today">Play today\'s challenge game</string>
+    <string name="challenge_share_code">Share a code</string>
+    <string name="challenge_enter_code">Enter a friend\'s code</string>
+    <string name="challenge_play_code">Play it now</string>
+    <string name="challenge_your_code">Your challenge code</string>
+    <string name="challenge_code_message">%1$s\n\n%2$s — the same dice for anyone who plays this code.</string>
+    <string name="challenge_share_text">Play this backgammon challenge with me — code: %1$s</string>
+    <string name="challenge_code_hint">e.g. PLA-3F9K2-7</string>
+    <string name="challenge_code_invalid">That code is not valid.</string>
+    <string name="challenge_banner">Challenge · %1$s</string>
+    <string name="challenge_results">Challenge results</string>
+    <string name="challenge_results_empty">No challenge games yet.</string>
+    <string name="challenge_result_won">%1$s · %2$s · won %3$d</string>
+    <string name="challenge_result_lost">%1$s · %2$s · lost %3$d</string>
+    <string name="review_reward_button">Watch a video for %1$d coins</string>
+    <!-- Journey screen, royal layout -->
+    <string name="journey_progress_label">Chapters completed</string>
+    <string name="journey_opponent_line">Opponent: %1$s</string>
+    <string name="journey_reward_line">%1$d coins</string>
+    <string name="journey_hint_current">Next: %1$s</string>
+    <string name="journey_hint_complete">The whole road is behind you. Play any chapter again whenever you like.</string>
+    <string name="journey_chapter_number">%1$d</string>
+    <string name="shop_collection_label">Your collection</string>
+    <string name="shop_collection_count">%1$d of %2$d</string>
+    <!-- Checker sets, named for the craft they come from -->
+    <string name="shop_category_checkers">Checkers</string>
+    <string name="shop_category_dice">Dice</string>
+    <string name="shop_category_title">Titles</string>
+    <string name="checkers_walnut_title">Walnut</string>
+    <string name="checkers_walnut_desc">Turned from a single block. The set everyone learns on.</string>
+    <string name="checkers_bone_title">Camel bone</string>
+    <string name="checkers_bone_desc">Warm, close-grained, and heavier in the hand than it looks.</string>
+    <string name="checkers_khatam_title">Isfahan khatam</string>
+    <string name="checkers_khatam_desc">Ebony inlaid in the marquetry of Isfahan, star within star.</string>
+    <string name="checkers_nacre_title">Mother-of-pearl</string>
+    <string name="checkers_nacre_desc">The inside of the shell, which changes colour as the board turns.</string>
+    <string name="checkers_turquoise_title">Neyshabur turquoise</string>
+    <string name="checkers_turquoise_desc">The blue Persia is known for, from the mines above Neyshabur.</string>
+    <string name="checkers_agate_title">Yemeni agate</string>
+    <string name="checkers_agate_desc">Banded carnelian, cut and polished like a seal stone.</string>
+    <string name="checkers_gold_title">Gold leaf</string>
+    <string name="checkers_gold_desc">A set for a table nobody plays on. Play on it anyway.</string>
+    <!-- Dice, cut from real stone -->
+    <string name="dice_bone_title">Bone</string>
+    <string name="dice_bone_desc">The pair every table starts with. Light, loud, honest.</string>
+    <string name="dice_ebony_title">Ebony</string>
+    <string name="dice_ebony_desc">Nearly black, and heavy enough to land where you throw it.</string>
+    <string name="dice_turquoise_title">Turquoise</string>
+    <string name="dice_turquoise_desc">Veined with the matrix it grew in. No two faces alike.</string>
+    <string name="dice_agate_title">Agate</string>
+    <string name="dice_agate_desc">Banded through, so every roll shows a different cut of the stone.</string>
+    <string name="dice_gold_title">Gold</string>
+    <string name="dice_gold_desc">They roll slower. Everyone watches them anyway.</string>
+
+    <!-- Titles, in the language of the game -->
+    <string name="title_none_title">No title</string>
+    <string name="title_none_desc">Let the play speak.</string>
+    <string name="title_doubler_title">The Doubler</string>
+    <string name="title_doubler_desc">For the player whose doubles keep arriving.</string>
+    <string name="title_prime_title">Six-Block</string>
+    <string name="title_prime_desc">For the one who builds the prime and never lets it open.</string>
+    <string name="title_gammon_title">Gammon-Maker</string>
+    <string name="title_gammon_desc">Winning is enough for most people.</string>
+    <string name="title_plakoto_title">Master of Plakoto</string>
+    <string name="title_plakoto_desc">Where nothing is hit, only pinned — and the mother decides.</string>
+    <string name="title_unbeaten_title">Unbeaten</string>
+    <string name="title_unbeaten_desc">Held only while it is true.</string>
+    <!-- Seasons: one workshop, one craft, six weeks, then closed -->
+    <string name="season_isfahan_name">Season One — Isfahan</string>
+    <string name="season_isfahan_story">The marquetry workshops, where a star is built from a thousand slivers of ebony and bone.</string>
+    <string name="season_isfahan_bundle">The Isfahan Set</string>
+    <string name="season_neyshabur_name">Season Two — Neyshabur</string>
+    <string name="season_neyshabur_story">Above the town, the mines that gave the colour its name. The best stone never leaves the province.</string>
+    <string name="season_neyshabur_bundle">The Neyshabur Set</string>
+    <string name="season_harbour_name">Season Three — The Harbour</string>
+    <string name="season_harbour_story">What the divers brought up, and what the workshops on the quay made of it.</string>
+    <string name="season_harbour_bundle">The Harbour Set</string>
+    <string name="season_caravan_name">Season Four — The Caravan Road</string>
+    <string name="season_caravan_story">Agate came north with the caravans, already banded, already worth more than the camel that carried it.</string>
+    <string name="season_caravan_bundle">The Caravan Set</string>
+
+    <string name="season_limited">Limited edition</string>
+    <string name="season_days_left">%1$d days left</string>
+    <string name="season_last_day">Last day</string>
+    <string name="season_bundle_price">Whole set — %1$d coins</string>
+    <string name="season_bundle_saving">Separately %1$d</string>
+    <string name="season_bundle_owned">You own this set</string>
+    <string name="season_retires">When the season closes, this set is withdrawn and is not sold again.</string>
+    <!-- The treasury -->
+    <string name="collection_title">Treasury</string>
+    <string name="collection_total">%1$d of %2$d</string>
+    <string name="collection_season_open">%1$d days left</string>
+    <string name="collection_season_closed">Closed</string>
+    <string name="collection_piece_held">Held</string>
+    <string name="collection_piece_missed">Missed</string>
+    <string name="collection_piece_price">%1$d coins</string>
+    <string name="collection_open">Treasury</string>
+
+    <!-- Season pieces: boards, dice effects, banners and frames. -->
+    <string name="board_khatam_title">Khatam board</string>
+    <string name="board_khatam_desc">Ten thousand slivers to the square span.</string>
+    <string name="board_khatam_story">Khatam is brass wire, ebony and camel bone drawn into rods no thicker than a bristle, bundled into a hexagon and sliced across. Every slice is one star. A board this size is a month of slices laid one beside the next.</string>
+    <string name="effect_enamel_dust_title">Enamel dust</string>
+    <string name="effect_enamel_dust_desc">The dice land in a haze off the kiln.</string>
+    <string name="effect_enamel_dust_story">Isfahan\'s enamellers fire their blue three times over, and every firing leaves a fine powder on the bench. The dice pick it up and carry it.</string>
+    <string name="banner_isfahan_title">Banner of the Forty Columns</string>
+    <string name="banner_isfahan_desc">Won, never sold.</string>
+    <string name="banner_isfahan_story">Twenty columns standing in the air and twenty standing in the water beneath them. Nobody has ever counted forty in one place. This one is not for sale at any price: it is given for finishing the Isfahan chapter.</string>
+    <string name="frame_isfahan_title">Chased brass bezel</string>
+    <string name="frame_isfahan_desc">Raised from the back, eight points.</string>
+    <string name="frame_isfahan_story">A chaser works the sheet from behind, lifting the metal with a few hundred small blows, then turns it and sinks the lines from the front.</string>
+    <string name="board_mina_title">Mina board</string>
+    <string name="board_mina_desc">Fired blue, three times over.</string>
+    <string name="board_mina_story">Mina kari is enamel laid into chased copper and taken back to the kiln for every colour. Blue goes in first because it survives the most heat.</string>
+    <string name="effect_turquoise_spark_title">Turquoise spark</string>
+    <string name="effect_turquoise_spark_desc">Struck light, the colour of the mine.</string>
+    <string name="effect_turquoise_spark_story">Hit turquoise matrix with steel and it throws a short blue spark. The miners used to find the seam that way in the dark.</string>
+    <string name="banner_neyshabur_title">Banner of the Blue Mine</string>
+    <string name="banner_neyshabur_desc">Won, never sold.</string>
+    <string name="banner_neyshabur_story">The seam at Neyshabur has been worked for longer than anyone has been keeping count. Given for finishing the Neyshabur chapter.</string>
+    <string name="frame_neyshabur_title">Turquoise bezel</string>
+    <string name="frame_neyshabur_desc">Set the way a ring is set.</string>
+    <string name="frame_neyshabur_story">The stone is cut flat, bedded on a rim of metal, and the rim pushed over its edge until it holds without glue.</string>
+    <string name="board_nacre_title">Mother-of-pearl board</string>
+    <string name="board_nacre_desc">The inside of a shell, sawn flat.</string>
+    <string name="board_nacre_story">Nacre is the lining an oyster lays down in sheets thinner than paper. Sawn across, those sheets split light, which is why no two points on this board are quite the same colour.</string>
+    <string name="effect_pearl_ripple_title">Pearl ripple</string>
+    <string name="effect_pearl_ripple_desc">A ring of light, outward.</string>
+    <string name="effect_pearl_ripple_story">Drop anything into still water in the shallows and the ring reaches the boat before the sound does.</string>
+    <string name="banner_harbour_title">Banner of the Divers</string>
+    <string name="banner_harbour_desc">Won, never sold.</string>
+    <string name="banner_harbour_story">A diver\'s rope was held by one other man, and that was the whole of the safety arrangement. Given for finishing the harbour chapter.</string>
+    <string name="frame_harbour_title">Shell bezel</string>
+    <string name="frame_harbour_desc">Cut from one piece, not inlaid.</string>
+    <string name="frame_harbour_story">Big enough a shell that the whole ring comes out of a single curve of it, which is rarer than the stone in it.</string>
+    <string name="board_monabbat_title">Monabbat board</string>
+    <string name="board_monabbat_desc">Cut down into the wood, not laid on it.</string>
+    <string name="board_monabbat_story">Monabbat is carving: the pattern is what is left after the ground is taken away. Nothing is added, so nothing can lift.</string>
+    <string name="effect_agate_ember_title">Agate ember</string>
+    <string name="effect_agate_ember_desc">Lit from inside.</string>
+    <string name="effect_agate_ember_story">Hold banded agate to a lamp and the bands go through it one after another, like looking down a road at dusk.</string>
+    <string name="banner_caravan_title">Banner of the Road</string>
+    <string name="banner_caravan_desc">Won, never sold.</string>
+    <string name="banner_caravan_story">Stones came up the road in sacks and went back as seals with someone\'s name cut backwards into them. Given for finishing the caravan chapter.</string>
+    <string name="frame_caravan_title">Agate bezel</string>
+    <string name="frame_caravan_desc">Six points, one stone.</string>
+    <string name="frame_caravan_story">Cut so the bands run across the ring rather than around it, which wastes most of the stone and is the only way the pattern reads.</string>
+
+    <!-- Bundle page and item detail sheet. -->
+    <string name="shop_cat_board">Boards</string>
+    <string name="shop_cat_effect">Dice effects</string>
+    <string name="shop_cat_banner">Banners</string>
+    <string name="shop_cat_frame">Frames</string>
+    <string name="bundle_contents">What is in the set</string>
+    <string name="bundle_separately">Bought separately: %1$d</string>
+    <string name="bundle_set_price">As a set: %1$d</string>
+    <string name="bundle_saving">You keep %1$d</string>
+    <string name="bundle_buy_set">Take the whole set</string>
+    <string name="bundle_owned">This set is yours</string>
+    <string name="bundle_partial">You hold %1$d of %2$d</string>
+    <string name="bundle_days_left">%1$d days before it closes</string>
+    <string name="detail_story">The craft</string>
+    <string name="detail_how">How it is come by</string>
+    <string name="detail_earn_only">Play for it. It is not sold.</string>
+    <string name="detail_buy_or_earn">Buy it, or play for it</string>
+    <string name="detail_preview">On the board</string>
+    <string name="detail_held">In your treasury</string>
+    <string name="detail_closed">This season has closed</string>
+    <string name="treasury_set_done">Set complete</string>
+    <string name="treasury_set_progress">%1$d of %2$d</string>
+
+    <!-- Seasons five to eight, and a sound set for all eight. -->
+    <string name="board_haftrang_title">Seven-colour board</string>
+    <string name="board_haftrang_desc">All seven fired at once.</string>
+    <string name="board_haftrang_story">Mosaic is cut from seven glazes and assembled; haft-rang is painted in seven glazes and fired once. The colours creep into each other at the edges in the kiln, and that bleed is how you tell one from the other at a glance.</string>
+    <string name="checkers_lajvard_title">Lapis checkers</string>
+    <string name="checkers_lajvard_desc">Blue with its own gold in it.</string>
+    <string name="checkers_lajvard_story">Lapis is not dyed. The gold specks through it are pyrite, sitting in the stone where it formed, which is why no two pieces in a set match.</string>
+    <string name="dice_lajvard_title">Lapis dice</string>
+    <string name="dice_lajvard_desc">Cut across the vein, not along it.</string>
+    <string name="dice_lajvard_story">Cut along the vein and every face is a different blue. Cut across it and the six faces finally agree.</string>
+    <string name="effect_lapis_night_title">Lapis night</string>
+    <string name="effect_lapis_night_desc">Dust that does not settle.</string>
+    <string name="effect_lapis_night_story">The pyrite comes off the stone as it is worked and hangs in the lamplight for a long time afterwards.</string>
+    <string name="banner_shiraz_title">Banner of the Seven Colours</string>
+    <string name="banner_shiraz_desc">Won, never sold.</string>
+    <string name="banner_shiraz_story">Given for finishing the Shiraz chapter, and by no other route.</string>
+    <string name="frame_shiraz_title">Lapis bezel</string>
+    <string name="frame_shiraz_desc">Seven points, one stone.</string>
+    <string name="frame_shiraz_story">Cut flat and bedded low, because lapis chips if the rim is pushed hard.</string>
+    <string name="title_backgame_title">The Backgame</string>
+    <string name="title_backgame_desc">Two anchors and no hurry.</string>
+    <string name="title_backgame_story">Holding two points in the opponent\'s home and waiting. It loses badly when it loses, which is the price of the way it wins.</string>
+    <string name="board_pateh_title">Pateh board</string>
+    <string name="board_pateh_desc">One needle, one winter.</string>
+    <string name="board_pateh_story">Pateh is wool sewn onto wool until no ground is left showing. The whole cloth is covered by a single needle, and a good one is a winter\'s work.</string>
+    <string name="checkers_copper_title">Copper checkers</string>
+    <string name="checkers_copper_desc">Struck, then left to darken.</string>
+    <string name="checkers_copper_story">Kerman\'s coppersmiths do not lacquer their work. It goes brown, then almost black, and is brought back with a lemon.</string>
+    <string name="dice_copper_title">Copper dice</string>
+    <string name="dice_copper_desc">Warm in the hand before the throw.</string>
+    <string name="dice_copper_story">Copper takes the heat of a hand faster than bone or stone, which is either a superstition or the reason people prefer them.</string>
+    <string name="effect_madder_thread_title">Madder thread</string>
+    <string name="effect_madder_thread_desc">A ring of red, outward.</string>
+    <string name="effect_madder_thread_story">Madder root gives a red that goes brown before it ever goes pink, which is how an old pateh is dated.</string>
+    <string name="banner_kerman_title">Banner of the Needle</string>
+    <string name="banner_kerman_desc">Won, never sold.</string>
+    <string name="banner_kerman_story">Given for finishing the Kerman chapter, and by no other route.</string>
+    <string name="frame_kerman_title">Madder bezel</string>
+    <string name="frame_kerman_desc">Nine points, wool over copper.</string>
+    <string name="frame_kerman_story">The wool is stretched over a copper ring and stitched down the back where the join will not be seen.</string>
+    <string name="title_anchor_title">The Anchor</string>
+    <string name="title_anchor_desc">A point held to the end.</string>
+    <string name="title_anchor_story">One point in the opponent\'s home that is never given up, however long the game goes against you.</string>
+    <string name="board_melileh_title">Filigree board</string>
+    <string name="board_melileh_desc">Wire that holds itself up.</string>
+    <string name="board_melileh_story">Filigree is silver drawn out to the thickness of a hair and bent into a pattern with nothing behind it. The pattern is the structure; take one wire out and the rest sags.</string>
+    <string name="checkers_melileh_title">Filigree checkers</string>
+    <string name="checkers_melileh_desc">Lighter than they look.</string>
+    <string name="checkers_melileh_story">Mostly air. A full set weighs less than a single walnut piece, and players either love that or cannot stand it.</string>
+    <string name="dice_melileh_title">Filigree dice</string>
+    <string name="dice_melileh_desc">Silver over a bone core.</string>
+    <string name="dice_melileh_story">Hollow filigree would not roll true, so these are wound over bone and weigh what a die should weigh.</string>
+    <string name="effect_filigree_glint_title">Filigree glint</string>
+    <string name="effect_filigree_glint_desc">Light off a hundred wires at once.</string>
+    <string name="effect_filigree_glint_story">A filigree piece has no flat face to catch the light, so it catches all of it at every angle instead.</string>
+    <string name="banner_tabriz_title">Banner of the Drawn Wire</string>
+    <string name="banner_tabriz_desc">Won, never sold.</string>
+    <string name="banner_tabriz_story">Given for finishing the Tabriz chapter, and by no other route.</string>
+    <string name="frame_tabriz_title">Filigree bezel</string>
+    <string name="frame_tabriz_desc">Eleven points, no backing.</string>
+    <string name="frame_tabriz_story">The only frame here with nothing behind it. What you see through the gaps is whatever is behind the screen.</string>
+    <string name="title_blitz_title">The Blitz</string>
+    <string name="title_blitz_desc">Hit, and hit again.</string>
+    <string name="title_blitz_story">Attacking the opponent\'s home board before it is closed, on the theory that a game decided early is a game that cannot turn.</string>
+    <string name="board_zari_title">Termeh board</string>
+    <string name="board_zari_desc">A hand\'s width a day.</string>
+    <string name="board_zari_story">Termeh is woven so slowly that a weaver counts progress in finger-widths. The pattern is in the weave, not printed on it, so the back is the front in reverse.</string>
+    <string name="checkers_saffron_title">Saffron checkers</string>
+    <string name="checkers_saffron_desc">Honey-stone, held to the light.</string>
+    <string name="checkers_saffron_story">The colour is not a dye. It is what the stone does when the sun is behind it, which is why a set indoors and the same set outdoors look like two sets.</string>
+    <string name="dice_saffron_title">Saffron dice</string>
+    <string name="dice_saffron_desc">Warm even in shadow.</string>
+    <string name="dice_saffron_story">Cut from the same block as the checkers, so the pair and the set were the same stone before anybody shaped them.</string>
+    <string name="effect_saffron_haze_title">Saffron haze</string>
+    <string name="effect_saffron_haze_desc">Late light, held a moment.</string>
+    <string name="effect_saffron_haze_story">The hour before dark in Yazd, when the walls give back everything they took all day.</string>
+    <string name="banner_yazd_title">Banner of the Loom</string>
+    <string name="banner_yazd_desc">Won, never sold.</string>
+    <string name="banner_yazd_story">Given for finishing the Yazd chapter, and by no other route.</string>
+    <string name="frame_yazd_title">Saffron bezel</string>
+    <string name="frame_yazd_desc">Eight points, one cut.</string>
+    <string name="frame_yazd_story">Turned from a single piece so the bands run unbroken all the way round, which wastes most of the block.</string>
+    <string name="title_bearoff_title">The Bear-Off</string>
+    <string name="title_bearoff_desc">Counted, not hoped.</string>
+    <string name="title_bearoff_story">The last stretch, where the dice stop being luck and start being arithmetic.</string>
+    <string name="sound_isfahan_title">Isfahan sounds</string>
+    <string name="sound_isfahan_desc">Wood on wood, under a dome.</string>
+    <string name="sound_isfahan_story">Recorded the way a tea house sounds: a piece set down hard, and the room giving it back a half-second later.</string>
+    <string name="sound_neyshabur_title">Neyshabur sounds</string>
+    <string name="sound_neyshabur_desc">Stone, and a long tail.</string>
+    <string name="sound_neyshabur_story">Turquoise on a hard board rings rather than knocks.</string>
+    <string name="sound_harbour_title">Harbour sounds</string>
+    <string name="sound_harbour_desc">Shell, and water under the floor.</string>
+    <string name="sound_harbour_story">Quieter than the rest. Shell does not carry.</string>
+    <string name="sound_caravan_title">Caravan sounds</string>
+    <string name="sound_caravan_desc">Stone on stone, outdoors.</string>
+    <string name="sound_caravan_story">No room to give anything back, so every piece lands once and that is all.</string>
+    <string name="sound_shiraz_title">Shiraz sounds</string>
+    <string name="sound_shiraz_desc">Glazed tile, struck lightly.</string>
+    <string name="sound_shiraz_story">A fired glaze has a note in it. Two pieces set down together are almost a chord, which is either lovely or maddening.</string>
+    <string name="sound_kerman_title">Kerman sounds</string>
+    <string name="sound_kerman_desc">Copper, and cloth under it.</string>
+    <string name="sound_kerman_story">The wool takes the edge off every knock, which is the point of playing on a pateh at all.</string>
+    <string name="sound_tabriz_title">Tabriz sounds</string>
+    <string name="sound_tabriz_desc">Silver, very short.</string>
+    <string name="sound_tabriz_story">Filigree has almost no mass, so it clicks and stops.</string>
+    <string name="sound_yazd_title">Yazd sounds</string>
+    <string name="sound_yazd_desc">Stone, and a courtyard.</string>
+    <string name="sound_yazd_story">Open above, walls close on four sides: one knock and four answers.</string>
+
+    <string name="season_shiraz_name">Season Five — Shiraz</string>
+    <string name="season_shiraz_story">Seven glazes painted together and fired once, so the colours bleed into one another in the kiln.</string>
+    <string name="season_shiraz_bundle">The Seven Colours</string>
+    <string name="season_kerman_name">Season Six — Kerman</string>
+    <string name="season_kerman_story">Wool sewn onto wool until no ground shows, by one needle, over a winter.</string>
+    <string name="season_kerman_bundle">The Needle</string>
+    <string name="season_tabriz_name">Season Seven — Tabriz</string>
+    <string name="season_tabriz_story">Silver drawn to the thickness of a hair and bent into a pattern that stands up with nothing behind it.</string>
+    <string name="season_tabriz_bundle">The Drawn Wire</string>
+    <string name="season_yazd_name">Season Eight — Yazd</string>
+    <string name="season_yazd_story">Woven a finger\'s width at a time, the pattern in the weave rather than printed on it.</string>
+    <string name="season_yazd_bundle">The Loom</string>
 </resources>
